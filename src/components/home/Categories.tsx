@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { IceCream, Refrigerator, Package, Cocktail } from 'lucide-react';
+import { IceCream, Refrigerator, Package, Coffee } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
 
 interface CategoryCardProps {
@@ -47,7 +47,7 @@ const Categories: React.FC = () => {
     {
       title: "Boissons",
       description: "Un choix varié de boissons pour accompagner vos repas et moments de détente.",
-      icon: <Cocktail size={28} />,
+      icon: <Coffee size={28} />,
       delay: 400
     }
   ];
