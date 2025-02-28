@@ -26,9 +26,13 @@ const Hero: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="md:pr-8">
             <ScrollReveal direction="up" delay={100}>
-              <span className="inline-block py-1 px-3 mb-6 rounded-full bg-brand-orange/10 text-brand-orange font-medium text-sm">
-                Qualité Premium Halal
-              </span>
+              <div className="mb-8">
+                <img 
+                  src="/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png" 
+                  alt="Z Market Logo" 
+                  className="h-20 md:h-24"
+                />
+              </div>
             </ScrollReveal>
             
             <ScrollReveal direction="up" delay={200}>

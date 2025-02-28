@@ -32,10 +32,15 @@ const Navbar: React.FC = () => {
       )}
     >
       <div className="container px-4 mx-auto flex justify-between items-center">
-        <a href="/" className="z-50">
-          <h1 className="text-2xl font-bold tracking-tight text-brand-black">
-            Halal<span className="text-brand-orange">Délices</span>
-          </h1>
+        <a href="/" className="z-50 flex items-center">
+          <img 
+            src="/lovable-uploads/12f65d9b-15c8-4a5f-8482-905125be3fd2.png" 
+            alt="Z Market Logo" 
+            className="h-10 mr-2" 
+          />
+          <span className={`text-2xl font-bold tracking-tight ${isScrolled || isMenuOpen ? 'text-brand-black' : 'text-white'}`}>
+            Z <span className="text-brand-orange">Market</span>
+          </span>
         </a>
 
         {/* Desktop Navigation */}
@@ -44,7 +49,7 @@ const Navbar: React.FC = () => {
             <li>
               <a
                 href="#produits"
-                className="font-medium text-gray-800 hover:text-brand-orange transition-colors"
+                className={`font-medium hover:text-brand-orange transition-colors ${isScrolled ? 'text-gray-800' : 'text-white'}`}
               >
                 Nos Produits
               </a>
@@ -52,7 +57,7 @@ const Navbar: React.FC = () => {
             <li>
               <a
                 href="#a-propos"
-                className="font-medium text-gray-800 hover:text-brand-orange transition-colors"
+                className={`font-medium hover:text-brand-orange transition-colors ${isScrolled ? 'text-gray-800' : 'text-white'}`}
               >
                 À Propos
               </a>
@@ -60,7 +65,7 @@ const Navbar: React.FC = () => {
             <li>
               <a
                 href="#contact"
-                className="font-medium text-gray-800 hover:text-brand-orange transition-colors"
+                className={`font-medium hover:text-brand-orange transition-colors ${isScrolled ? 'text-gray-800' : 'text-white'}`}
               >
                 Contact
               </a>
@@ -93,7 +98,7 @@ const Navbar: React.FC = () => {
                 className="text-gray-800 transition-transform duration-300 ease-elastic transform rotate-90"
               />
             ) : (
-              <Menu size={24} className="text-gray-800" />
+              <Menu size={24} className={isScrolled ? 'text-gray-800' : 'text-white'} />
             )}
           </button>
         </div>
@@ -106,6 +111,13 @@ const Navbar: React.FC = () => {
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'
         )}
       >
+        <div className="mb-10">
+          <img 
+            src="/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png" 
+            alt="Z Market Full Logo" 
+            className="h-16" 
+          />
+        </div>
         <nav className="flex flex-col items-center space-y-8">
           <a
             href="#produits"

@@ -8,9 +8,16 @@ const Footer: React.FC = () => {
       <div className="container px-4 mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div className="md:col-span-2">
-            <h2 className="text-2xl font-bold mb-6">
-              Halal<span className="text-brand-orange">Délices</span>
-            </h2>
+            <div className="flex items-center mb-6">
+              <img 
+                src="/lovable-uploads/12f65d9b-15c8-4a5f-8482-905125be3fd2.png" 
+                alt="Z Market Logo" 
+                className="h-10 mr-2" 
+              />
+              <h2 className="text-2xl font-bold">
+                Z <span className="text-brand-orange">Market</span>
+              </h2>
+            </div>
             <p className="text-gray-400 mb-6 max-w-md">
               Votre destination pour des produits Halal de qualité. 
               Surgelés, frais, épicerie sèche et boissons – tout ce dont 
@@ -61,14 +68,14 @@ const Footer: React.FC = () => {
               <li>123 Avenue de la République</li>
               <li>75011 Paris, France</li>
               <li>+33 (0)1 23 45 67 89</li>
-              <li>contact@halaldelices.fr</li>
+              <li>contact@zmarket.fr</li>
             </ul>
           </div>
         </div>
         
         <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-500 mb-4 md:mb-0">
-            &copy; {new Date().getFullYear()} HalalDélices. Tous droits réservés.
+            &copy; {new Date().getFullYear()} Z Market. Tous droits réservés.
           </p>
           <div className="flex space-x-6">
             <a href="#" className="text-gray-500 hover:text-brand-orange transition-colors">
