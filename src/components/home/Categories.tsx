@@ -94,107 +94,107 @@ const Categories: React.FC = () => {
   const products = [
     {
       id: 1,
-      image: "/lovable-uploads/14d917c9-a8ac-4ffc-bae2-cd02b95fd486.png",
-      title: "Bœuf Halal Tranché",
-      brand: "HALBEEF",
-      weight: "800g",
+      image: "/lovable-uploads/1e7548f5-8859-4e95-b8cb-40cab3d8dd35.png",
+      title: "Hachis Parmentier",
+      brand: "Isla Délice",
+      weight: "1kg",
       category: "frozen"
     },
     {
       id: 2,
-      image: "/lovable-uploads/3230e5df-068b-4a55-89ea-10484b277a5a.png",
-      title: "Bœuf Halal Haché",
-      brand: "HALBEEF",
-      weight: "800g",
+      image: "/lovable-uploads/d2681e21-da6a-4833-a3ab-0401774b86b8.png",
+      title: "Lasagnes Bolognaise",
+      brand: "Isla Délice",
+      weight: "1kg",
       category: "frozen"
     },
     {
       id: 3,
-      image: "/lovable-uploads/e5cb8b7d-61b4-4258-beca-9d45d00f51f0.png",
-      title: "Poulet Entier",
-      brand: "Vedina",
-      weight: "2kg",
+      image: "/lovable-uploads/433dd9e5-e599-46c3-8392-fc448937ffc8.png",
+      title: "M'Semen",
+      brand: "Isla Délice",
+      weight: "300g",
       category: "frozen"
     },
     {
       id: 4,
-      image: "/lovable-uploads/dec641d6-c084-497b-83dc-ddf8cb4c5c53.png",
-      title: "Poulet Entier",
-      brand: "Vedina",
-      weight: "2kg",
+      image: "/lovable-uploads/598f2802-d958-4c9f-a399-523b3093bc03.png",
+      title: "Chili Con Carne",
+      brand: "Isla Délice",
+      weight: "350g",
       category: "frozen"
     },
     {
       id: 5,
-      image: "/lovable-uploads/ade6d804-0040-4868-940d-50f471a0ebca.png",
-      title: "Poulet Pané",
-      brand: "Vedina",
-      weight: "800g",
+      image: "/lovable-uploads/a93f4692-ec7d-4f4e-85a8-ab6d49983972.png",
+      title: "Penne Carbonara",
+      brand: "Isla Délice",
+      weight: "350g",
       category: "frozen"
     },
     {
       id: 6,
-      image: "/lovable-uploads/d56c0d79-a101-4067-809c-49ae8bf2b5ea.png",
-      title: "Cordons Bleus",
-      brand: "Vedina",
-      weight: "875g",
+      image: "/lovable-uploads/3dc16206-c347-4845-8b8c-a647f326e35a.png",
+      title: "Fusilli Bolognaise",
+      brand: "Isla Délice",
+      weight: "350g",
       category: "frozen"
     },
     {
       id: 7,
-      image: "/lovable-uploads/c416881d-1296-4496-964d-ea866136d2fc.png",
-      title: "Veggie Bites",
-      brand: "Greens",
-      weight: "1000g",
+      image: "/lovable-uploads/2f0beba4-380a-432d-a95c-d2adf30b0af5.png",
+      title: "Poulet Mariné Harissa",
+      brand: "Isla Délice",
+      weight: "400g",
       category: "frozen"
     },
     {
       id: 8,
-      image: "/lovable-uploads/9ca2f98b-369e-4205-ad84-00c5d774d128.png",
-      title: "Poulet Rôti Tranché",
-      brand: "Vedina",
-      weight: "2kg",
+      image: "/lovable-uploads/f8882b9d-14ea-4d99-80c5-9e95889b9a08.png",
+      title: "Pizza Kebab",
+      brand: "Isla Délice",
+      weight: "420g",
       category: "frozen"
     },
     {
       id: 9,
-      image: "/lovable-uploads/f96329d1-539b-41bc-8c63-c12b7a050ae6.png",
-      title: "Poulet Mariné",
-      brand: "Vedina",
-      weight: "800g",
+      image: "/lovable-uploads/b198d5d0-a298-4da5-8981-3d139ea2060f.png",
+      title: "Pizza Royale",
+      brand: "Isla Délice",
+      weight: "430g",
       category: "frozen"
     },
     {
       id: 10,
-      image: "/lovable-uploads/6789b32c-f705-4682-a1d6-04711575997c.png",
-      title: "Poulet Épicé",
-      brand: "Vedina",
-      weight: "800g",
+      image: "/lovable-uploads/f2711295-a3ab-4f6d-8f4d-c654ff21b6b9.png",
+      title: "Corn Dog",
+      brand: "Isla Délice",
+      weight: "300g",
       category: "frozen"
     },
     {
       id: 11,
-      image: "/lovable-uploads/829ba4b3-184f-48f2-9b47-61ff5966a02e.png",
-      title: "Salade Sultan",
-      brand: "Greens Cuisin'easy",
-      weight: "1250g",
-      category: "fresh"
+      image: "/lovable-uploads/c244efe0-0408-4159-8ca0-b3ffbcedd505.png",
+      title: "Nems de Dinde",
+      brand: "Isla Délice",
+      weight: "280g",
+      category: "frozen"
     },
     {
       id: 12,
-      image: "/lovable-uploads/786f8b28-d009-4919-9f5c-35950e94f592.png",
-      title: "Pâtes Mozzarella",
-      brand: "Greens Cuisin'easy",
-      weight: "1250g",
-      category: "fresh"
+      image: "/lovable-uploads/7e562f60-6ce9-4803-a8b1-2c661c5e1394.png",
+      title: "Samoussas de Dinde",
+      brand: "Isla Délice",
+      weight: "200g",
+      category: "frozen"
     },
     {
       id: 13,
-      image: "/lovable-uploads/06bfda08-4f12-4c74-b680-6b7a9ddcab29.png",
-      title: "Boisson Halal",
-      brand: "Z Market Selection",
-      weight: "1L",
-      category: "drinks"
+      image: "/lovable-uploads/b0105d8f-dcf3-4781-9be3-b4a3597dfc6e.png",
+      title: "Empanadas de Dinde",
+      brand: "Isla Délice",
+      weight: "160g",
+      category: "frozen"
     }
   ];
 
