@@ -13,7 +13,7 @@ const Hero: React.FC = () => {
       <div 
         className="absolute inset-0 bg-cover bg-center z-[-1] opacity-40"
         style={{ 
-          backgroundImage: "url('https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?q=80&w=2000')",
+          backgroundImage: "url('https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=2000')",
           backgroundPositionY: "30%"
         }}
       ></div>
@@ -71,7 +71,7 @@ const Hero: React.FC = () => {
               <div 
                 className="w-full h-full rounded-xl overflow-hidden shadow-2xl animate-float"
                 style={{ 
-                  backgroundImage: "url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=600')", 
+                  backgroundImage: "url('/lovable-uploads/704b812d-925f-4cea-95ad-0cb5fb8ae7a1.png')", 
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   transform: "rotate(5deg)"
@@ -83,7 +83,7 @@ const Hero: React.FC = () => {
               <div 
                 className="w-full h-full rounded-xl overflow-hidden shadow-2xl animate-float animation-delay-1000"
                 style={{ 
-                  backgroundImage: "url('https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?q=80&w=600')", 
+                  backgroundImage: "url('https://images.unsplash.com/photo-1578044259758-cbca198139ef?q=80&w=600')", 
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   transform: "rotate(-5deg)"
