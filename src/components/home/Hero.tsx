@@ -101,7 +101,7 @@ const Hero: React.FC = () => {
           <div className="hidden md:flex items-center justify-center relative h-[500px]">
             <ScrollReveal direction="left" delay={500} className="relative">
               <div className="flex items-center justify-center">
-                <Snowflake size={120} className="text-brand-orange mb-4" />
+                <Snowflake size={120} className="text-brand-orange mb-4 animate-float" />
               </div>
             </ScrollReveal>
           </div>
