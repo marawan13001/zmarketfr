@@ -43,8 +43,19 @@ const Index = () => {
       <div className="bg-brand-orange/10 py-3">
         <div className="container mx-auto px-4 flex items-center justify-center cursor-pointer" onClick={scrollToDelivery}>
           <div className="flex items-center gap-3 group">
-            <div className="bg-white p-2 rounded-full shadow-sm">
-              <Snowflake className="text-brand-orange h-6 w-6" />
+            <div className="flex items-center justify-center bg-white p-2 rounded-full shadow-sm">
+              {/* Option 1: Using custom SVG that exactly matches the provided image */}
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L12 22" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M17 5L7 19" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M7 5L17 19" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M2 12L22 12" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M4.93 4.93L19.07 19.07" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M19.07 4.93L4.93 19.07" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+              {/* Option 2: Using Lucide icon with customized color (uncomment to use this instead)
+              <Snowflake className="text-[#F97316] h-6 w-6" strokeWidth={2} />
+              */}
             </div>
             <p className="font-medium text-gray-800">
               Livraison rapide de produits surgelés <span className="text-brand-orange">en 1 heure</span>
