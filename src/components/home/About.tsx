@@ -22,7 +22,7 @@ const About: React.FC = () => {
                 <div 
                   className="rounded-2xl overflow-hidden h-[450px] w-full md:w-[90%] relative z-10 shadow-xl"
                   style={{ 
-                    backgroundImage: "url('https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?q=80&w=800')", 
+                    backgroundImage: "url('/lovable-uploads/e08d9a35-f285-434b-8e11-c6a4adab48cb.png')", 
                     backgroundSize: "cover",
                     backgroundPosition: "center"
                   }}
@@ -49,7 +49,7 @@ const About: React.FC = () => {
             
             <ScrollReveal direction="up" delay={300}>
               <p className="text-gray-600 mb-8">
-                Chez HalalDélices, nous nous engageons à offrir des produits surgelés, frais, secs et des boissons 
+                Chez ZMarket, nous nous engageons à offrir des produits surgelés, frais, secs et des boissons 
                 qui respectent les traditions halal tout en proposant une expérience gustative exceptionnelle. 
                 Notre mission est de rendre accessible à tous une alimentation halal de qualité.
               </p>
