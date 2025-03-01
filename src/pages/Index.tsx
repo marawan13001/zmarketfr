@@ -8,7 +8,8 @@ import About from '@/components/home/About';
 import Contact from '@/components/home/Contact';
 import Footer from '@/components/layout/Footer';
 import { toast } from 'sonner';
-import { Snowflake } from 'lucide-react';
+import { Snowflake, Clock, MapPin, Truck, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Index = () => {
   const deliveryRef = useRef<HTMLDivElement>(null);
@@ -61,6 +62,73 @@ const Index = () => {
               Livraison rapide de produits surgelés <span className="text-brand-orange">en 1 heure</span>
             </p>
             <span className="text-brand-orange group-hover:translate-x-1 transition-transform">→</span>
+          </div>
+        </div>
+      </div>
+      
+      {/* Home Delivery Highlight Section - Added directly to homepage */}
+      <div className="bg-brand-cream py-10">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            <div className="md:w-1/2">
+              <h2 className="text-3xl font-bold mb-4">Livraison à domicile <span className="text-brand-orange">ultra-rapide</span></h2>
+              <p className="text-gray-700 mb-6">
+                Profitez de nos produits surgelés de qualité livrés directement chez vous en moins d'une heure. 
+                Notre service de livraison fonctionne 7j/7 de 10h à 19h.
+              </p>
+              
+              <div className="space-y-4 mb-6">
+                <div className="flex items-start gap-3">
+                  <div className="bg-brand-orange/10 p-2 rounded-full">
+                    <Clock className="text-brand-orange h-5 w-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium">Livraison en 1h maximum</h3>
+                    <p className="text-sm text-gray-600">Recevez votre commande rapidement</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3">
+                  <div className="bg-brand-orange/10 p-2 rounded-full">
+                    <MapPin className="text-brand-orange h-5 w-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium">Paris et proche banlieue</h3>
+                    <p className="text-sm text-gray-600">Zone de livraison en expansion</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3">
+                  <div className="bg-brand-orange/10 p-2 rounded-full">
+                    <Truck className="text-brand-orange h-5 w-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium">Livraison dans des conteneurs spéciaux</h3>
+                    <p className="text-sm text-gray-600">Pour garantir la fraîcheur de vos produits</p>
+                  </div>
+                </div>
+              </div>
+              
+              <button 
+                onClick={scrollToDelivery}
+                className="bg-brand-orange hover:bg-brand-orange/90 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-colors"
+              >
+                Découvrir notre service
+                <ChevronRight size={18} />
+              </button>
+            </div>
+            
+            <div className="md:w-1/2">
+              <img 
+                src="/lovable-uploads/eeb6edd3-b5a8-476d-99e1-4baecf67123e.png" 
+                alt="Livraison ZMarket" 
+                className="w-full h-auto rounded-xl shadow-lg"
+                onError={(e) => {
+                  console.error('Failed to load delivery image');
+                  e.currentTarget.src = '/placeholder.svg';
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>
