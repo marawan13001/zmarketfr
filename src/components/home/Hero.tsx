@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Snowflake } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
 
 const Hero: React.FC = () => {
@@ -11,16 +11,12 @@ const Hero: React.FC = () => {
   const imagePaths = {
     background: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901', // Fallback image d'Unsplash
     logo: '/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png', // Logo qui fonctionne d'après les logs
-    food1: '/lovable-uploads/df01b84c-0652-4bfe-89cc-5f7fa5e37f9f.png', // Nouvelle image poulet Vedina 1
-    food2: '/lovable-uploads/c4ca7c05-8562-4f98-b3d3-f0d9d0cb0b69.png'  // Nouvelle image poulet Vedina 2
   };
 
   // Fallback images en cas d'échec
   const fallbackImages = {
     background: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901',
     logo: '/placeholder.svg',
-    food1: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9',
-    food2: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e'
   };
 
   // Handle image loading success
@@ -102,41 +98,13 @@ const Hero: React.FC = () => {
             </ScrollReveal>
           </div>
           
-          <div className="hidden md:block relative h-[500px]">
-            <ScrollReveal direction="left" delay={500} className="absolute right-0 top-0 w-[300px] h-[300px]">
-              <div className="w-full h-full rounded-xl overflow-hidden shadow-2xl animate-float" style={{ transform: "rotate(5deg)" }}>
-                <div className="relative flex items-center justify-center w-full h-full bg-gray-100 text-gray-500 text-sm p-4">
-                  <img 
-                    src={imageErrors.food1 ? fallbackImages.food1 : imagePaths.food1} 
-                    alt="Poulet Vedina" 
-                    className="w-full h-full object-cover"
-                    onLoad={() => handleImageLoad('food1')}
-                    onError={() => handleImageError('food1')}
-                  />
-                  {imageErrors.food1 && 
-                    <div className="absolute inset-0 flex items-center justify-center bg-gray-100/80">
-                      <span className="text-sm text-gray-500">Image de remplacement</span>
-                    </div>
-                  }
-                </div>
-              </div>
-            </ScrollReveal>
-            
-            <ScrollReveal direction="left" delay={700} className="absolute right-20 bottom-20 w-[250px] h-[250px]">
-              <div className="w-full h-full rounded-xl overflow-hidden shadow-2xl animate-float animation-delay-1000" style={{ transform: "rotate(-5deg)" }}>
-                <div className="relative flex items-center justify-center w-full h-full bg-gray-100 text-gray-500 text-sm p-4">
-                  <img 
-                    src={imageErrors.food2 ? fallbackImages.food2 : imagePaths.food2} 
-                    alt="Poulet Vedina" 
-                    className="w-full h-full object-cover"
-                    onLoad={() => handleImageLoad('food2')}
-                    onError={() => handleImageError('food2')}
-                  />
-                  {imageErrors.food2 && 
-                    <div className="absolute inset-0 flex items-center justify-center bg-gray-100/80">
-                      <span className="text-sm text-gray-500">Image de remplacement</span>
-                    </div>
-                  }
+          <div className="hidden md:flex items-center justify-center relative h-[500px]">
+            <ScrollReveal direction="left" delay={500} className="relative">
+              <div className="w-[350px] h-[350px] rounded-full flex items-center justify-center bg-gradient-to-br from-[#F97316] to-[#FEC6A1] shadow-lg animate-float">
+                <div className="absolute inset-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex flex-col items-center justify-center text-white">
+                  <Snowflake size={80} className="text-white mb-4" />
+                  <h3 className="text-3xl font-bold text-center mb-2">SURGELÉ</h3>
+                  <p className="text-lg font-medium text-center opacity-90">Qualité Préservée</p>
                 </div>
               </div>
             </ScrollReveal>

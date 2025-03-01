@@ -9,14 +9,14 @@ import Footer from '@/components/layout/Footer';
 import { toast } from 'sonner';
 
 const Index = () => {
-  // Notification avec lien direct vers la page de test d'images
+  // Notification pour informer de la mise à jour du design
   React.useEffect(() => {
     setTimeout(() => {
       toast.info(
         <div>
-          Nous avons ajouté de nouvelles images de produits Vedina! 
+          Nous avons mis à jour notre site avec un nouveau design surgelé! 
           <a href="/test-images" className="text-blue-500 underline ml-1">
-            Voir les détails
+            Voir tous nos visuels
           </a>
         </div>,
         {
