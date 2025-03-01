@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/home/Hero';
@@ -54,9 +53,6 @@ const Index = () => {
                 <path d="M4.93 4.93L19.07 19.07" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
                 <path d="M19.07 4.93L4.93 19.07" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
               </svg>
-              {/* Option 2: Using Lucide icon with customized color (uncomment to use this instead)
-              <Snowflake className="text-[#F97316] h-6 w-6" strokeWidth={2} />
-              */}
             </div>
             <p className="font-medium text-gray-800">
               Livraison rapide de produits surgelés <span className="text-brand-orange">en 1 heure</span>
@@ -66,75 +62,21 @@ const Index = () => {
         </div>
       </div>
       
-      {/* Home Delivery Highlight Section - Added directly to homepage */}
-      <div className="bg-brand-cream py-10">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center gap-8">
-            <div className="md:w-1/2">
-              <h2 className="text-3xl font-bold mb-4">Livraison à domicile <span className="text-brand-orange">ultra-rapide</span></h2>
-              <p className="text-gray-700 mb-6">
-                Profitez de nos produits surgelés de qualité livrés directement chez vous en moins d'une heure. 
-                Notre service de livraison fonctionne 7j/7 de 10h à 19h.
-              </p>
-              
-              <div className="space-y-4 mb-6">
-                <div className="flex items-start gap-3">
-                  <div className="bg-brand-orange/10 p-2 rounded-full">
-                    <Clock className="text-brand-orange h-5 w-5" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium">Livraison en 1h maximum</h3>
-                    <p className="text-sm text-gray-600">Recevez votre commande rapidement</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-3">
-                  <div className="bg-brand-orange/10 p-2 rounded-full">
-                    <MapPin className="text-brand-orange h-5 w-5" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium">Paris et proche banlieue</h3>
-                    <p className="text-sm text-gray-600">Zone de livraison en expansion</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-3">
-                  <div className="bg-brand-orange/10 p-2 rounded-full">
-                    <Truck className="text-brand-orange h-5 w-5" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium">Livraison dans des conteneurs spéciaux</h3>
-                    <p className="text-sm text-gray-600">Pour garantir la fraîcheur de vos produits</p>
-                  </div>
-                </div>
-              </div>
-              
-              <button 
-                onClick={scrollToDelivery}
-                className="bg-brand-orange hover:bg-brand-orange/90 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-colors"
-              >
-                Découvrir notre service
-                <ChevronRight size={18} />
-              </button>
-            </div>
-            
-            <div className="md:w-1/2">
-              <img 
-                src="/lovable-uploads/eeb6edd3-b5a8-476d-99e1-4baecf67123e.png" 
-                alt="Livraison ZMarket" 
-                className="w-full h-auto rounded-xl shadow-lg"
-                onError={(e) => {
-                  console.error('Failed to load delivery image');
-                  e.currentTarget.src = '/placeholder.svg';
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      
       <main>
         <Hero />
+        
+        {/* Simple Delivery CTA Button right after Hero section */}
+        <div className="container mx-auto px-4 py-6 flex justify-center">
+          <button 
+            onClick={scrollToDelivery}
+            className="bg-brand-orange hover:bg-brand-orange/90 text-white px-8 py-4 rounded-lg flex items-center gap-3 transition-colors shadow-md text-lg font-medium"
+          >
+            <Truck className="h-6 w-6" />
+            Livraison à domicile en 1 heure
+            <ChevronRight size={20} />
+          </button>
+        </div>
+        
         <Categories />
         <div ref={deliveryRef}>
           <HomeDelivery />
