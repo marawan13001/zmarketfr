@@ -299,7 +299,7 @@ const Commande: React.FC = () => {
                       <Clock className="text-blue-500 mr-3 flex-shrink-0 mt-1" size={20} />
                       <div>
                         <h3 className="font-medium text-blue-700">Horaires de livraison</h3>
-                        <p className="text-blue-600 text-sm">Nous livrons tous les jours de 10h à 19h. La commande est livrée dans l'heure qui suit.</p>
+                        <p className="text-blue-600 text-sm">Nous livrons tous les jours de 10h à 19h. Votre commande sera livrée une heure après avoir été passée.</p>
                       </div>
                     </div>
                   </div>
