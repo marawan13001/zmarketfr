@@ -100,12 +100,8 @@ const Hero: React.FC = () => {
           
           <div className="hidden md:flex items-center justify-center relative h-[500px]">
             <ScrollReveal direction="left" delay={500} className="relative">
-              <div className="w-[350px] h-[350px] rounded-full flex items-center justify-center bg-gradient-to-br from-[#F97316] to-[#FEC6A1] shadow-lg animate-float">
-                <div className="absolute inset-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex flex-col items-center justify-center text-white">
-                  <Snowflake size={80} className="text-white mb-4" />
-                  <h3 className="text-3xl font-bold text-center mb-2">SURGELÉ</h3>
-                  <p className="text-lg font-medium text-center opacity-90">Qualité Préservée</p>
-                </div>
+              <div className="flex items-center justify-center">
+                <Snowflake size={120} className="text-brand-orange mb-4" />
               </div>
             </ScrollReveal>
           </div>
