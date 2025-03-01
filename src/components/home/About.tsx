@@ -19,14 +19,11 @@ const About: React.FC = () => {
           <div className="order-2 md:order-1">
             <div className="relative">
               <ScrollReveal direction="right">
-                <div 
-                  className="rounded-2xl overflow-hidden h-[450px] w-full md:w-[90%] relative z-10 shadow-xl"
-                  style={{ 
-                    backgroundImage: "url('/lovable-uploads/e08d9a35-f285-434b-8e11-c6a4adab48cb.png')", 
-                    backgroundSize: "cover",
-                    backgroundPosition: "center"
-                  }}
-                ></div>
+                <img 
+                  src="/lovable-uploads/e08d9a35-f285-434b-8e11-c6a4adab48cb.png"
+                  alt="Notre produit"
+                  className="rounded-2xl w-full md:w-[90%] h-[450px] object-cover object-center shadow-xl relative z-10"
+                />
               </ScrollReveal>
               
               <div className="absolute top-[20%] -right-10 w-[150px] h-[150px] bg-brand-orange rounded-2xl blur-3xl opacity-20 z-0"></div>

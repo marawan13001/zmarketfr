@@ -8,13 +8,13 @@ const Hero: React.FC = () => {
   const [imageErrors, setImageErrors] = useState<{[key: string]: boolean}>({});
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  // Image paths - using correctly formatted paths and reliable images
+  // Image paths
   const imagePaths = {
     background: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901',
     logo: '/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png',
   };
 
-  // Fallback images en cas d'échec
+  // Fallback images
   const fallbackImages = {
     background: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901',
     logo: '/placeholder.svg',
@@ -22,13 +22,13 @@ const Hero: React.FC = () => {
 
   // Handle image loading success
   const handleImageLoad = (key: string) => {
-    console.log(`Image loaded successfully: ${key} (${imagePaths[key as keyof typeof imagePaths]})`);
+    console.log(`Image loaded successfully: ${key}`);
     setImagesLoaded(true);
   };
 
   // Handle image error
   const handleImageError = (key: string) => {
-    console.error(`Failed to load image: ${imagePaths[key as keyof typeof imagePaths]}`);
+    console.error(`Failed to load image: ${key}`);
     setImageErrors(prev => ({...prev, [key]: true}));
   };
 
