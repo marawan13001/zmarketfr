@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
 
@@ -7,20 +7,26 @@ const Hero: React.FC = () => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [imageErrors, setImageErrors] = useState<{[key: string]: boolean}>({});
 
-  // Image paths
+  // Image paths - using images we know exist in the project
   const imagePaths = {
-    background: '/lovable-uploads/c55ca31b-6d84-498b-b610-0d9c5bb96920.png',
-    logo: '/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png',
-    food1: '/lovable-uploads/7566ebde-6f4f-485f-b523-2037183b002d.png',
-    food2: '/lovable-uploads/119b6b0a-b379-4049-aaaa-e05b38872e88.png'
+    background: '/public/lovable-uploads/b0be503c-11d2-44a7-8671-5efe375b1a53.png', // image from current message
+    logo: '/public/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png',
+    food1: '/public/placeholder.svg', // fallback to known placeholder
+    food2: '/public/placeholder.svg'  // fallback to known placeholder
   };
 
-  // Fallback images (if needed)
+  // Fallback images for when the primary images fail to load
   const fallbackImages = {
     background: '/placeholder.svg',
     logo: '/placeholder.svg',
     food1: '/placeholder.svg',
     food2: '/placeholder.svg'
+  };
+
+  // Handle image loading success
+  const handleImageLoad = (key: string) => {
+    console.log(`Image loaded successfully: ${key}`);
+    setImagesLoaded(true);
   };
 
   // Handle image error
@@ -37,10 +43,11 @@ const Hero: React.FC = () => {
       {/* Background Image */}
       <div className="absolute inset-0 z-[-1]">
         <img 
-          src={imageErrors.background ? fallbackImages.background : imagePaths.background}
+          src={imageErrors.background ? fallbackImages.background : '/lovable-uploads/b0be503c-11d2-44a7-8671-5efe375b1a53.png'}
           alt="Background" 
           className="w-full h-full object-cover opacity-40"
           style={{ objectPosition: "center 30%" }}
+          onLoad={() => handleImageLoad('background')}
           onError={() => handleImageError('background')}
         />
       </div>
@@ -55,9 +62,10 @@ const Hero: React.FC = () => {
             <ScrollReveal direction="up" delay={100}>
               <div className="mb-8">
                 <img 
-                  src={imageErrors.logo ? fallbackImages.logo : imagePaths.logo} 
+                  src={imageErrors.logo ? fallbackImages.logo : '/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png'} 
                   alt="Z Market Logo" 
                   className="h-20 md:h-24"
+                  onLoad={() => handleImageLoad('logo')}
                   onError={() => handleImageError('logo')}
                 />
               </div>
@@ -97,23 +105,37 @@ const Hero: React.FC = () => {
           <div className="hidden md:block relative h-[500px]">
             <ScrollReveal direction="left" delay={500} className="absolute right-0 top-0 w-[300px] h-[300px]">
               <div className="w-full h-full rounded-xl overflow-hidden shadow-2xl animate-float" style={{ transform: "rotate(5deg)" }}>
-                <img 
-                  src={imageErrors.food1 ? fallbackImages.food1 : imagePaths.food1} 
-                  alt="Produit halal" 
-                  className="w-full h-full object-cover"
-                  onError={() => handleImageError('food1')}
-                />
+                {/* Debug message to show in UI */}
+                <div className="flex items-center justify-center w-full h-full bg-gray-100 text-gray-500 text-sm p-4">
+                  {imageErrors.food1 ? 
+                    "Image non disponible" : 
+                    <img 
+                      src="/placeholder.svg" 
+                      alt="Produit halal" 
+                      className="w-full h-full object-cover"
+                      onLoad={() => handleImageLoad('food1')}
+                      onError={() => handleImageError('food1')}
+                    />
+                  }
+                </div>
               </div>
             </ScrollReveal>
             
             <ScrollReveal direction="left" delay={700} className="absolute right-20 bottom-20 w-[250px] h-[250px]">
               <div className="w-full h-full rounded-xl overflow-hidden shadow-2xl animate-float animation-delay-1000" style={{ transform: "rotate(-5deg)" }}>
-                <img 
-                  src={imageErrors.food2 ? fallbackImages.food2 : imagePaths.food2}
-                  alt="Produit halal" 
-                  className="w-full h-full object-cover"
-                  onError={() => handleImageError('food2')}
-                />
+                {/* Debug message to show in UI */}
+                <div className="flex items-center justify-center w-full h-full bg-gray-100 text-gray-500 text-sm p-4">
+                  {imageErrors.food2 ? 
+                    "Image non disponible" : 
+                    <img 
+                      src="/placeholder.svg" 
+                      alt="Produit halal" 
+                      className="w-full h-full object-cover"
+                      onLoad={() => handleImageLoad('food2')}
+                      onError={() => handleImageError('food2')}
+                    />
+                  }
+                </div>
               </div>
             </ScrollReveal>
           </div>
