@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Truck, Clock, ShoppingCart, ChevronRight, MapPin, Calendar } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
@@ -75,16 +74,13 @@ const HomeDelivery: React.FC = () => {
           </ScrollReveal>
         </div>
         
-        {/* Comment fonctionne la livraison */}
         <ScrollReveal delay={300} direction="up">
           <div className="bg-brand-cream rounded-xl p-8 md:p-10 mb-16">
             <h3 className="text-2xl font-bold mb-6 text-center">Comment fonctionne notre livraison ?</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10 relative">
-              {/* Ligne de connexion */}
               <div className="hidden md:block absolute top-16 left-[20%] right-[20%] h-0.5 bg-brand-orange/30"></div>
               
-              {/* Étape 1 */}
               <div className="flex flex-col items-center text-center">
                 <div className="w-12 h-12 rounded-full bg-brand-orange text-white flex items-center justify-center mb-4 relative z-10 text-lg font-bold">
                   1
@@ -95,7 +91,6 @@ const HomeDelivery: React.FC = () => {
                 </p>
               </div>
               
-              {/* Étape 2 */}
               <div className="flex flex-col items-center text-center">
                 <div className="w-12 h-12 rounded-full bg-brand-orange text-white flex items-center justify-center mb-4 relative z-10 text-lg font-bold">
                   2
@@ -106,7 +101,6 @@ const HomeDelivery: React.FC = () => {
                 </p>
               </div>
               
-              {/* Étape 3 */}
               <div className="flex flex-col items-center text-center">
                 <div className="w-12 h-12 rounded-full bg-brand-orange text-white flex items-center justify-center mb-4 relative z-10 text-lg font-bold">
                   3
@@ -254,7 +248,7 @@ const HomeDelivery: React.FC = () => {
             
             <div className="w-full max-w-sm">
               <img 
-                src="/lovable-uploads/6b802ec0-d175-4e47-868b-b47181fc9ea8.png" 
+                src="/lovable-uploads/d56c0d79-a101-4067-809c-49ae8bf2b5ea.png" 
                 alt="Livraison ZMarket à domicile" 
                 className="w-full rounded-xl shadow-lg"
                 onError={(e) => {
