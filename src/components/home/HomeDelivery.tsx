@@ -1,8 +1,9 @@
 
 import React, { useState } from 'react';
-import { Truck, Clock, ShoppingCart } from 'lucide-react';
+import { Truck, Clock, ShoppingCart, ChevronRight, MapPin, Calendar } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
 import { toast } from 'sonner';
+import { Link } from 'react-router-dom';
 
 interface Product {
   id: number;
@@ -74,6 +75,61 @@ const HomeDelivery: React.FC = () => {
           </ScrollReveal>
         </div>
         
+        {/* Comment fonctionne la livraison */}
+        <ScrollReveal delay={300} direction="up">
+          <div className="bg-brand-cream rounded-xl p-8 md:p-10 mb-16">
+            <h3 className="text-2xl font-bold mb-6 text-center">Comment fonctionne notre livraison ?</h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 relative">
+              {/* Ligne de connexion */}
+              <div className="hidden md:block absolute top-16 left-[20%] right-[20%] h-0.5 bg-brand-orange/30"></div>
+              
+              {/* Étape 1 */}
+              <div className="flex flex-col items-center text-center">
+                <div className="w-12 h-12 rounded-full bg-brand-orange text-white flex items-center justify-center mb-4 relative z-10 text-lg font-bold">
+                  1
+                </div>
+                <h4 className="text-lg font-bold mb-2">Commandez en ligne</h4>
+                <p className="text-gray-600">
+                  Parcourez notre sélection de produits et ajoutez-les à votre panier en quelques clics.
+                </p>
+              </div>
+              
+              {/* Étape 2 */}
+              <div className="flex flex-col items-center text-center">
+                <div className="w-12 h-12 rounded-full bg-brand-orange text-white flex items-center justify-center mb-4 relative z-10 text-lg font-bold">
+                  2
+                </div>
+                <h4 className="text-lg font-bold mb-2">Confirmez votre commande</h4>
+                <p className="text-gray-600">
+                  Indiquez votre adresse de livraison et choisissez votre mode de paiement.
+                </p>
+              </div>
+              
+              {/* Étape 3 */}
+              <div className="flex flex-col items-center text-center">
+                <div className="w-12 h-12 rounded-full bg-brand-orange text-white flex items-center justify-center mb-4 relative z-10 text-lg font-bold">
+                  3
+                </div>
+                <h4 className="text-lg font-bold mb-2">Recevez votre livraison</h4>
+                <p className="text-gray-600">
+                  Votre commande est livrée à votre porte dans l'heure qui suit.
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex justify-center mt-10">
+              <Link 
+                to="/commande" 
+                className="inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orange/90 text-white font-medium px-6 py-3 rounded-lg transition-colors"
+              >
+                Commander maintenant
+                <ChevronRight size={18} />
+              </Link>
+            </div>
+          </div>
+        </ScrollReveal>
+        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-16">
           <ScrollReveal delay={300} direction="up">
             <div className="bg-brand-cream rounded-xl p-8 text-center">
@@ -114,7 +170,16 @@ const HomeDelivery: React.FC = () => {
         
         <div className="mb-20">
           <ScrollReveal delay={200} direction="up">
-            <h3 className="text-2xl font-bold mb-8 text-center">Nos Produits Populaires</h3>
+            <div className="flex flex-col md:flex-row justify-between items-center mb-8">
+              <h3 className="text-2xl font-bold mb-4 md:mb-0">Nos Produits Populaires</h3>
+              <Link 
+                to="/#produits" 
+                className="inline-flex items-center gap-2 text-brand-orange font-medium hover:underline"
+              >
+                Voir tous nos produits
+                <ChevronRight size={18} />
+              </Link>
+            </div>
           </ScrollReveal>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
@@ -158,10 +223,29 @@ const HomeDelivery: React.FC = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="max-w-md">
               <h3 className="text-2xl font-bold mb-4">Horaires de livraison</h3>
-              <p className="text-gray-600 mb-6">
-                Nous livrons tous les jours de 10h à 19h. Votre commande est livrée dans l'heure qui suit votre confirmation.
-                Pour les commandes passées après 18h, la livraison sera effectuée le lendemain matin.
-              </p>
+              <div className="space-y-4 mb-6">
+                <div className="flex items-start gap-3">
+                  <Calendar size={20} className="text-brand-orange mt-1 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-medium">Tous les jours</h4>
+                    <p className="text-gray-600 text-sm">Nous livrons 7j/7, même les jours fériés.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Clock size={20} className="text-brand-orange mt-1 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-medium">De 10h à 19h</h4>
+                    <p className="text-gray-600 text-sm">Commandez quand vous voulez dans cette plage horaire.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <MapPin size={20} className="text-brand-orange mt-1 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-medium">Zone de livraison</h4>
+                    <p className="text-gray-600 text-sm">Nous livrons actuellement dans Paris et proche banlieue.</p>
+                  </div>
+                </div>
+              </div>
               <div className="flex items-center gap-3 text-brand-orange font-medium">
                 <Clock size={20} />
                 <span>Livraison en 1 heure maximum</span>
@@ -170,7 +254,7 @@ const HomeDelivery: React.FC = () => {
             
             <div className="w-full max-w-sm">
               <img 
-                src="/lovable-uploads/9ca2f98b-369e-4205-ad84-00c5d774d128.png" 
+                src="/lovable-uploads/eeb6edd3-b5a8-476d-99e1-4baecf67123e.png" 
                 alt="Livraison ZMarket" 
                 className="w-full rounded-xl shadow-lg"
                 onError={(e) => {
