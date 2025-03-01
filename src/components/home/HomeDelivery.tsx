@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Truck, Clock, ShoppingCart, ChevronRight, MapPin, Calendar } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
@@ -248,7 +249,7 @@ const HomeDelivery: React.FC = () => {
             
             <div className="w-full max-w-sm">
               <img 
-                src="/lovable-uploads/d56c0d79-a101-4067-809c-49ae8bf2b5ea.png" 
+                src="/lovable-uploads/93dc9dcb-7dd3-4f4e-a8a6-94f4f3f8a781.png" 
                 alt="Livraison ZMarket à domicile" 
                 className="w-full rounded-xl shadow-lg"
                 onError={(e) => {
