@@ -1,6 +1,8 @@
+
 import React, { useState } from 'react';
-import { IceCream, Refrigerator, Package, Coffee } from 'lucide-react';
+import { IceCream, Refrigerator, Package, Coffee, ShoppingCart } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
+import { toast } from 'sonner';
 
 interface CategoryCardProps {
   title: string;
@@ -24,14 +26,25 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ title, description, icon, d
 };
 
 interface ProductProps {
+  id: number;
   image: string;
   title: string;
   brand: string;
   weight: string;
   category: string;
+  price: number;
 }
 
-const ProductCard: React.FC<ProductProps> = ({ image, title, brand, weight, category }) => {
+const ProductCard: React.FC<ProductProps> = ({ id, image, title, brand, weight, category, price }) => {
+  const addToCart = () => {
+    toast.success(
+      <div className="flex items-center gap-2">
+        <span className="font-medium">{title}</span> ajouté au panier
+      </div>,
+      { duration: 3000 }
+    );
+  };
+
   return (
     <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all hover:translate-y-[-5px] group">
       <div className="relative aspect-square overflow-hidden">
@@ -45,11 +58,23 @@ const ProductCard: React.FC<ProductProps> = ({ image, title, brand, weight, cate
         </div>
       </div>
       <div className="p-4">
-        <h3 className="font-bold text-gray-900 mb-1">{title}</h3>
+        <div className="flex justify-between items-center mb-1">
+          <h3 className="font-bold text-gray-900">{title}</h3>
+          <span className="text-brand-orange font-bold">{price.toFixed(2)}€</span>
+        </div>
         <p className="text-sm text-gray-500 mb-2">{brand}</p>
         <div className="flex justify-between items-center">
           <span className="text-sm font-medium">{weight}</span>
-          <span className="text-xs py-1 px-2 bg-gray-100 rounded-full font-medium text-gray-700">Halal</span>
+          <div className="flex gap-2 items-center">
+            <span className="text-xs py-1 px-2 bg-gray-100 rounded-full font-medium text-gray-700">Halal</span>
+            <button 
+              onClick={addToCart}
+              className="flex items-center gap-1 bg-brand-orange hover:bg-brand-orange/90 text-white py-1.5 px-3 rounded-lg transition-colors"
+            >
+              <ShoppingCart size={14} />
+              <span className="text-sm">Ajouter</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -97,7 +122,8 @@ const Categories: React.FC = () => {
       title: "Hachis Parmentier",
       brand: "Isla Délice",
       weight: "1kg",
-      category: "frozen"
+      category: "frozen",
+      price: 6.99
     },
     {
       id: 2,
@@ -105,7 +131,8 @@ const Categories: React.FC = () => {
       title: "Lasagnes Bolognaise",
       brand: "Isla Délice",
       weight: "1kg",
-      category: "frozen"
+      category: "frozen",
+      price: 7.49
     },
     {
       id: 3,
@@ -113,7 +140,8 @@ const Categories: React.FC = () => {
       title: "M'Semen",
       brand: "Isla Délice",
       weight: "300g",
-      category: "frozen"
+      category: "frozen",
+      price: 4.99
     },
     {
       id: 4,
@@ -121,7 +149,8 @@ const Categories: React.FC = () => {
       title: "Chili Con Carne",
       brand: "Isla Délice",
       weight: "350g",
-      category: "fresh"
+      category: "fresh",
+      price: 5.49
     },
     {
       id: 5,
@@ -129,7 +158,8 @@ const Categories: React.FC = () => {
       title: "Penne Carbonara",
       brand: "Isla Délice",
       weight: "350g",
-      category: "fresh"
+      category: "fresh",
+      price: 5.49
     },
     {
       id: 6,
@@ -137,7 +167,8 @@ const Categories: React.FC = () => {
       title: "Fusilli Bolognaise",
       brand: "Isla Délice",
       weight: "350g",
-      category: "fresh"
+      category: "fresh",
+      price: 5.49
     },
     {
       id: 7,
@@ -145,7 +176,8 @@ const Categories: React.FC = () => {
       title: "Poulet Mariné Harissa",
       brand: "Isla Délice",
       weight: "400g",
-      category: "frozen"
+      category: "frozen",
+      price: 6.99
     },
     {
       id: 8,
@@ -153,7 +185,8 @@ const Categories: React.FC = () => {
       title: "Pizza Kebab",
       brand: "Isla Délice",
       weight: "420g",
-      category: "frozen"
+      category: "frozen",
+      price: 5.99
     },
     {
       id: 9,
@@ -161,7 +194,8 @@ const Categories: React.FC = () => {
       title: "Pizza Royale",
       brand: "Isla Délice",
       weight: "430g",
-      category: "frozen"
+      category: "frozen",
+      price: 5.99
     },
     {
       id: 10,
@@ -169,7 +203,8 @@ const Categories: React.FC = () => {
       title: "Corn Dog",
       brand: "Isla Délice",
       weight: "300g",
-      category: "frozen"
+      category: "frozen",
+      price: 4.49
     },
     {
       id: 11,
@@ -177,7 +212,8 @@ const Categories: React.FC = () => {
       title: "Nems de Dinde",
       brand: "Isla Délice",
       weight: "280g",
-      category: "frozen"
+      category: "frozen",
+      price: 4.99
     },
     {
       id: 12,
@@ -185,7 +221,8 @@ const Categories: React.FC = () => {
       title: "Samoussas de Dinde",
       brand: "Isla Délice",
       weight: "200g",
-      category: "frozen"
+      category: "frozen",
+      price: 4.49
     },
     {
       id: 13,
@@ -193,7 +230,8 @@ const Categories: React.FC = () => {
       title: "Empanadas de Dinde",
       brand: "Isla Délice",
       weight: "160g",
-      category: "frozen"
+      category: "frozen",
+      price: 3.99
     }
   ];
 
@@ -249,11 +287,13 @@ const Categories: React.FC = () => {
             {filteredProducts.map((product) => (
               <ProductCard 
                 key={product.id}
+                id={product.id}
                 image={product.image}
                 title={product.title}
                 brand={product.brand}
                 weight={product.weight}
                 category={product.category === "frozen" ? "Surgelé" : product.category === "fresh" ? "Frais" : "Boisson"}
+                price={product.price}
               />
             ))}
           </div>
@@ -261,10 +301,10 @@ const Categories: React.FC = () => {
         
         <ScrollReveal delay={500} direction="up" className="mt-16 text-center">
           <a 
-            href="#"
+            href="/commande"
             className="inline-flex items-center justify-center px-8 py-4 rounded-lg bg-brand-orange text-white font-medium transition-all hover:bg-brand-orange/90 hover:scale-105"
           >
-            Voir tous nos produits
+            Commander maintenant
           </a>
         </ScrollReveal>
       </div>

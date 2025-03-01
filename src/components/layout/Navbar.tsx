@@ -80,7 +80,7 @@ const Navbar: React.FC = () => {
             </li>
           </ul>
           <a
-            href="#"
+            href="/commande"
             className="flex items-center justify-center w-10 h-10 rounded-full bg-brand-orange text-white hover:bg-brand-orange/90 transition-colors"
           >
             <ShoppingCart size={20} />
@@ -90,7 +90,7 @@ const Navbar: React.FC = () => {
         {/* Mobile Menu Button */}
         <div className="flex items-center md:hidden">
           <a
-            href="#"
+            href="/commande"
             className="flex items-center justify-center w-10 h-10 rounded-full bg-brand-orange text-white hover:bg-brand-orange/90 transition-colors mr-2"
           >
             <ShoppingCart size={20} />
@@ -154,6 +154,14 @@ const Navbar: React.FC = () => {
             onClick={toggleMenu}
           >
             Contact
+          </a>
+          <a
+            href="/commande"
+            className="flex items-center gap-2 px-6 py-3 bg-brand-orange text-white rounded-lg font-semibold"
+            onClick={toggleMenu}
+          >
+            <ShoppingCart size={20} />
+            Commander
           </a>
         </nav>
       </div>
