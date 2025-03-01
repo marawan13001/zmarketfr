@@ -1,9 +1,37 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
 
 const Hero: React.FC = () => {
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+
+  // Preload images to ensure they're loaded before display
+  useEffect(() => {
+    const imagesToPreload = [
+      '/lovable-uploads/c55ca31b-6d84-498b-b610-0d9c5bb96920.png',
+      '/lovable-uploads/7566ebde-6f4f-485f-b523-2037183b002d.png',
+      '/lovable-uploads/119b6b0a-b379-4049-aaaa-e05b38872e88.png',
+      '/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png'
+    ];
+    
+    let loadedCount = 0;
+    
+    imagesToPreload.forEach(src => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        loadedCount++;
+        if (loadedCount === imagesToPreload.length) {
+          setImagesLoaded(true);
+        }
+      };
+      img.onerror = (e) => {
+        console.error(`Failed to load image: ${src}`, e);
+      };
+    });
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background */}
@@ -13,10 +41,17 @@ const Hero: React.FC = () => {
       <div 
         className="absolute inset-0 bg-cover bg-center z-[-1] opacity-40"
         style={{ 
-          backgroundImage: "url('/lovable-uploads/c55ca31b-6d84-498b-b610-0d9c5bb96920.png')",
+          backgroundImage: `url('/lovable-uploads/c55ca31b-6d84-498b-b610-0d9c5bb96920.png')`,
           backgroundPositionY: "30%"
         }}
-      ></div>
+      >
+        {/* Fallback if image doesn't load */}
+        {!imagesLoaded && (
+          <div className="absolute inset-0 flex items-center justify-center text-white/30 text-lg">
+            Chargement des images...
+          </div>
+        )}
+      </div>
       
       {/* Animated Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90 z-0"></div>
@@ -31,6 +66,10 @@ const Hero: React.FC = () => {
                   src="/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png" 
                   alt="Z Market Logo" 
                   className="h-20 md:h-24"
+                  onError={(e) => {
+                    console.error("Logo failed to load");
+                    e.currentTarget.style.display = 'none';
+                  }}
                 />
               </div>
             </ScrollReveal>
@@ -71,7 +110,7 @@ const Hero: React.FC = () => {
               <div 
                 className="w-full h-full rounded-xl overflow-hidden shadow-2xl animate-float"
                 style={{ 
-                  backgroundImage: "url('/lovable-uploads/7566ebde-6f4f-485f-b523-2037183b002d.png')", 
+                  backgroundImage: `url('/lovable-uploads/7566ebde-6f4f-485f-b523-2037183b002d.png')`, 
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   transform: "rotate(5deg)"
@@ -83,7 +122,7 @@ const Hero: React.FC = () => {
               <div 
                 className="w-full h-full rounded-xl overflow-hidden shadow-2xl animate-float animation-delay-1000"
                 style={{ 
-                  backgroundImage: "url('/lovable-uploads/119b6b0a-b379-4049-aaaa-e05b38872e88.png')", 
+                  backgroundImage: `url('/lovable-uploads/119b6b0a-b379-4049-aaaa-e05b38872e88.png')`, 
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   transform: "rotate(-5deg)"
