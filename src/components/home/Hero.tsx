@@ -5,32 +5,29 @@ import ScrollReveal from '../ui/ScrollReveal';
 
 const Hero: React.FC = () => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [imageErrors, setImageErrors] = useState<{[key: string]: boolean}>({});
 
-  // Preload images to ensure they're loaded before display
-  useEffect(() => {
-    const imagesToPreload = [
-      '/lovable-uploads/c55ca31b-6d84-498b-b610-0d9c5bb96920.png',
-      '/lovable-uploads/7566ebde-6f4f-485f-b523-2037183b002d.png',
-      '/lovable-uploads/119b6b0a-b379-4049-aaaa-e05b38872e88.png',
-      '/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png'
-    ];
-    
-    let loadedCount = 0;
-    
-    imagesToPreload.forEach(src => {
-      const img = new Image();
-      img.src = src;
-      img.onload = () => {
-        loadedCount++;
-        if (loadedCount === imagesToPreload.length) {
-          setImagesLoaded(true);
-        }
-      };
-      img.onerror = (e) => {
-        console.error(`Failed to load image: ${src}`, e);
-      };
-    });
-  }, []);
+  // Image paths
+  const imagePaths = {
+    background: '/lovable-uploads/c55ca31b-6d84-498b-b610-0d9c5bb96920.png',
+    logo: '/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png',
+    food1: '/lovable-uploads/7566ebde-6f4f-485f-b523-2037183b002d.png',
+    food2: '/lovable-uploads/119b6b0a-b379-4049-aaaa-e05b38872e88.png'
+  };
+
+  // Fallback images (if needed)
+  const fallbackImages = {
+    background: '/placeholder.svg',
+    logo: '/placeholder.svg',
+    food1: '/placeholder.svg',
+    food2: '/placeholder.svg'
+  };
+
+  // Handle image error
+  const handleImageError = (key: string) => {
+    console.error(`Failed to load image: ${imagePaths[key as keyof typeof imagePaths]}`);
+    setImageErrors(prev => ({...prev, [key]: true}));
+  };
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
@@ -38,19 +35,14 @@ const Hero: React.FC = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-black via-black/90 to-black/80 z-0"></div>
       
       {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center z-[-1] opacity-40"
-        style={{ 
-          backgroundImage: `url('/lovable-uploads/c55ca31b-6d84-498b-b610-0d9c5bb96920.png')`,
-          backgroundPositionY: "30%"
-        }}
-      >
-        {/* Fallback if image doesn't load */}
-        {!imagesLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center text-white/30 text-lg">
-            Chargement des images...
-          </div>
-        )}
+      <div className="absolute inset-0 z-[-1]">
+        <img 
+          src={imageErrors.background ? fallbackImages.background : imagePaths.background}
+          alt="Background" 
+          className="w-full h-full object-cover opacity-40"
+          style={{ objectPosition: "center 30%" }}
+          onError={() => handleImageError('background')}
+        />
       </div>
       
       {/* Animated Gradient Overlay */}
@@ -63,13 +55,10 @@ const Hero: React.FC = () => {
             <ScrollReveal direction="up" delay={100}>
               <div className="mb-8">
                 <img 
-                  src="/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png" 
+                  src={imageErrors.logo ? fallbackImages.logo : imagePaths.logo} 
                   alt="Z Market Logo" 
                   className="h-20 md:h-24"
-                  onError={(e) => {
-                    console.error("Logo failed to load");
-                    e.currentTarget.style.display = 'none';
-                  }}
+                  onError={() => handleImageError('logo')}
                 />
               </div>
             </ScrollReveal>
@@ -107,27 +96,25 @@ const Hero: React.FC = () => {
           
           <div className="hidden md:block relative h-[500px]">
             <ScrollReveal direction="left" delay={500} className="absolute right-0 top-0 w-[300px] h-[300px]">
-              <div 
-                className="w-full h-full rounded-xl overflow-hidden shadow-2xl animate-float"
-                style={{ 
-                  backgroundImage: `url('/lovable-uploads/7566ebde-6f4f-485f-b523-2037183b002d.png')`, 
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  transform: "rotate(5deg)"
-                }}
-              ></div>
+              <div className="w-full h-full rounded-xl overflow-hidden shadow-2xl animate-float" style={{ transform: "rotate(5deg)" }}>
+                <img 
+                  src={imageErrors.food1 ? fallbackImages.food1 : imagePaths.food1} 
+                  alt="Produit halal" 
+                  className="w-full h-full object-cover"
+                  onError={() => handleImageError('food1')}
+                />
+              </div>
             </ScrollReveal>
             
             <ScrollReveal direction="left" delay={700} className="absolute right-20 bottom-20 w-[250px] h-[250px]">
-              <div 
-                className="w-full h-full rounded-xl overflow-hidden shadow-2xl animate-float animation-delay-1000"
-                style={{ 
-                  backgroundImage: `url('/lovable-uploads/119b6b0a-b379-4049-aaaa-e05b38872e88.png')`, 
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  transform: "rotate(-5deg)"
-                }}
-              ></div>
+              <div className="w-full h-full rounded-xl overflow-hidden shadow-2xl animate-float animation-delay-1000" style={{ transform: "rotate(-5deg)" }}>
+                <img 
+                  src={imageErrors.food2 ? fallbackImages.food2 : imagePaths.food2}
+                  alt="Produit halal" 
+                  className="w-full h-full object-cover"
+                  onError={() => handleImageError('food2')}
+                />
+              </div>
             </ScrollReveal>
           </div>
         </div>
