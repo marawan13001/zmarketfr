@@ -7,12 +7,12 @@ const Hero: React.FC = () => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [imageErrors, setImageErrors] = useState<{[key: string]: boolean}>({});
 
-  // Image paths - using correct paths without "/public" prefix
+  // Image paths - using new uploaded image and guaranteed resources
   const imagePaths = {
-    background: '/lovable-uploads/b0be503c-11d2-44a7-8671-5efe375b1a53.png',
-    logo: '/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png',
-    food1: '/lovable-uploads/7566ebde-6f4f-485f-b523-2037183b002d.png',
-    food2: '/lovable-uploads/119b6b0a-b379-4049-aaaa-e05b38872e88.png'
+    background: '/lovable-uploads/5154d0c7-e869-45f5-8efe-75432bed9d86.png', // Nouvelle image téléchargée
+    logo: '/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png', // Logo qui fonctionne d'après les logs
+    food1: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e', // Image Unsplash fiable
+    food2: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901' // Image Unsplash fiable
   };
 
   // Fallback images for when the primary images fail to load
