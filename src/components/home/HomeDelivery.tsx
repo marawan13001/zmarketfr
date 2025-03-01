@@ -242,7 +242,7 @@ const HomeDelivery: React.FC = () => {
                   <MapPin size={20} className="text-brand-orange mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium">Zone de livraison</h4>
-                    <p className="text-gray-600 text-sm">Nous livrons actuellement dans Paris et proche banlieue.</p>
+                    <p className="text-gray-600 text-sm">Nous livrons actuellement dans Marseille et alentours.</p>
                   </div>
                 </div>
               </div>
@@ -254,8 +254,8 @@ const HomeDelivery: React.FC = () => {
             
             <div className="w-full max-w-sm">
               <img 
-                src="/lovable-uploads/eeb6edd3-b5a8-476d-99e1-4baecf67123e.png" 
-                alt="Livraison ZMarket" 
+                src="/lovable-uploads/6b802ec0-d175-4e47-868b-b47181fc9ea8.png" 
+                alt="Livraison ZMarket à domicile" 
                 className="w-full rounded-xl shadow-lg"
                 onError={(e) => {
                   console.error('Failed to load delivery image');
