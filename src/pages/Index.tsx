@@ -13,7 +13,7 @@ const Index = () => {
   React.useEffect(() => {
     setTimeout(() => {
       toast.info(
-        "Accédez à /test-images pour vérifier le chargement des images",
+        "Nouvelles images chargées. Accédez à /test-images pour vérifier leur affichage.",
         {
           duration: 5000,
           position: "bottom-center"

@@ -7,20 +7,20 @@ const Hero: React.FC = () => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [imageErrors, setImageErrors] = useState<{[key: string]: boolean}>({});
 
-  // Image paths - using new uploaded image and guaranteed resources
+  // Image paths - using newly uploaded images
   const imagePaths = {
-    background: '/lovable-uploads/5154d0c7-e869-45f5-8efe-75432bed9d86.png', // Nouvelle image téléchargée
+    background: '/lovable-uploads/4f4b89b1-20ef-4551-a295-eb2a696c41b9.png', // Nouvelle image téléchargée
     logo: '/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png', // Logo qui fonctionne d'après les logs
-    food1: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e', // Image Unsplash fiable
-    food2: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901' // Image Unsplash fiable
+    food1: '/lovable-uploads/d099aa13-63d5-439f-81e1-e9f800a0c7d8.png', // Nouvelle image Poulet
+    food2: '/lovable-uploads/c194056f-e3bd-4e9b-b007-acced086e6ca.png' // Nouvelle image Poulet 2
   };
 
   // Fallback images for when the primary images fail to load
   const fallbackImages = {
-    background: '/placeholder.svg',
+    background: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901',
     logo: '/placeholder.svg',
-    food1: '/placeholder.svg',
-    food2: '/placeholder.svg'
+    food1: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9',
+    food2: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901'
   };
 
   // Handle image loading success
