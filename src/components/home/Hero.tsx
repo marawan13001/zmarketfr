@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
@@ -10,8 +11,8 @@ const Hero: React.FC = () => {
   const imagePaths = {
     background: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901', // Fallback image d'Unsplash
     logo: '/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png', // Logo qui fonctionne d'après les logs
-    food1: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9', // Image fiable d'Unsplash
-    food2: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e' // Image fiable d'Unsplash
+    food1: '/lovable-uploads/df01b84c-0652-4bfe-89cc-5f7fa5e37f9f.png', // Nouvelle image poulet Vedina 1
+    food2: '/lovable-uploads/c4ca7c05-8562-4f98-b3d3-f0d9d0cb0b69.png'  // Nouvelle image poulet Vedina 2
   };
 
   // Fallback images en cas d'échec
@@ -107,7 +108,7 @@ const Hero: React.FC = () => {
                 <div className="relative flex items-center justify-center w-full h-full bg-gray-100 text-gray-500 text-sm p-4">
                   <img 
                     src={imageErrors.food1 ? fallbackImages.food1 : imagePaths.food1} 
-                    alt="Produit halal" 
+                    alt="Poulet Vedina" 
                     className="w-full h-full object-cover"
                     onLoad={() => handleImageLoad('food1')}
                     onError={() => handleImageError('food1')}
@@ -126,7 +127,7 @@ const Hero: React.FC = () => {
                 <div className="relative flex items-center justify-center w-full h-full bg-gray-100 text-gray-500 text-sm p-4">
                   <img 
                     src={imageErrors.food2 ? fallbackImages.food2 : imagePaths.food2} 
-                    alt="Produit halal" 
+                    alt="Poulet Vedina" 
                     className="w-full h-full object-cover"
                     onLoad={() => handleImageLoad('food2')}
                     onError={() => handleImageError('food2')}

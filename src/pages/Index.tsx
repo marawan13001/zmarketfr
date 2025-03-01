@@ -14,7 +14,7 @@ const Index = () => {
     setTimeout(() => {
       toast.info(
         <div>
-          En raison de problèmes avec certaines images, nous utilisons des images de remplacement. 
+          Nous avons ajouté de nouvelles images de produits Vedina! 
           <a href="/test-images" className="text-blue-500 underline ml-1">
             Voir les détails
           </a>

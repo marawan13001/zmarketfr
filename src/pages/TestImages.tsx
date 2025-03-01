@@ -12,6 +12,10 @@ const TestImages = () => {
     // Logo qui semble fonctionner
     { name: 'Logo', path: '/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png' },
     
+    // Nouvelles images de poulet téléchargées
+    { name: 'Poulet Vedina 1 (nouvelle)', path: '/lovable-uploads/df01b84c-0652-4bfe-89cc-5f7fa5e37f9f.png' },
+    { name: 'Poulet Vedina 2 (nouvelle)', path: '/lovable-uploads/c4ca7c05-8562-4f98-b3d3-f0d9d0cb0b69.png' },
+    
     // Images téléchargées problématiques (pour tester)
     { name: 'Image Poulet 1 (problématique)', path: '/lovable-uploads/4f4b89b1-20ef-4551-a295-eb2a696c41b9.png' },
     { name: 'Image Poulet 2 (problématique)', path: '/lovable-uploads/d099aa13-63d5-439f-81e1-e9f800a0c7d8.png' },
@@ -30,7 +34,7 @@ const TestImages = () => {
         <p className="text-amber-700">
           Cette page affiche toutes les images disponibles pour tester leur chargement.
           Les images vertes sont chargées correctement, les rouges ont échoué.
-          Pour le site, nous utilisons maintenant des images Unsplash fiables comme fallbacks.
+          Les nouvelles images Vedina sont maintenant disponibles pour le site.
         </p>
       </div>
       
