@@ -20,9 +20,13 @@ const About: React.FC = () => {
             <div className="relative">
               <ScrollReveal direction="right">
                 <img 
-                  src="/lovable-uploads/e08d9a35-f285-434b-8e11-c6a4adab48cb.png"
-                  alt="Notre produit"
+                  src="/lovable-uploads/f99e6b99-49a1-43a5-8745-fc4c75b9469d.png"
+                  alt="Poulet Vedina surgelé"
                   className="rounded-2xl w-full md:w-[90%] h-[450px] object-cover object-center shadow-xl relative z-10"
+                  onError={(e) => {
+                    console.error('Failed to load About image');
+                    e.currentTarget.src = '/placeholder.svg';
+                  }}
                 />
               </ScrollReveal>
               
