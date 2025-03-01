@@ -22,7 +22,7 @@ const About: React.FC = () => {
                 <img 
                   src="/lovable-uploads/f99e6b99-49a1-43a5-8745-fc4c75b9469d.png"
                   alt="Poulet Vedina surgelé"
-                  className="rounded-2xl w-full md:w-[90%] h-[450px] object-cover object-center shadow-xl relative z-10"
+                  className="rounded-2xl w-full md:w-[90%] h-[450px] object-contain shadow-xl relative z-10"
                   onError={(e) => {
                     console.error('Failed to load About image');
                     e.currentTarget.src = '/placeholder.svg';
