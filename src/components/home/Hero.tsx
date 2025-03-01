@@ -1,16 +1,17 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowRight, Snowflake } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
 
 const Hero: React.FC = () => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [imageErrors, setImageErrors] = useState<{[key: string]: boolean}>({});
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   // Image paths - using correctly formatted paths and reliable images
   const imagePaths = {
-    background: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901', // Fallback image d'Unsplash
-    logo: '/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png', // Logo qui fonctionne d'après les logs
+    background: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901',
+    logo: '/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png',
   };
 
   // Fallback images en cas d'échec
@@ -31,8 +32,31 @@ const Hero: React.FC = () => {
     setImageErrors(prev => ({...prev, [key]: true}));
   };
 
+  // Handle mouse movement
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Cursor follower */}
+      <div 
+        className="fixed w-6 h-6 rounded-full bg-brand-orange/60 blur-md pointer-events-none z-50 transition-transform duration-100 ease-out"
+        style={{ 
+          left: `${mousePosition.x}px`, 
+          top: `${mousePosition.y}px`,
+          transform: 'translate(-50%, -50%)'
+        }}
+      />
+
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-black via-black/90 to-black/80 z-0"></div>
       
