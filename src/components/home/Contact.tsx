@@ -58,21 +58,21 @@ const Contact: React.FC = () => {
             <ContactInfo 
               icon={<MapPin size={24} />}
               title="Adresse"
-              content={<p>123 Avenue de la République<br />75011 Paris, France</p>}
+              content={<p>55 Boulevard Jean Moulin<br />13010 Marseille, France</p>}
               delay={200}
             />
             
             <ContactInfo 
               icon={<Phone size={24} />}
               title="Téléphone"
-              content={<p>+33 (0)1 23 45 67 89</p>}
+              content={<p>07 53 74 31 29</p>}
               delay={300}
             />
             
             <ContactInfo 
               icon={<Mail size={24} />}
               title="Email"
-              content={<p>contact@halaldelices.fr</p>}
+              content={<p>contact@zmarket.fr</p>}
               delay={400}
             />
             
@@ -81,8 +81,7 @@ const Contact: React.FC = () => {
               title="Horaires d'ouverture"
               content={
                 <div>
-                  <p>Lundi - Samedi: 9h00 - 20h00</p>
-                  <p>Dimanche: 10h00 - 18h00</p>
+                  <p>Tous les jours: 09h00 - 20h00</p>
                 </div>
               }
               delay={500}
@@ -90,7 +89,9 @@ const Contact: React.FC = () => {
             
             <ScrollReveal delay={600} direction="up">
               <a 
-                href="#"
+                href="https://maps.google.com/?q=55+Boulevard+Jean+Moulin+13010+Marseille+France"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center font-medium text-brand-orange hover:text-brand-orange/80 transition-colors mt-4"
               >
                 Voir sur Google Maps
@@ -102,7 +103,7 @@ const Contact: React.FC = () => {
           <ScrollReveal delay={700} direction="left">
             <div className="rounded-xl overflow-hidden shadow-lg border border-gray-100 h-[400px] lg:h-[450px] w-full">
               <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9916256937845!2d2.3709401!3d48.8580924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66dfb72cf8f15%3A0x608b324ec1d1e25a!2sParis%2C%20France!5e0!3m2!1sen!2sus!4v1653896080427!5m2!1sen!2sus" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2904.1789326773994!2d5.4036408760732055!3d43.287994871335544!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12c9bf6adcbcb047%3A0x4eee6a20aee1fe5!2s55%20Bd%20Jean%20Moulin%2C%2013010%20Marseille!5e0!3m2!1sfr!2sfr!4v1719309053399!5m2!1sfr!2sfr" 
                 width="100%" 
                 height="100%" 
                 style={{ border: 0 }} 

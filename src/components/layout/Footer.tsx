@@ -65,9 +65,9 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-semibold mb-6">Contact</h3>
             <ul className="space-y-3 text-gray-400">
-              <li>123 Avenue de la République</li>
-              <li>75011 Paris, France</li>
-              <li>+33 (0)1 23 45 67 89</li>
+              <li>55 Boulevard Jean Moulin</li>
+              <li>13010 Marseille, France</li>
+              <li>07 53 74 31 29</li>
               <li>contact@zmarket.fr</li>
             </ul>
           </div>
