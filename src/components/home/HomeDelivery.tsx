@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Truck, Clock, ShoppingCart, ChevronRight, MapPin, Calendar } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
@@ -238,6 +237,14 @@ const HomeDelivery: React.FC = () => {
                   <div>
                     <h4 className="font-medium">Zone de livraison</h4>
                     <p className="text-gray-600 text-sm">Nous livrons actuellement dans Marseille et alentours.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 bg-white p-3 rounded-lg border border-brand-orange/20">
+                  <Truck size={20} className="text-brand-orange mt-1 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-medium">Frais de livraison</h4>
+                    <p className="text-gray-600 text-sm">15€ pour toute commande inférieure à 50€.</p>
+                    <p className="text-brand-orange font-medium text-sm">Livraison offerte dès 50€ d'achat !</p>
                   </div>
                 </div>
               </div>

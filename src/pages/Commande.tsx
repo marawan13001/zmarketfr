@@ -51,7 +51,8 @@ const Commande: React.FC = () => {
   };
 
   const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-  const deliveryFee = 2.99;
+  // Update the delivery fee logic based on subtotal
+  const deliveryFee = subtotal >= 50 ? 0 : 15;
   const total = subtotal + deliveryFee;
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -202,8 +203,18 @@ const Commande: React.FC = () => {
                         </div>
                         <div className="flex justify-between">
                           <span className="text-gray-600">Frais de livraison</span>
-                          <span className="font-medium">{deliveryFee.toFixed(2)}€</span>
+                          {deliveryFee === 0 ? (
+                            <span className="font-medium text-green-600">Gratuit</span>
+                          ) : (
+                            <span className="font-medium">{deliveryFee.toFixed(2)}€</span>
+                          )}
                         </div>
+                        {subtotal > 0 && subtotal < 50 && (
+                          <div className="flex justify-between bg-brand-orange/10 p-2 rounded text-sm">
+                            <span className="text-brand-orange">Livraison offerte à partir de</span>
+                            <span className="font-medium text-brand-orange">50.00€</span>
+                          </div>
+                        )}
                         <div className="flex justify-between pt-2 border-t">
                           <span className="font-bold">Total</span>
                           <span className="font-bold text-lg text-brand-orange">{total.toFixed(2)}€</span>
@@ -383,7 +394,11 @@ const Commande: React.FC = () => {
                         </div>
                         <div className="flex justify-between">
                           <span className="text-gray-600">Livraison</span>
-                          <span>{deliveryFee.toFixed(2)}€</span>
+                          {deliveryFee === 0 ? (
+                            <span className="text-green-600">Gratuit</span>
+                          ) : (
+                            <span>{deliveryFee.toFixed(2)}€</span>
+                          )}
                         </div>
                         <div className="flex justify-between pt-2 border-t font-medium">
                           <span>Total</span>
