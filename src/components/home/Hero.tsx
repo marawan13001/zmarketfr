@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
@@ -7,25 +6,25 @@ const Hero: React.FC = () => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [imageErrors, setImageErrors] = useState<{[key: string]: boolean}>({});
 
-  // Image paths - using newly uploaded images
+  // Image paths - using correctly formatted paths and reliable images
   const imagePaths = {
-    background: '/lovable-uploads/4f4b89b1-20ef-4551-a295-eb2a696c41b9.png', // Nouvelle image téléchargée
+    background: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901', // Fallback image d'Unsplash
     logo: '/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png', // Logo qui fonctionne d'après les logs
-    food1: '/lovable-uploads/d099aa13-63d5-439f-81e1-e9f800a0c7d8.png', // Nouvelle image Poulet
-    food2: '/lovable-uploads/c194056f-e3bd-4e9b-b007-acced086e6ca.png' // Nouvelle image Poulet 2
+    food1: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9', // Image fiable d'Unsplash
+    food2: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e' // Image fiable d'Unsplash
   };
 
-  // Fallback images for when the primary images fail to load
+  // Fallback images en cas d'échec
   const fallbackImages = {
     background: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901',
     logo: '/placeholder.svg',
     food1: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9',
-    food2: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901'
+    food2: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e'
   };
 
   // Handle image loading success
   const handleImageLoad = (key: string) => {
-    console.log(`Image loaded successfully: ${key}`);
+    console.log(`Image loaded successfully: ${key} (${imagePaths[key as keyof typeof imagePaths]})`);
     setImagesLoaded(true);
   };
 
@@ -105,19 +104,18 @@ const Hero: React.FC = () => {
           <div className="hidden md:block relative h-[500px]">
             <ScrollReveal direction="left" delay={500} className="absolute right-0 top-0 w-[300px] h-[300px]">
               <div className="w-full h-full rounded-xl overflow-hidden shadow-2xl animate-float" style={{ transform: "rotate(5deg)" }}>
-                <div className="flex items-center justify-center w-full h-full bg-gray-100 text-gray-500 text-sm p-4">
-                  {imageErrors.food1 ? 
-                    <div className="flex flex-col items-center">
-                      <span>Image non disponible</span>
-                      <img src="/placeholder.svg" alt="Placeholder" className="w-16 h-16 mt-2" />
-                    </div> : 
-                    <img 
-                      src={imagePaths.food1} 
-                      alt="Produit halal" 
-                      className="w-full h-full object-cover"
-                      onLoad={() => handleImageLoad('food1')}
-                      onError={() => handleImageError('food1')}
-                    />
+                <div className="relative flex items-center justify-center w-full h-full bg-gray-100 text-gray-500 text-sm p-4">
+                  <img 
+                    src={imageErrors.food1 ? fallbackImages.food1 : imagePaths.food1} 
+                    alt="Produit halal" 
+                    className="w-full h-full object-cover"
+                    onLoad={() => handleImageLoad('food1')}
+                    onError={() => handleImageError('food1')}
+                  />
+                  {imageErrors.food1 && 
+                    <div className="absolute inset-0 flex items-center justify-center bg-gray-100/80">
+                      <span className="text-sm text-gray-500">Image de remplacement</span>
+                    </div>
                   }
                 </div>
               </div>
@@ -125,19 +123,18 @@ const Hero: React.FC = () => {
             
             <ScrollReveal direction="left" delay={700} className="absolute right-20 bottom-20 w-[250px] h-[250px]">
               <div className="w-full h-full rounded-xl overflow-hidden shadow-2xl animate-float animation-delay-1000" style={{ transform: "rotate(-5deg)" }}>
-                <div className="flex items-center justify-center w-full h-full bg-gray-100 text-gray-500 text-sm p-4">
-                  {imageErrors.food2 ? 
-                    <div className="flex flex-col items-center">
-                      <span>Image non disponible</span>
-                      <img src="/placeholder.svg" alt="Placeholder" className="w-16 h-16 mt-2" />
-                    </div> : 
-                    <img 
-                      src={imagePaths.food2} 
-                      alt="Produit halal" 
-                      className="w-full h-full object-cover"
-                      onLoad={() => handleImageLoad('food2')}
-                      onError={() => handleImageError('food2')}
-                    />
+                <div className="relative flex items-center justify-center w-full h-full bg-gray-100 text-gray-500 text-sm p-4">
+                  <img 
+                    src={imageErrors.food2 ? fallbackImages.food2 : imagePaths.food2} 
+                    alt="Produit halal" 
+                    className="w-full h-full object-cover"
+                    onLoad={() => handleImageLoad('food2')}
+                    onError={() => handleImageError('food2')}
+                  />
+                  {imageErrors.food2 && 
+                    <div className="absolute inset-0 flex items-center justify-center bg-gray-100/80">
+                      <span className="text-sm text-gray-500">Image de remplacement</span>
+                    </div>
                   }
                 </div>
               </div>

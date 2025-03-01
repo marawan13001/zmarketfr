@@ -9,13 +9,18 @@ import Footer from '@/components/layout/Footer';
 import { toast } from 'sonner';
 
 const Index = () => {
-  // Notification pour indiquer comment accéder à la page de test d'images
+  // Notification avec lien direct vers la page de test d'images
   React.useEffect(() => {
     setTimeout(() => {
       toast.info(
-        "Nouvelles images chargées. Accédez à /test-images pour vérifier leur affichage.",
+        <div>
+          En raison de problèmes avec certaines images, nous utilisons des images de remplacement. 
+          <a href="/test-images" className="text-blue-500 underline ml-1">
+            Voir les détails
+          </a>
+        </div>,
         {
-          duration: 5000,
+          duration: 8000,
           position: "bottom-center"
         }
       );
