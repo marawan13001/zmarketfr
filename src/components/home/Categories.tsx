@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { IceCream, Refrigerator, Package, Coffee } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
@@ -122,7 +121,7 @@ const Categories: React.FC = () => {
       title: "Chili Con Carne",
       brand: "Isla Délice",
       weight: "350g",
-      category: "frozen"
+      category: "fresh"
     },
     {
       id: 5,
@@ -130,7 +129,7 @@ const Categories: React.FC = () => {
       title: "Penne Carbonara",
       brand: "Isla Délice",
       weight: "350g",
-      category: "frozen"
+      category: "fresh"
     },
     {
       id: 6,
@@ -138,7 +137,7 @@ const Categories: React.FC = () => {
       title: "Fusilli Bolognaise",
       brand: "Isla Délice",
       weight: "350g",
-      category: "frozen"
+      category: "fresh"
     },
     {
       id: 7,
@@ -225,7 +224,6 @@ const Categories: React.FC = () => {
           </ScrollReveal>
         </div>
         
-        {/* Catégories */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           {categories.map((category, index) => (
             <div 
@@ -246,7 +244,6 @@ const Categories: React.FC = () => {
           ))}
         </div>
         
-        {/* Produits */}
         <ScrollReveal delay={300} direction="up">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-16">
             {filteredProducts.map((product) => (
