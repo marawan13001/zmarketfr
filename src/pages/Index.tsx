@@ -3,6 +3,7 @@ import React from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/home/Hero';
 import Categories from '@/components/home/Categories';
+import HomeDelivery from '@/components/home/HomeDelivery';
 import About from '@/components/home/About';
 import Contact from '@/components/home/Contact';
 import Footer from '@/components/layout/Footer';
@@ -33,6 +34,7 @@ const Index = () => {
       <main>
         <Hero />
         <Categories />
+        <HomeDelivery />
         <About />
         <Contact />
       </main>

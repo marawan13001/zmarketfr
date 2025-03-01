@@ -56,6 +56,14 @@ const Navbar: React.FC = () => {
             </li>
             <li>
               <a
+                href="#livraison"
+                className={`font-medium hover:text-brand-orange transition-colors ${isScrolled ? 'text-gray-800' : 'text-white'}`}
+              >
+                Livraison
+              </a>
+            </li>
+            <li>
+              <a
                 href="#a-propos"
                 className={`font-medium hover:text-brand-orange transition-colors ${isScrolled ? 'text-gray-800' : 'text-white'}`}
               >
@@ -125,6 +133,13 @@ const Navbar: React.FC = () => {
             onClick={toggleMenu}
           >
             Nos Produits
+          </a>
+          <a
+            href="#livraison"
+            className="text-2xl font-semibold text-gray-800 hover:text-brand-orange transition-colors"
+            onClick={toggleMenu}
+          >
+            Livraison
           </a>
           <a
             href="#a-propos"
