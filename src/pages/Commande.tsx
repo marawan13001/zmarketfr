@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -14,7 +13,6 @@ interface CartItem {
 }
 
 const Commande: React.FC = () => {
-  // Exemple de produits dans le panier
   const [cartItems, setCartItems] = useState<CartItem[]>([
     {
       id: 1,
@@ -34,6 +32,8 @@ const Commande: React.FC = () => {
 
   const [deliveryTime, setDeliveryTime] = useState<string>("asap");
   const [deliveryAddress, setDeliveryAddress] = useState<string>("");
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [paymentMethod, setPaymentMethod] = useState<string>("card");
   const [step, setStep] = useState<number>(1);
 
@@ -51,7 +51,6 @@ const Commande: React.FC = () => {
   };
 
   const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-  // Update the delivery fee logic based on subtotal
   const deliveryFee = subtotal >= 50 ? 0 : 15;
   const total = subtotal + deliveryFee;
 
@@ -73,20 +72,28 @@ const Commande: React.FC = () => {
         toast.error("Veuillez entrer une adresse de livraison");
         return;
       }
+      if (!phoneNumber) {
+        toast.error("Veuillez entrer un numéro de téléphone");
+        return;
+      }
+      if (!email) {
+        toast.error("Veuillez entrer une adresse email");
+        return;
+      }
       setStep(3);
       window.scrollTo(0, 0);
       return;
     }
     
-    // Simuler une commande réussie
-    toast.success("Commande confirmée ! Votre livraison est en route.", {
-      duration: 5000,
-    });
-    
-    // Rediriger vers la page d'accueil après un délai
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 3000);
+    if (step === 3) {
+      toast.success("Commande confirmée ! Votre livraison est en route.", {
+        duration: 5000,
+      });
+      
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 3000);
+    }
   };
 
   return (
@@ -98,7 +105,6 @@ const Commande: React.FC = () => {
           <h1 className="text-3xl md:text-4xl font-bold mb-6 text-center">Votre Commande</h1>
           
           <div className="w-full max-w-4xl mx-auto">
-            {/* Étapes de commande */}
             <div className="flex items-center justify-between mb-12 relative">
               <div className="absolute left-0 right-0 top-1/2 h-1 bg-gray-200 -z-10"></div>
               
@@ -239,6 +245,32 @@ const Commande: React.FC = () => {
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-brand-orange outline-none"
                         value={deliveryAddress}
                         onChange={(e) => setDeliveryAddress(e.target.value)}
+                        required
+                      />
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="phone" className="block mb-2 font-medium">Numéro de téléphone</label>
+                      <input 
+                        type="tel" 
+                        id="phone" 
+                        placeholder="Entrez votre numéro de téléphone" 
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-brand-orange outline-none"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        required
+                      />
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="email" className="block mb-2 font-medium">Adresse email</label>
+                      <input 
+                        type="email" 
+                        id="email" 
+                        placeholder="Entrez votre adresse email" 
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-brand-orange outline-none"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                       />
                     </div>
