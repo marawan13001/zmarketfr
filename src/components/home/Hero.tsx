@@ -7,12 +7,12 @@ const Hero: React.FC = () => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [imageErrors, setImageErrors] = useState<{[key: string]: boolean}>({});
 
-  // Image paths - using images we know exist in the project
+  // Image paths - using correct paths without "/public" prefix
   const imagePaths = {
-    background: '/public/lovable-uploads/b0be503c-11d2-44a7-8671-5efe375b1a53.png', // image from current message
-    logo: '/public/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png',
-    food1: '/public/placeholder.svg', // fallback to known placeholder
-    food2: '/public/placeholder.svg'  // fallback to known placeholder
+    background: '/lovable-uploads/b0be503c-11d2-44a7-8671-5efe375b1a53.png',
+    logo: '/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png',
+    food1: '/lovable-uploads/7566ebde-6f4f-485f-b523-2037183b002d.png',
+    food2: '/lovable-uploads/119b6b0a-b379-4049-aaaa-e05b38872e88.png'
   };
 
   // Fallback images for when the primary images fail to load
@@ -43,7 +43,7 @@ const Hero: React.FC = () => {
       {/* Background Image */}
       <div className="absolute inset-0 z-[-1]">
         <img 
-          src={imageErrors.background ? fallbackImages.background : '/lovable-uploads/b0be503c-11d2-44a7-8671-5efe375b1a53.png'}
+          src={imageErrors.background ? fallbackImages.background : imagePaths.background}
           alt="Background" 
           className="w-full h-full object-cover opacity-40"
           style={{ objectPosition: "center 30%" }}
@@ -62,7 +62,7 @@ const Hero: React.FC = () => {
             <ScrollReveal direction="up" delay={100}>
               <div className="mb-8">
                 <img 
-                  src={imageErrors.logo ? fallbackImages.logo : '/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png'} 
+                  src={imageErrors.logo ? fallbackImages.logo : imagePaths.logo} 
                   alt="Z Market Logo" 
                   className="h-20 md:h-24"
                   onLoad={() => handleImageLoad('logo')}
@@ -105,12 +105,14 @@ const Hero: React.FC = () => {
           <div className="hidden md:block relative h-[500px]">
             <ScrollReveal direction="left" delay={500} className="absolute right-0 top-0 w-[300px] h-[300px]">
               <div className="w-full h-full rounded-xl overflow-hidden shadow-2xl animate-float" style={{ transform: "rotate(5deg)" }}>
-                {/* Debug message to show in UI */}
                 <div className="flex items-center justify-center w-full h-full bg-gray-100 text-gray-500 text-sm p-4">
                   {imageErrors.food1 ? 
-                    "Image non disponible" : 
+                    <div className="flex flex-col items-center">
+                      <span>Image non disponible</span>
+                      <img src="/placeholder.svg" alt="Placeholder" className="w-16 h-16 mt-2" />
+                    </div> : 
                     <img 
-                      src="/placeholder.svg" 
+                      src={imagePaths.food1} 
                       alt="Produit halal" 
                       className="w-full h-full object-cover"
                       onLoad={() => handleImageLoad('food1')}
@@ -123,12 +125,14 @@ const Hero: React.FC = () => {
             
             <ScrollReveal direction="left" delay={700} className="absolute right-20 bottom-20 w-[250px] h-[250px]">
               <div className="w-full h-full rounded-xl overflow-hidden shadow-2xl animate-float animation-delay-1000" style={{ transform: "rotate(-5deg)" }}>
-                {/* Debug message to show in UI */}
                 <div className="flex items-center justify-center w-full h-full bg-gray-100 text-gray-500 text-sm p-4">
                   {imageErrors.food2 ? 
-                    "Image non disponible" : 
+                    <div className="flex flex-col items-center">
+                      <span>Image non disponible</span>
+                      <img src="/placeholder.svg" alt="Placeholder" className="w-16 h-16 mt-2" />
+                    </div> : 
                     <img 
-                      src="/placeholder.svg" 
+                      src={imagePaths.food2} 
                       alt="Produit halal" 
                       className="w-full h-full object-cover"
                       onLoad={() => handleImageLoad('food2')}

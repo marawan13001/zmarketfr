@@ -7,6 +7,7 @@ const TestImages = () => {
     { name: 'Logo', path: '/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png' },
     { name: 'Food1', path: '/lovable-uploads/7566ebde-6f4f-485f-b523-2037183b002d.png' },
     { name: 'Food2', path: '/lovable-uploads/119b6b0a-b379-4049-aaaa-e05b38872e88.png' },
+    { name: 'New Image', path: '/lovable-uploads/3e55cb01-3d97-4335-ba30-1e75eb3dacfd.png' },
     { name: 'Placeholder', path: '/placeholder.svg' }
   ];
 
