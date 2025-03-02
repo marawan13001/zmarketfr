@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Truck, Clock, ShoppingCart, ChevronRight, MapPin, Calendar } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
 import { toast } from 'sonner';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface Product {
   id: number;
@@ -18,6 +18,8 @@ interface HomeDeliveryProps {
 }
 
 const HomeDelivery: React.FC<HomeDeliveryProps> = ({ onAddToCart = () => {} }) => {
+  const navigate = useNavigate();
+  
   const featuredProducts: Product[] = [
     {
       id: 1,
@@ -49,6 +51,11 @@ const HomeDelivery: React.FC<HomeDeliveryProps> = ({ onAddToCart = () => {} }) =
       image: product.image,
       price: product.price
     });
+  };
+  
+  const handleCommandeClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/commande');
   };
 
   return (
@@ -113,13 +120,13 @@ const HomeDelivery: React.FC<HomeDeliveryProps> = ({ onAddToCart = () => {} }) =
             </div>
             
             <div className="flex justify-center mt-10">
-              <Link 
-                to="/commande" 
+              <button 
+                onClick={handleCommandeClick}
                 className="inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orange/90 text-white font-medium px-6 py-3 rounded-lg transition-colors"
               >
                 Commander maintenant
                 <ChevronRight size={18} />
-              </Link>
+              </button>
             </div>
           </div>
         </ScrollReveal>

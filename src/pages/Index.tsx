@@ -9,8 +9,7 @@ import Contact from '@/components/home/Contact';
 import Footer from '@/components/layout/Footer';
 import FloatingCart from '@/components/cart/FloatingCart';
 import { toast } from 'sonner';
-import { Snowflake, Clock, MapPin, Truck, ChevronRight, Coffee, Beef, Salad, UtensilsCrossed } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Truck, ChevronRight } from 'lucide-react';
 
 const initialCartItems = [
   {
@@ -34,7 +33,6 @@ export const WHATSAPP_NUMBER = "0675725897";
 const Index = () => {
   const deliveryRef = useRef<HTMLDivElement>(null);
   const categoriesRef = useRef<HTMLDivElement>(null);
-  const frozenRef = useRef<HTMLDivElement>(null);
   const [cartItems, setCartItems] = useState(initialCartItems);
 
   useEffect(() => {
@@ -139,48 +137,6 @@ const Index = () => {
               Livraison rapide de produits surgelés <span className="text-brand-orange">en 1 heure</span>
             </p>
             <span className="text-brand-orange group-hover:translate-x-1 transition-transform">→</span>
-          </div>
-        </div>
-      </div>
-      
-      <div className="bg-blue-100 py-3 w-full">
-        <div className="container mx-auto px-4 flex items-center justify-center cursor-pointer" onClick={() => scrollToFrozen('viande')}>
-          <div className="flex items-center gap-3 group">
-            <div className="flex items-center justify-center bg-white p-2 rounded-full shadow-sm">
-              <Beef size={24} className="text-red-500" />
-            </div>
-            <p className="font-medium text-gray-800">
-              Découvrez nos <span className="text-red-500">viandes surgelées</span>
-            </p>
-            <span className="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
-          </div>
-        </div>
-      </div>
-      
-      <div className="bg-green-100 py-3 w-full">
-        <div className="container mx-auto px-4 flex items-center justify-center cursor-pointer" onClick={() => scrollToFrozen('legumes')}>
-          <div className="flex items-center gap-3 group">
-            <div className="flex items-center justify-center bg-white p-2 rounded-full shadow-sm">
-              <Salad size={24} className="text-green-500" />
-            </div>
-            <p className="font-medium text-gray-800">
-              Nouveautés <span className="text-green-500">légumes surgelés Greens</span>
-            </p>
-            <span className="text-green-500 group-hover:translate-x-1 transition-transform">→</span>
-          </div>
-        </div>
-      </div>
-      
-      <div className="bg-amber-100 py-3 w-full">
-        <div className="container mx-auto px-4 flex items-center justify-center cursor-pointer" onClick={() => scrollToFrozen('plats')}>
-          <div className="flex items-center gap-3 group">
-            <div className="flex items-center justify-center bg-white p-2 rounded-full shadow-sm">
-              <UtensilsCrossed size={24} className="text-amber-500" />
-            </div>
-            <p className="font-medium text-gray-800">
-              Découvrez nos <span className="text-amber-500">plats cuisinés surgelés</span>
-            </p>
-            <span className="text-amber-500 group-hover:translate-x-1 transition-transform">→</span>
           </div>
         </div>
       </div>
