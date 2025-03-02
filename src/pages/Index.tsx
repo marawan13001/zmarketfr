@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/home/Hero';
@@ -54,6 +53,9 @@ const Index = () => {
 
   const scrollToDelivery = () => {
     deliveryRef.current?.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => {
+      window.scrollBy(0, -100);
+    }, 100);
   };
 
   const scrollToCategories = () => {
@@ -63,12 +65,10 @@ const Index = () => {
   const scrollToFrozen = (subcategory?: string) => {
     categoriesRef.current?.scrollIntoView({ behavior: 'smooth' });
     setTimeout(() => {
-      // First click on frozen category
       const frozenCategoryElement = document.querySelector('[data-category="frozen"]');
       if (frozenCategoryElement instanceof HTMLElement) {
         frozenCategoryElement.click();
         
-        // If subcategory is provided, click on that subcategory after a short delay
         if (subcategory) {
           setTimeout(() => {
             const subcategoryButton = document.querySelector(`[data-subcategory="${subcategory}"]`);
@@ -158,9 +158,11 @@ const Index = () => {
         <div ref={categoriesRef}>
           <Categories onAddToCart={addToCart} />
         </div>
-        <div ref={deliveryRef}>
+        
+        <div id="livraison-section" ref={deliveryRef}>
           <HomeDelivery onAddToCart={addToCart} />
         </div>
+        
         <About />
         <Contact />
       </main>
