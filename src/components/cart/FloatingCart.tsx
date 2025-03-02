@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ShoppingCart, X, ChevronUp, ChevronDown } from 'lucide-react';
+import { ShoppingCart, X, ChevronUp, ChevronDown, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
@@ -16,11 +16,13 @@ export interface CartItem {
 interface FloatingCartProps {
   items: CartItem[];
   onUpdateQuantity?: (id: number, newQuantity: number) => void;
+  onRemoveItem?: (id: number) => void;
 }
 
 const FloatingCart: React.FC<FloatingCartProps> = ({ 
   items = [],
-  onUpdateQuantity
+  onUpdateQuantity,
+  onRemoveItem
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -42,6 +44,17 @@ const FloatingCart: React.FC<FloatingCartProps> = ({
     onUpdateQuantity(id, newQuantity);
     
     toast.success(`Quantité mise à jour: ${item.name}`);
+  };
+
+  const handleRemoveItem = (id: number) => {
+    if (!onRemoveItem) return;
+    
+    const item = items.find(item => item.id === id);
+    if (!item) return;
+    
+    onRemoveItem(id);
+    
+    toast.success(`${item.name} retiré du panier`);
   };
 
   return (
@@ -107,6 +120,13 @@ const FloatingCart: React.FC<FloatingCartProps> = ({
                       <ChevronDown size={18} />
                     </button>
                   </div>
+                  <button 
+                    onClick={() => handleRemoveItem(item.id)}
+                    className="text-gray-500 hover:text-red-500 ml-1"
+                    aria-label="Supprimer du panier"
+                  >
+                    <Trash2 size={18} />
+                  </button>
                 </div>
               ))
             )}

@@ -48,6 +48,10 @@ const Commande: React.FC = () => {
     );
   };
 
+  const removeCartItem = (id: number) => {
+    setCartItems(prevItems => prevItems.filter(item => item.id !== id));
+  };
+
   const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   const deliveryFee = subtotal >= 50 ? 0 : 15;
   const total = subtotal + deliveryFee;
@@ -166,7 +170,7 @@ const Commande: React.FC = () => {
                           
                           <button 
                             className="text-gray-400 hover:text-red-500 transition-colors"
-                            onClick={() => setCartItems(items => items.filter(i => i.id !== item.id))}
+                            onClick={() => removeCartItem(item.id)}
                           >
                             &times;
                           </button>
@@ -373,6 +377,7 @@ const Commande: React.FC = () => {
       <FloatingCart 
         items={cartItems}
         onUpdateQuantity={updateQuantity}
+        onRemoveItem={removeCartItem}
       />
     </div>
   );

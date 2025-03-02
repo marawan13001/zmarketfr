@@ -64,6 +64,11 @@ const Index = () => {
     );
   };
 
+  // Ajout de la fonction pour supprimer un produit du panier
+  const removeCartItem = (id: number) => {
+    setCartItems(prevItems => prevItems.filter(item => item.id !== id));
+  };
+
   // Add item to cart function
   const addToCart = (product: { id: number; title: string; image: string; price: number }) => {
     // Check if the product is already in the cart
@@ -146,6 +151,7 @@ const Index = () => {
       <FloatingCart 
         items={cartItems}
         onUpdateQuantity={updateCartItemQuantity}
+        onRemoveItem={removeCartItem}
       />
     </div>
   );
