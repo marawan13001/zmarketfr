@@ -34,7 +34,7 @@ const Navbar: React.FC = () => {
       <div className="container px-4 mx-auto flex justify-between items-center">
         <a href="/" className="z-50 flex items-center">
           <img 
-            src="/lovable-uploads/12f65d9b-15c8-4a5f-8482-905125be3fd2.png" 
+            src="/lovable-uploads/81fe1b1a-9718-4a7d-b30e-3b1b32c3cc85.png" 
             alt="Z Market Logo" 
             className="h-10 mr-2" 
           />
@@ -121,7 +121,7 @@ const Navbar: React.FC = () => {
       >
         <div className="mb-10">
           <img 
-            src="/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png" 
+            src="/lovable-uploads/81fe1b1a-9718-4a7d-b30e-3b1b32c3cc85.png" 
             alt="Z Market Full Logo" 
             className="h-16" 
           />
@@ -170,3 +170,4 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
+

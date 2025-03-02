@@ -12,7 +12,7 @@ const Footer = () => {
           {/* Column 1: Logo and Description */}
           <div>
             <div className="mb-4">
-              <img src="/lovable-uploads/c97b959e-d75d-40fb-8e7d-fca9337435d3.png" alt="Logo Z Market" className="h-12" />
+              <img src="/lovable-uploads/81fe1b1a-9718-4a7d-b30e-3b1b32c3cc85.png" alt="Logo Z Market" className="h-12" />
             </div>
             <p className="text-gray-400 mb-4">
               Livraison de produits surgelés de qualité directement à votre porte. Nous garantissons la fraîcheur et la qualité de tous nos produits.
@@ -92,3 +92,4 @@ const Footer = () => {
 };
 
 export default Footer;
+
