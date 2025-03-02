@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { IceCream, Refrigerator, Package, Coffee, ShoppingCart } from 'lucide-react';
+
+import React, { useState, useEffect } from 'react';
+import { IceCream, Refrigerator, Package, Coffee, ShoppingCart, Beef, Salad, UtensilsCrossed } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
 import { toast } from 'sonner';
 
@@ -31,6 +32,7 @@ interface ProductProps {
   brand: string;
   weight: string;
   category: string;
+  subcategory?: string;
   price: number;
   onAddToCart: (product: { id: number; title: string; image: string; price: number }) => void;
 }
@@ -82,7 +84,13 @@ interface CategoriesProps {
 
 const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
   const [activeCategory, setActiveCategory] = useState("all");
+  const [activeSubcategory, setActiveSubcategory] = useState("all");
   
+  // Reset subcategory when category changes
+  useEffect(() => {
+    setActiveSubcategory("all");
+  }, [activeCategory]);
+
   const categories = [
     {
       id: "all",
@@ -114,6 +122,39 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
     }
   ];
 
+  const subcategories = [
+    {
+      id: "viande",
+      title: "Viandes",
+      icon: <Beef size={20} />,
+      color: "bg-red-500",
+      textColor: "text-red-500",
+      bgColor: "bg-red-50",
+      hoverBgColor: "hover:bg-red-100",
+      activeBgColor: "bg-red-100"
+    },
+    {
+      id: "plats",
+      title: "Plats Cuisinés",
+      icon: <UtensilsCrossed size={20} />,
+      color: "bg-amber-500",
+      textColor: "text-amber-500",
+      bgColor: "bg-amber-50",
+      hoverBgColor: "hover:bg-amber-100",
+      activeBgColor: "bg-amber-100"
+    },
+    {
+      id: "legumes",
+      title: "Légumes",
+      icon: <Salad size={20} />,
+      color: "bg-green-500",
+      textColor: "text-green-500",
+      bgColor: "bg-green-50",
+      hoverBgColor: "hover:bg-green-100",
+      activeBgColor: "bg-green-100"
+    }
+  ];
+
   const products = [
     {
       id: 1,
@@ -122,6 +163,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Isla Délice",
       weight: "1kg",
       category: "frozen",
+      subcategory: "plats",
       price: 6.99
     },
     {
@@ -131,6 +173,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Isla Délice",
       weight: "1kg",
       category: "frozen",
+      subcategory: "plats",
       price: 7.49
     },
     {
@@ -140,6 +183,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Isla Délice",
       weight: "300g",
       category: "frozen",
+      subcategory: "plats",
       price: 4.99
     },
     {
@@ -176,6 +220,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Isla Délice",
       weight: "400g",
       category: "frozen",
+      subcategory: "viande",
       price: 6.99
     },
     {
@@ -185,6 +230,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Isla Délice",
       weight: "420g",
       category: "frozen",
+      subcategory: "plats",
       price: 5.99
     },
     {
@@ -194,6 +240,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Isla Délice",
       weight: "430g",
       category: "frozen",
+      subcategory: "plats",
       price: 5.99
     },
     {
@@ -203,6 +250,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Isla Délice",
       weight: "300g",
       category: "frozen",
+      subcategory: "plats",
       price: 4.49
     },
     {
@@ -212,6 +260,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Isla Délice",
       weight: "280g",
       category: "frozen",
+      subcategory: "plats",
       price: 4.99
     },
     {
@@ -221,6 +270,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Isla Délice",
       weight: "200g",
       category: "frozen",
+      subcategory: "plats",
       price: 4.49
     },
     {
@@ -230,6 +280,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Isla Délice",
       weight: "160g",
       category: "frozen",
+      subcategory: "plats",
       price: 3.99
     },
     {
@@ -329,6 +380,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "HALBEEF",
       weight: "800g",
       category: "frozen",
+      subcategory: "viande",
       price: 9.99
     },
     {
@@ -338,6 +390,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "HALBEEF",
       weight: "800g",
       category: "frozen",
+      subcategory: "viande",
       price: 8.99
     },
     {
@@ -347,6 +400,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Vedina",
       weight: "2kg",
       category: "frozen",
+      subcategory: "viande",
       price: 14.99
     },
     {
@@ -356,6 +410,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Vedina",
       weight: "800g",
       category: "frozen",
+      subcategory: "viande",
       price: 8.99
     },
     {
@@ -365,6 +420,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Vedina",
       weight: "875g",
       category: "frozen",
+      subcategory: "viande",
       price: 10.49
     },
     {
@@ -374,6 +430,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens",
       weight: "1000g",
       category: "frozen",
+      subcategory: "legumes",
       price: 7.99
     },
     {
@@ -383,6 +440,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Vedina",
       weight: "2kg",
       category: "frozen",
+      subcategory: "viande",
       price: 16.99
     },
     {
@@ -392,6 +450,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Vedina",
       weight: "800g",
       category: "frozen",
+      subcategory: "viande",
       price: 9.99
     },
     {
@@ -401,6 +460,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens Cuisin'easy",
       weight: "1250g",
       category: "frozen",
+      subcategory: "plats",
       price: 6.99
     },
     {
@@ -410,6 +470,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens Cuisin'easy",
       weight: "1250g",
       category: "frozen",
+      subcategory: "plats",
       price: 6.99
     },
     {
@@ -419,6 +480,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Vedina",
       weight: "1kg",
       category: "frozen",
+      subcategory: "viande",
       price: 11.99
     },
     {
@@ -428,6 +490,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens",
       weight: "2500g",
       category: "frozen",
+      subcategory: "legumes",
       price: 8.99
     },
     {
@@ -437,6 +500,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens",
       weight: "1000g",
       category: "frozen",
+      subcategory: "legumes",
       price: 4.49
     },
     {
@@ -446,6 +510,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens",
       weight: "1000g",
       category: "frozen",
+      subcategory: "legumes",
       price: 4.99
     },
     {
@@ -455,6 +520,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens",
       weight: "2500g",
       category: "frozen",
+      subcategory: "legumes",
       price: 7.99
     },
     {
@@ -464,6 +530,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens",
       weight: "1000g",
       category: "frozen",
+      subcategory: "legumes",
       price: 4.49
     },
     {
@@ -473,6 +540,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens Herbs",
       weight: "250g",
       category: "frozen",
+      subcategory: "legumes",
       price: 3.99
     },
     {
@@ -482,6 +550,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens",
       weight: "1000g",
       category: "frozen",
+      subcategory: "legumes",
       price: 4.49
     },
     {
@@ -491,6 +560,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens",
       weight: "1000g",
       category: "frozen",
+      subcategory: "legumes",
       price: 4.99
     },
     {
@@ -500,6 +570,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens",
       weight: "1000g",
       category: "frozen",
+      subcategory: "legumes",
       price: 5.99
     },
     {
@@ -509,6 +580,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens",
       weight: "1000g",
       category: "frozen",
+      subcategory: "legumes",
       price: 4.49
     },
     {
@@ -518,6 +590,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens",
       weight: "1000g",
       category: "frozen",
+      subcategory: "legumes",
       price: 4.29
     },
     {
@@ -527,6 +600,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens",
       weight: "2500g",
       category: "frozen",
+      subcategory: "legumes",
       price: 8.99
     },
     {
@@ -536,6 +610,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens",
       weight: "1000g",
       category: "frozen",
+      subcategory: "legumes",
       price: 6.99
     },
     {
@@ -545,6 +620,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens",
       weight: "1000g",
       category: "frozen",
+      subcategory: "legumes",
       price: 3.99
     },
     {
@@ -554,6 +630,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens",
       weight: "1000g",
       category: "frozen",
+      subcategory: "legumes",
       price: 4.99
     },
     {
@@ -563,6 +640,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens",
       weight: "1000g",
       category: "frozen",
+      subcategory: "legumes",
       price: 4.49
     },
     {
@@ -572,6 +650,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens",
       weight: "1000g",
       category: "frozen",
+      subcategory: "legumes",
       price: 6.99
     },
     {
@@ -581,6 +660,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens",
       weight: "1000g",
       category: "frozen",
+      subcategory: "legumes",
       price: 4.99
     },
     {
@@ -590,6 +670,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens Herbs",
       weight: "250g",
       category: "frozen",
+      subcategory: "legumes",
       price: 3.49
     },
     {
@@ -599,6 +680,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens",
       weight: "1000g",
       category: "frozen",
+      subcategory: "legumes",
       price: 4.99
     },
     {
@@ -608,6 +690,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens Herbs",
       weight: "250g",
       category: "frozen",
+      subcategory: "legumes",
       price: 3.49
     },
     {
@@ -617,6 +700,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens",
       weight: "1000g",
       category: "frozen",
+      subcategory: "legumes",
       price: 4.49
     },
     {
@@ -626,13 +710,25 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       brand: "Greens Herbs",
       weight: "250g",
       category: "frozen",
+      subcategory: "legumes",
       price: 3.49
     }
   ];
 
-  const filteredProducts = activeCategory === "all" 
-    ? products 
-    : products.filter(product => product.category === activeCategory);
+  // Filter products by category and subcategory
+  const filteredProducts = (() => {
+    // First filter by main category
+    let filtered = activeCategory === "all" 
+      ? products 
+      : products.filter(product => product.category === activeCategory);
+    
+    // Then filter by subcategory if in frozen category and subcategory is not "all"
+    if (activeCategory === "frozen" && activeSubcategory !== "all") {
+      filtered = filtered.filter(product => product.subcategory === activeSubcategory);
+    }
+    
+    return filtered;
+  })();
 
   return (
     <section id="produits" className="py-20 md:py-32 bg-brand-gray">
@@ -678,6 +774,41 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
           ))}
         </div>
         
+        {/* Show subcategories only when frozen category is active */}
+        {activeCategory === "frozen" && (
+          <ScrollReveal delay={250} direction="up">
+            <div className="mb-10">
+              <div className="flex flex-wrap items-center gap-3">
+                <button
+                  onClick={() => setActiveSubcategory("all")}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                    activeSubcategory === "all" 
+                      ? 'bg-gray-800 text-white' 
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  Tous les surgelés
+                </button>
+                
+                {subcategories.map((subcategory) => (
+                  <button
+                    key={subcategory.id}
+                    onClick={() => setActiveSubcategory(subcategory.id)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                      activeSubcategory === subcategory.id
+                        ? `${subcategory.color} text-white`
+                        : `${subcategory.bgColor} ${subcategory.textColor} ${subcategory.hoverBgColor}`
+                    }`}
+                  >
+                    <span className="flex-shrink-0">{subcategory.icon}</span>
+                    {subcategory.title}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </ScrollReveal>
+        )}
+        
         <ScrollReveal delay={300} direction="up">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-16">
             {filteredProducts.map((product) => (
@@ -710,3 +841,4 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
 };
 
 export default Categories;
+

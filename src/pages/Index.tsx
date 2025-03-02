@@ -9,7 +9,7 @@ import Contact from '@/components/home/Contact';
 import Footer from '@/components/layout/Footer';
 import FloatingCart from '@/components/cart/FloatingCart';
 import { toast } from 'sonner';
-import { Snowflake, Clock, MapPin, Truck, ChevronRight, Coffee } from 'lucide-react';
+import { Snowflake, Clock, MapPin, Truck, ChevronRight, Coffee, Beef, Salad, UtensilsCrossed } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const initialCartItems = [
@@ -62,12 +62,23 @@ const Index = () => {
     categoriesRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const scrollToFrozen = () => {
+  const scrollToFrozen = (subcategory?: string) => {
     categoriesRef.current?.scrollIntoView({ behavior: 'smooth' });
     setTimeout(() => {
+      // First click on frozen category
       const frozenCategoryElement = document.querySelector('[data-category="frozen"]');
       if (frozenCategoryElement instanceof HTMLElement) {
         frozenCategoryElement.click();
+        
+        // If subcategory is provided, click on that subcategory after a short delay
+        if (subcategory) {
+          setTimeout(() => {
+            const subcategoryButton = document.querySelector(`[data-subcategory="${subcategory}"]`);
+            if (subcategoryButton instanceof HTMLElement) {
+              subcategoryButton.click();
+            }
+          }, 300);
+        }
       }
     }, 500);
   };
@@ -133,29 +144,43 @@ const Index = () => {
       </div>
       
       <div className="bg-blue-100 py-3 w-full">
-        <div className="container mx-auto px-4 flex items-center justify-center cursor-pointer" onClick={scrollToCategories}>
+        <div className="container mx-auto px-4 flex items-center justify-center cursor-pointer" onClick={() => scrollToFrozen('viande')}>
           <div className="flex items-center gap-3 group">
             <div className="flex items-center justify-center bg-white p-2 rounded-full shadow-sm">
-              <Coffee size={24} className="text-blue-500" />
+              <Beef size={24} className="text-red-500" />
             </div>
             <p className="font-medium text-gray-800">
-              Découvrez nos <span className="text-blue-500">nouvelles boissons Mogu Mogu</span>
+              Découvrez nos <span className="text-red-500">viandes surgelées</span>
             </p>
-            <span className="text-blue-500 group-hover:translate-x-1 transition-transform">→</span>
+            <span className="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
           </div>
         </div>
       </div>
       
       <div className="bg-green-100 py-3 w-full">
-        <div className="container mx-auto px-4 flex items-center justify-center cursor-pointer" onClick={scrollToFrozen}>
+        <div className="container mx-auto px-4 flex items-center justify-center cursor-pointer" onClick={() => scrollToFrozen('legumes')}>
           <div className="flex items-center gap-3 group">
             <div className="flex items-center justify-center bg-white p-2 rounded-full shadow-sm">
-              <Snowflake size={24} className="text-green-500" />
+              <Salad size={24} className="text-green-500" />
             </div>
             <p className="font-medium text-gray-800">
               Nouveautés <span className="text-green-500">légumes surgelés Greens</span>
             </p>
             <span className="text-green-500 group-hover:translate-x-1 transition-transform">→</span>
+          </div>
+        </div>
+      </div>
+      
+      <div className="bg-amber-100 py-3 w-full">
+        <div className="container mx-auto px-4 flex items-center justify-center cursor-pointer" onClick={() => scrollToFrozen('plats')}>
+          <div className="flex items-center gap-3 group">
+            <div className="flex items-center justify-center bg-white p-2 rounded-full shadow-sm">
+              <UtensilsCrossed size={24} className="text-amber-500" />
+            </div>
+            <p className="font-medium text-gray-800">
+              Découvrez nos <span className="text-amber-500">plats cuisinés surgelés</span>
+            </p>
+            <span className="text-amber-500 group-hover:translate-x-1 transition-transform">→</span>
           </div>
         </div>
       </div>
