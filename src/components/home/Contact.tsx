@@ -2,6 +2,7 @@
 import React from 'react';
 import { MapPin, Phone, Mail, Clock, ArrowRight } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
+import { WHATSAPP_NUMBER } from '../../pages/Index';
 
 interface ContactInfoProps {
   icon: React.ReactNode;
@@ -48,7 +49,7 @@ const Contact: React.FC = () => {
           
           <ScrollReveal delay={150} direction="up">
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Nous serions ravis de vous accueillir dans notre magasin pour vous faire découvrir notre sélection de produits Halal.
+              Nous serions ravis de vous accueillir dans notre magasin pour vous faire découvrir notre sélection de produits surgelés.
             </p>
           </ScrollReveal>
         </div>
@@ -65,7 +66,7 @@ const Contact: React.FC = () => {
             <ContactInfo 
               icon={<Phone size={24} />}
               title="Téléphone"
-              content={<p>07 53 74 31 29</p>}
+              content={<p>{WHATSAPP_NUMBER}</p>}
               delay={300}
             />
             
