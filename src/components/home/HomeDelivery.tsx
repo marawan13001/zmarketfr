@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Truck, Clock, ShoppingCart, ChevronRight, MapPin, Calendar } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
@@ -12,9 +13,11 @@ interface Product {
   unit: string;
 }
 
-const HomeDelivery: React.FC = () => {
-  const [cartItems, setCartItems] = useState<Product[]>([]);
-  
+interface HomeDeliveryProps {
+  onAddToCart?: (product: { id: number; title: string; image: string; price: number }) => void;
+}
+
+const HomeDelivery: React.FC<HomeDeliveryProps> = ({ onAddToCart = () => {} }) => {
   const featuredProducts: Product[] = [
     {
       id: 1,
@@ -39,16 +42,13 @@ const HomeDelivery: React.FC = () => {
     }
   ];
 
-  const addToCart = (product: Product) => {
-    setCartItems([...cartItems, product]);
-    toast.success(
-      <div className="flex items-center gap-2">
-        <span className="font-medium">{product.title}</span> ajouté au panier
-      </div>,
-      {
-        duration: 3000,
-      }
-    );
+  const handleAddToCart = (product: Product) => {
+    onAddToCart({
+      id: product.id,
+      title: product.title,
+      image: product.image,
+      price: product.price
+    });
   };
 
   return (
@@ -199,7 +199,7 @@ const HomeDelivery: React.FC = () => {
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-500">{product.unit}</span>
                       <button 
-                        onClick={() => addToCart(product)}
+                        onClick={() => handleAddToCart(product)}
                         className="flex items-center gap-2 bg-brand-orange hover:bg-brand-orange/90 text-white py-2 px-4 rounded-lg transition-colors"
                       >
                         <ShoppingCart size={16} />

@@ -13,7 +13,7 @@ import { Snowflake, Clock, MapPin, Truck, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // Sample cart items to display
-const sampleCartItems = [
+const initialCartItems = [
   {
     id: 1,
     name: "Pizza 4 Fromages Surgelée",
@@ -32,7 +32,7 @@ const sampleCartItems = [
 
 const Index = () => {
   const deliveryRef = useRef<HTMLDivElement>(null);
-  const [cartItems, setCartItems] = useState(sampleCartItems);
+  const [cartItems, setCartItems] = useState(initialCartItems);
 
   // Notification pour informer de la mise à jour du design
   useEffect(() => {
@@ -61,6 +61,33 @@ const Index = () => {
       prevItems.map(item => 
         item.id === id ? { ...item, quantity: newQuantity } : item
       )
+    );
+  };
+
+  // Add item to cart function
+  const addToCart = (product: { id: number; title: string; image: string; price: number }) => {
+    // Check if the product is already in the cart
+    const existingItem = cartItems.find(item => item.id === product.id);
+    
+    if (existingItem) {
+      // If already in cart, increase quantity
+      updateCartItemQuantity(product.id, existingItem.quantity + 1);
+    } else {
+      // Add new item to cart
+      setCartItems([...cartItems, {
+        id: product.id,
+        name: product.title,
+        image: product.image,
+        price: product.price,
+        quantity: 1
+      }]);
+    }
+    
+    toast.success(
+      <div className="flex items-center gap-2">
+        <span className="font-medium">{product.title}</span> ajouté au panier
+      </div>,
+      { duration: 3000 }
     );
   };
 
@@ -106,9 +133,9 @@ const Index = () => {
           </button>
         </div>
         
-        <Categories />
+        <Categories onAddToCart={addToCart} />
         <div ref={deliveryRef}>
-          <HomeDelivery />
+          <HomeDelivery onAddToCart={addToCart} />
         </div>
         <About />
         <Contact />

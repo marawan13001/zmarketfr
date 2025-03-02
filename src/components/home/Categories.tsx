@@ -33,16 +33,12 @@ interface ProductProps {
   weight: string;
   category: string;
   price: number;
+  onAddToCart: (product: { id: number; title: string; image: string; price: number }) => void;
 }
 
-const ProductCard: React.FC<ProductProps> = ({ id, image, title, brand, weight, category, price }) => {
-  const addToCart = () => {
-    toast.success(
-      <div className="flex items-center gap-2">
-        <span className="font-medium">{title}</span> ajouté au panier
-      </div>,
-      { duration: 3000 }
-    );
+const ProductCard: React.FC<ProductProps> = ({ id, image, title, brand, weight, category, price, onAddToCart }) => {
+  const handleAddToCart = () => {
+    onAddToCart({ id, title, image, price });
   };
 
   return (
@@ -68,7 +64,7 @@ const ProductCard: React.FC<ProductProps> = ({ id, image, title, brand, weight, 
           <div className="flex gap-2 items-center">
             <span className="text-xs py-1 px-2 bg-gray-100 rounded-full font-medium text-gray-700">Halal</span>
             <button 
-              onClick={addToCart}
+              onClick={handleAddToCart}
               className="flex items-center gap-1 bg-brand-orange hover:bg-brand-orange/90 text-white py-1.5 px-3 rounded-lg transition-colors"
             >
               <ShoppingCart size={14} />
@@ -81,7 +77,11 @@ const ProductCard: React.FC<ProductProps> = ({ id, image, title, brand, weight, 
   );
 };
 
-const Categories: React.FC = () => {
+interface CategoriesProps {
+  onAddToCart?: (product: { id: number; title: string; image: string; price: number }) => void;
+}
+
+const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
   const [activeCategory, setActiveCategory] = useState("all");
   
   const categories = [
@@ -294,6 +294,7 @@ const Categories: React.FC = () => {
                 weight={product.weight}
                 category={product.category === "frozen" ? "Surgelé" : product.category === "fresh" ? "Frais" : "Boisson"}
                 price={product.price}
+                onAddToCart={onAddToCart}
               />
             ))}
           </div>
