@@ -11,7 +11,7 @@ const Hero: React.FC = () => {
   // Image paths
   const imagePaths = {
     background: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901',
-    logo: '/lovable-uploads/672b581f-d176-4a85-8f3b-810bafe22f5c.png',
+    logo: '/lovable-uploads/98acdf68-727b-422c-b6dd-a59dd56cd259.png',
   };
 
   // Fallback images
@@ -124,8 +124,13 @@ const Hero: React.FC = () => {
           
           <div className="hidden md:flex items-center justify-center relative h-[500px]">
             <ScrollReveal direction="left" delay={500} className="relative">
-              <div className="flex items-center justify-center">
-                <Snowflake size={120} className="text-brand-orange mb-4 animate-float" />
+              <div className="text-center">
+                <div className="flex justify-center mb-4">
+                  <Snowflake size={120} className="text-brand-orange animate-float" />
+                </div>
+                <div className="inline-block rounded-lg px-3 py-1 bg-black/30 border border-brand-orange/30 text-white text-sm">
+                  FRAÎCHEUR, QUALITÉ, PETITS PRIX !
+                </div>
               </div>
             </ScrollReveal>
           </div>
@@ -136,6 +141,14 @@ const Hero: React.FC = () => {
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
         <span className="text-white/70 text-sm mb-2">Découvrir</span>
         <div className="w-0.5 h-10 bg-gradient-to-b from-white/40 to-transparent rounded animate-pulse-slow"></div>
+      </div>
+
+      {/* Navigation Pills */}
+      <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex space-x-2 bg-black/50 backdrop-blur-sm rounded-full px-3 py-2 z-10">
+        <a href="#alimentaire" className="px-4 py-1 rounded-full text-xs bg-brand-orange text-white hover:bg-brand-orange/90 transition-colors">ALIMENTAIRE</a>
+        <a href="#surgele" className="px-4 py-1 rounded-full text-xs bg-transparent text-white hover:bg-white/10 transition-colors">SURGELÉ HALAL</a>
+        <a href="#boisson" className="px-4 py-1 rounded-full text-xs bg-transparent text-white hover:bg-white/10 transition-colors">BOISSON</a>
+        <a href="#materiel" className="px-4 py-1 rounded-full text-xs bg-transparent text-white hover:bg-white/10 transition-colors">MATÉRIEL CHR</a>
       </div>
     </section>
   );

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/home/Hero';
@@ -12,7 +11,6 @@ import { toast } from 'sonner';
 import { Snowflake, Clock, MapPin, Truck, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// Sample cart items to display
 const initialCartItems = [
   {
     id: 1,
@@ -34,12 +32,11 @@ const Index = () => {
   const deliveryRef = useRef<HTMLDivElement>(null);
   const [cartItems, setCartItems] = useState(initialCartItems);
 
-  // Notification pour informer de la mise à jour du design
   useEffect(() => {
     setTimeout(() => {
       toast.info(
         <div>
-          Nous avons mis à jour notre site avec un nouveau design surgelé! 
+          Bienvenue sur Z Market, votre spécialiste des produits halal surgelés!
           <a href="/test-images" className="text-blue-500 underline ml-1">
             Voir tous nos visuels
           </a>
@@ -64,21 +61,16 @@ const Index = () => {
     );
   };
 
-  // Ajout de la fonction pour supprimer un produit du panier
   const removeCartItem = (id: number) => {
     setCartItems(prevItems => prevItems.filter(item => item.id !== id));
   };
 
-  // Add item to cart function
   const addToCart = (product: { id: number; title: string; image: string; price: number }) => {
-    // Check if the product is already in the cart
     const existingItem = cartItems.find(item => item.id === product.id);
     
     if (existingItem) {
-      // If already in cart, increase quantity
       updateCartItemQuantity(product.id, existingItem.quantity + 1);
     } else {
-      // Add new item to cart
       setCartItems([...cartItems, {
         id: product.id,
         name: product.title,
@@ -100,12 +92,10 @@ const Index = () => {
     <div className="min-h-screen bg-white overflow-hidden">
       <Navbar />
       
-      {/* Mini Page Banner for Frozen Delivery */}
-      <div className="bg-brand-orange/10 py-3">
+      <div className="bg-orange-50 py-3">
         <div className="container mx-auto px-4 flex items-center justify-center cursor-pointer" onClick={scrollToDelivery}>
           <div className="flex items-center gap-3 group">
             <div className="flex items-center justify-center bg-white p-2 rounded-full shadow-sm">
-              {/* Option 1: Using custom SVG that exactly matches the provided image */}
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2L12 22" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
                 <path d="M17 5L7 19" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
@@ -126,7 +116,6 @@ const Index = () => {
       <main>
         <Hero />
         
-        {/* Simple Delivery CTA Button right after Hero section */}
         <div className="container mx-auto px-4 py-6 flex justify-center">
           <button 
             onClick={scrollToDelivery}
@@ -147,7 +136,6 @@ const Index = () => {
       </main>
       <Footer />
 
-      {/* Floating Cart Component */}
       <FloatingCart 
         items={cartItems}
         onUpdateQuantity={updateCartItemQuantity}
