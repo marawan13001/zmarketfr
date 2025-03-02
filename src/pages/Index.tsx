@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+
+import React, { useEffect, useRef, useState } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/home/Hero';
 import Categories from '@/components/home/Categories';
@@ -6,12 +7,32 @@ import HomeDelivery from '@/components/home/HomeDelivery';
 import About from '@/components/home/About';
 import Contact from '@/components/home/Contact';
 import Footer from '@/components/layout/Footer';
+import FloatingCart from '@/components/cart/FloatingCart';
 import { toast } from 'sonner';
 import { Snowflake, Clock, MapPin, Truck, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+// Sample cart items to display
+const sampleCartItems = [
+  {
+    id: 1,
+    name: "Pizza 4 Fromages Surgelée",
+    image: "/lovable-uploads/3230e5df-068b-4a55-89ea-10484b277a5a.png",
+    price: 12.99,
+    quantity: 1
+  },
+  {
+    id: 2,
+    name: "Glace Vanille Premium",
+    image: "/lovable-uploads/f96329d1-539b-41bc-8c63-c12b7a050ae6.png",
+    price: 8.50,
+    quantity: 2
+  }
+];
+
 const Index = () => {
   const deliveryRef = useRef<HTMLDivElement>(null);
+  const [cartItems, setCartItems] = useState(sampleCartItems);
 
   // Notification pour informer de la mise à jour du design
   useEffect(() => {
@@ -33,6 +54,14 @@ const Index = () => {
 
   const scrollToDelivery = () => {
     deliveryRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const updateCartItemQuantity = (id: number, newQuantity: number) => {
+    setCartItems(prevItems => 
+      prevItems.map(item => 
+        item.id === id ? { ...item, quantity: newQuantity } : item
+      )
+    );
   };
 
   return (
@@ -85,6 +114,12 @@ const Index = () => {
         <Contact />
       </main>
       <Footer />
+
+      {/* Floating Cart Component */}
+      <FloatingCart 
+        items={cartItems}
+        onUpdateQuantity={updateCartItemQuantity}
+      />
     </div>
   );
 };
