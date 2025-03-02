@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -92,6 +93,7 @@ const Commande: React.FC = () => {
     }
     
     if (step === 3) {
+      console.log('🔔 Processing order confirmation...');
       const orderId = generateOrderId();
       
       const orderDetails = {
@@ -107,11 +109,13 @@ const Commande: React.FC = () => {
           address: deliveryAddress
         },
         paymentMethod,
-        deliveryTime: deliveryTime === 'asap' ? 'Dès que possible' : 'Programmé',
+        deliveryTime: deliveryTime === 'asap' ? 'asap' : 'scheduled',
         total
       };
       
-      sendWhatsAppNotification(orderDetails);
+      console.log('🔔 Sending order notifications...');
+      const notificationSent = sendWhatsAppNotification(orderDetails);
+      console.log('🔔 Notification sent result:', notificationSent);
       
       toast.success("Commande confirmée ! Votre livraison est en route.", {
         duration: 5000,

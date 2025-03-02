@@ -1,3 +1,4 @@
+
 /**
  * Utility functions for sending WhatsApp notifications and emails
  */
@@ -56,6 +57,8 @@ export const formatOrderMessage = (orderDetails: OrderDetails): string => {
  * In a real application, this would be handled by a backend API endpoint
  */
 export const sendWhatsAppNotification = (orderDetails: OrderDetails) => {
+  console.log('📱 sendWhatsAppNotification called with order details:', orderDetails);
+  
   // Format the message
   const message = formatOrderMessage(orderDetails);
   
@@ -64,7 +67,6 @@ export const sendWhatsAppNotification = (orderDetails: OrderDetails) => {
   
   // In a real application, this would make an API call to a backend service
   // which would use the WhatsApp Business API or a similar service to send the message
-  // For demo purposes, we're simulating a successful notification
   
   // Show in the console that we're sending to your number
   console.log(`[NOTIFICATION SYSTEM] Order notification sent to WhatsApp: ${WHATSAPP_NUMBER}`);
@@ -80,6 +82,8 @@ export const sendWhatsAppNotification = (orderDetails: OrderDetails) => {
  * Note: In a real application, this would call a backend API to send the email
  */
 export const sendEmailNotification = (orderDetails: OrderDetails) => {
+  console.log('📧 sendEmailNotification called with order details:', orderDetails);
+  
   // In a real application, this would use a proper email sending API
   
   const { orderId, items, customerInfo, paymentMethod, deliveryTime, total } = orderDetails;
@@ -116,10 +120,6 @@ Merci de préparer cette commande!
   
   // Log the notification for demonstration purposes
   console.log(`[NOTIFICATION SYSTEM] Email notification would be sent to contact@zmarket.fr with content:`, emailBody);
-  
-  // In a real application, this would make an API call to a backend service
-  // which would use an email service to send the message
-  // For demo purposes, we're simulating a successful notification
   
   // Show in the console that we're sending to your email
   console.log(`[NOTIFICATION SYSTEM] Order notification sent to email: contact@zmarket.fr`);
