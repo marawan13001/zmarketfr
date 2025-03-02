@@ -33,6 +33,7 @@ export const WHATSAPP_NUMBER = "0675725897";
 const Index = () => {
   const deliveryRef = useRef<HTMLDivElement>(null);
   const categoriesRef = useRef<HTMLDivElement>(null);
+  const frozenRef = useRef<HTMLDivElement>(null);
   const [cartItems, setCartItems] = useState(initialCartItems);
 
   useEffect(() => {
@@ -58,6 +59,13 @@ const Index = () => {
 
   const scrollToCategories = () => {
     categoriesRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToFrozen = () => {
+    categoriesRef.current?.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => {
+      document.querySelector('[data-category="frozen"]')?.click();
+    }, 500);
   };
 
   const updateCartItemQuantity = (id: number, newQuantity: number) => {
@@ -130,6 +138,20 @@ const Index = () => {
               Découvrez nos <span className="text-blue-500">nouvelles boissons Mogu Mogu</span>
             </p>
             <span className="text-blue-500 group-hover:translate-x-1 transition-transform">→</span>
+          </div>
+        </div>
+      </div>
+      
+      <div className="bg-red-100 py-3 w-full">
+        <div className="container mx-auto px-4 flex items-center justify-center cursor-pointer" onClick={scrollToFrozen}>
+          <div className="flex items-center gap-3 group">
+            <div className="flex items-center justify-center bg-white p-2 rounded-full shadow-sm">
+              <Snowflake size={24} className="text-red-500" />
+            </div>
+            <p className="font-medium text-gray-800">
+              Nouveautés <span className="text-red-500">viandes et poulets surgelés Halal</span>
+            </p>
+            <span className="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
           </div>
         </div>
       </div>

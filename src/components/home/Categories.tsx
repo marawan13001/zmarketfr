@@ -321,6 +321,105 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       weight: "320ml",
       category: "drinks",
       price: 2.49
+    },
+    {
+      id: 24,
+      image: "/lovable-uploads/3108354e-d4b5-49dd-b5f6-d6745fe8fa76.png",
+      title: "Viande Hachée de Boeuf",
+      brand: "HALBEEF",
+      weight: "800g",
+      category: "frozen",
+      price: 9.99
+    },
+    {
+      id: 25,
+      image: "/lovable-uploads/a7dfcddb-d653-45aa-9896-dbe029789e8e.png",
+      title: "Merguez de Boeuf",
+      brand: "HALBEEF",
+      weight: "800g",
+      category: "frozen",
+      price: 8.99
+    },
+    {
+      id: 26,
+      image: "/lovable-uploads/8929a570-5ea5-49d4-b84a-09dc31b85f00.png",
+      title: "Morceaux de Poulet",
+      brand: "Vedina",
+      weight: "2kg",
+      category: "frozen",
+      price: 14.99
+    },
+    {
+      id: 27,
+      image: "/lovable-uploads/03f661b0-ba72-449a-839b-79af3f29308c.png",
+      title: "Poulet Pané",
+      brand: "Vedina",
+      weight: "800g",
+      category: "frozen",
+      price: 8.99
+    },
+    {
+      id: 28,
+      image: "/lovable-uploads/a2815b0f-1152-4cfa-83f1-c52eaec0aad7.png",
+      title: "Cordons Bleus",
+      brand: "Vedina",
+      weight: "875g",
+      category: "frozen",
+      price: 10.49
+    },
+    {
+      id: 29,
+      image: "/lovable-uploads/c9b1324f-dc47-42a1-8439-5cae1c724eaf.png",
+      title: "Crème Veggie Bites",
+      brand: "Greens",
+      weight: "1000g",
+      category: "frozen",
+      price: 7.99
+    },
+    {
+      id: 30,
+      image: "/lovable-uploads/9dfc2bb1-289f-4b76-8c26-38608c0eca31.png",
+      title: "Blanc de Poulet Tranché",
+      brand: "Vedina",
+      weight: "2kg",
+      category: "frozen",
+      price: 16.99
+    },
+    {
+      id: 31,
+      image: "/lovable-uploads/e64e59fb-99d9-4a4e-801d-bda76c096b34.png",
+      title: "Émincé de Poulet Mariné",
+      brand: "Vedina",
+      weight: "800g",
+      category: "frozen",
+      price: 9.99
+    },
+    {
+      id: 32,
+      image: "/lovable-uploads/b3460e2c-5fd3-4012-9d7d-9e5916f10e98.png",
+      title: "Sultan of Swing Couscous",
+      brand: "Greens Cuisin'easy",
+      weight: "1250g",
+      category: "frozen",
+      price: 6.99
+    },
+    {
+      id: 33,
+      image: "/lovable-uploads/182c5bcb-9965-48ae-9812-5c4338cc2532.png",
+      title: "Bella Ciao Pasta Salad",
+      brand: "Greens Cuisin'easy",
+      weight: "1250g",
+      category: "frozen",
+      price: 6.99
+    },
+    {
+      id: 34,
+      image: "/lovable-uploads/250f3181-7ee7-41d6-9c3b-460da5cbbbbb.png",
+      title: "Chicken Wings Épicés",
+      brand: "Vedina",
+      weight: "1kg",
+      category: "frozen",
+      price: 11.99
     }
   ];
 
