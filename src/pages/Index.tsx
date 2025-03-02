@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/home/Hero';
@@ -49,13 +50,29 @@ const Index = () => {
         }
       );
     }, 1000);
+
+    // Check if URL has #livraison hash and scroll to delivery section
+    if (window.location.hash === '#livraison') {
+      setTimeout(() => {
+        scrollToDelivery();
+      }, 500);
+    }
   }, []);
 
   const scrollToDelivery = () => {
-    deliveryRef.current?.scrollIntoView({ behavior: 'smooth' });
-    setTimeout(() => {
-      window.scrollBy(0, -100);
-    }, 100);
+    if (deliveryRef.current) {
+      // Get the element's position relative to the viewport
+      const rect = deliveryRef.current.getBoundingClientRect();
+      // Get current scroll position
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      // Calculate position to scroll to (element position + current scroll - offset)
+      const top = rect.top + scrollTop - 100;
+      
+      window.scrollTo({
+        top,
+        behavior: 'smooth'
+      });
+    }
   };
 
   const scrollToCategories = () => {
@@ -159,7 +176,7 @@ const Index = () => {
           <Categories onAddToCart={addToCart} />
         </div>
         
-        <div id="livraison-section" ref={deliveryRef}>
+        <div id="livraison" ref={deliveryRef}>
           <HomeDelivery onAddToCart={addToCart} />
         </div>
         

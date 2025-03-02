@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Truck, Clock, ShoppingCart, ChevronRight, MapPin, Calendar } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
@@ -81,55 +80,56 @@ const HomeDelivery: React.FC<HomeDeliveryProps> = ({ onAddToCart = () => {} }) =
           </ScrollReveal>
         </div>
         
-        <ScrollReveal delay={300} direction="up">
-          <div className="bg-brand-cream rounded-xl p-8 md:p-10 mb-16">
-            <h3 className="text-2xl font-bold mb-6 text-center">Comment fonctionne notre livraison ?</h3>
+      <ScrollReveal delay={300} direction="up">
+        <div className="bg-brand-cream rounded-xl p-8 md:p-10 mb-16">
+          <h3 className="text-2xl font-bold mb-6 text-center">Comment fonctionne notre livraison ?</h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 relative">
+            <div className="hidden md:block absolute top-16 left-[20%] right-[20%] h-0.5 bg-brand-orange/30"></div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 relative">
-              <div className="hidden md:block absolute top-16 left-[20%] right-[20%] h-0.5 bg-brand-orange/30"></div>
-              
-              <div className="flex flex-col items-center text-center">
-                <div className="w-12 h-12 rounded-full bg-brand-orange text-white flex items-center justify-center mb-4 relative z-10 text-lg font-bold">
-                  1
-                </div>
-                <h4 className="text-lg font-bold mb-2">Commandez en ligne</h4>
-                <p className="text-gray-600">
-                  Parcourez notre sélection de produits et ajoutez-les à votre panier en quelques clics.
-                </p>
+            <div className="flex flex-col items-center text-center">
+              <div className="w-12 h-12 rounded-full bg-brand-orange text-white flex items-center justify-center mb-4 relative z-10 text-lg font-bold">
+                1
               </div>
-              
-              <div className="flex flex-col items-center text-center">
-                <div className="w-12 h-12 rounded-full bg-brand-orange text-white flex items-center justify-center mb-4 relative z-10 text-lg font-bold">
-                  2
-                </div>
-                <h4 className="text-lg font-bold mb-2">Confirmez votre commande</h4>
-                <p className="text-gray-600">
-                  Indiquez votre adresse de livraison et choisissez votre mode de paiement.
-                </p>
-              </div>
-              
-              <div className="flex flex-col items-center text-center">
-                <div className="w-12 h-12 rounded-full bg-brand-orange text-white flex items-center justify-center mb-4 relative z-10 text-lg font-bold">
-                  3
-                </div>
-                <h4 className="text-lg font-bold mb-2">Recevez votre livraison</h4>
-                <p className="text-gray-600">
-                  Votre commande est livrée à votre porte dans l'heure qui suit.
-                </p>
-              </div>
+              <h4 className="text-lg font-bold mb-2">Commandez en ligne</h4>
+              <p className="text-gray-600">
+                Parcourez notre sélection de produits et ajoutez-les à votre panier en quelques clics.
+              </p>
             </div>
             
-            <div className="flex justify-center mt-10">
-              <button 
-                onClick={handleCommandeClick}
-                className="inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orange/90 text-white font-medium px-6 py-3 rounded-lg transition-colors"
-              >
-                Commander maintenant
-                <ChevronRight size={18} />
-              </button>
+            <div className="flex flex-col items-center text-center">
+              <div className="w-12 h-12 rounded-full bg-brand-orange text-white flex items-center justify-center mb-4 relative z-10 text-lg font-bold">
+                2
+              </div>
+              <h4 className="text-lg font-bold mb-2">Confirmez votre commande</h4>
+              <p className="text-gray-600">
+                Indiquez votre adresse de livraison et choisissez votre mode de paiement.
+              </p>
+            </div>
+            
+            <div className="flex flex-col items-center text-center">
+              <div className="w-12 h-12 rounded-full bg-brand-orange text-white flex items-center justify-center mb-4 relative z-10 text-lg font-bold">
+                3
+              </div>
+              <h4 className="text-lg font-bold mb-2">Recevez votre livraison</h4>
+              <p className="text-gray-600">
+                Votre commande est livrée à votre porte dans l'heure qui suit.
+              </p>
             </div>
           </div>
-        </ScrollReveal>
+          
+          <div className="flex justify-center mt-10">
+            <button 
+              onClick={handleCommandeClick}
+              className="inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orange/90 text-white font-medium px-6 py-3 rounded-lg transition-colors"
+            >
+              Commander maintenant
+              <ChevronRight size={18} />
+            </button>
+          </div>
+        </div>
+      </ScrollReveal>
+      
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-16">
           <ScrollReveal delay={300} direction="up">
