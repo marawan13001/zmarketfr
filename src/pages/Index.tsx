@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/home/Hero';
@@ -64,7 +65,10 @@ const Index = () => {
   const scrollToFrozen = () => {
     categoriesRef.current?.scrollIntoView({ behavior: 'smooth' });
     setTimeout(() => {
-      document.querySelector('[data-category="frozen"]')?.click();
+      const frozenCategoryElement = document.querySelector('[data-category="frozen"]');
+      if (frozenCategoryElement instanceof HTMLElement) {
+        frozenCategoryElement.click();
+      }
     }, 500);
   };
 
@@ -142,16 +146,16 @@ const Index = () => {
         </div>
       </div>
       
-      <div className="bg-red-100 py-3 w-full">
+      <div className="bg-green-100 py-3 w-full">
         <div className="container mx-auto px-4 flex items-center justify-center cursor-pointer" onClick={scrollToFrozen}>
           <div className="flex items-center gap-3 group">
             <div className="flex items-center justify-center bg-white p-2 rounded-full shadow-sm">
-              <Snowflake size={24} className="text-red-500" />
+              <Snowflake size={24} className="text-green-500" />
             </div>
             <p className="font-medium text-gray-800">
-              Nouveautés <span className="text-red-500">viandes et poulets surgelés Halal</span>
+              Nouveautés <span className="text-green-500">légumes surgelés Greens</span>
             </p>
-            <span className="text-red-500 group-hover:translate-x-1 transition-transform">→</span>
+            <span className="text-green-500 group-hover:translate-x-1 transition-transform">→</span>
           </div>
         </div>
       </div>

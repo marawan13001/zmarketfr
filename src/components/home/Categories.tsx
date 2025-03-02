@@ -420,6 +420,213 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       weight: "1kg",
       category: "frozen",
       price: 11.99
+    },
+    {
+      id: 35,
+      image: "/lovable-uploads/a4404067-b58d-41e2-814d-5664bef1aab1.png",
+      title: "Mix Poivrons Rouge et Vert",
+      brand: "Greens",
+      weight: "2500g",
+      category: "frozen",
+      price: 8.99
+    },
+    {
+      id: 36,
+      image: "/lovable-uploads/35df7411-7962-41b9-ad20-d58575d3a39d.png",
+      title: "Petits Pois",
+      brand: "Greens",
+      weight: "1000g",
+      category: "frozen",
+      price: 4.49
+    },
+    {
+      id: 37,
+      image: "/lovable-uploads/48ced986-2992-4f52-85a7-d1e90149e7f0.png",
+      title: "Poivrons en Lanières",
+      brand: "Greens",
+      weight: "1000g",
+      category: "frozen",
+      price: 4.99
+    },
+    {
+      id: 38,
+      image: "/lovable-uploads/33a4c5fb-aa6a-4c75-aec4-c1fb0568124c.png",
+      title: "Oignons Émincés",
+      brand: "Greens",
+      weight: "2500g",
+      category: "frozen",
+      price: 7.99
+    },
+    {
+      id: 39,
+      image: "/lovable-uploads/725ee896-e876-466d-a134-967ae91bd73b.png",
+      title: "Haricots Verts Fins",
+      brand: "Greens",
+      weight: "1000g",
+      category: "frozen",
+      price: 4.49
+    },
+    {
+      id: 40,
+      image: "/lovable-uploads/222e4d15-be1a-4723-9868-6b55b6e70f35.png",
+      title: "Ail Haché",
+      brand: "Greens Herbs",
+      weight: "250g",
+      category: "frozen",
+      price: 3.99
+    },
+    {
+      id: 41,
+      image: "/lovable-uploads/4ed38308-6a5e-402a-b02f-da6c97bfcd1b.png",
+      title: "Oignons Émincés",
+      brand: "Greens",
+      weight: "1000g",
+      category: "frozen",
+      price: 4.49
+    },
+    {
+      id: 42,
+      image: "/lovable-uploads/bb9ac058-cd77-419e-81dd-7434b01a9f1f.png",
+      title: "Fèves",
+      brand: "Greens",
+      weight: "1000g",
+      category: "frozen",
+      price: 4.99
+    },
+    {
+      id: 43,
+      image: "/lovable-uploads/e7a5f587-b696-4a22-80fe-e31b8e5511a4.png",
+      title: "Champignons Émincés",
+      brand: "Greens",
+      weight: "1000g",
+      category: "frozen",
+      price: 5.99
+    },
+    {
+      id: 44,
+      image: "/lovable-uploads/98155827-3a99-48ea-83b2-ed01525f9902.png",
+      title: "Macédoine de Légumes",
+      brand: "Greens",
+      weight: "1000g",
+      category: "frozen",
+      price: 4.49
+    },
+    {
+      id: 45,
+      image: "/lovable-uploads/e85998c4-07e1-4a42-8692-2e7ea0292f84.png",
+      title: "Maïs Doux",
+      brand: "Greens",
+      weight: "1000g",
+      category: "frozen",
+      price: 4.29
+    },
+    {
+      id: 46,
+      image: "/lovable-uploads/a38643a0-56b9-4270-ad94-538056d65958.png",
+      title: "Poivrons Rouges en Lanières",
+      brand: "Greens",
+      weight: "2500g",
+      category: "frozen",
+      price: 8.99
+    },
+    {
+      id: 47,
+      image: "/lovable-uploads/e4332095-f2d0-45c9-bd6e-52e2d730279f.png",
+      title: "Fonds d'Artichauts",
+      brand: "Greens",
+      weight: "1000g",
+      category: "frozen",
+      price: 6.99
+    },
+    {
+      id: 48,
+      image: "/lovable-uploads/1c5badeb-e238-481f-be23-1a23b85f4e43.png",
+      title: "Carottes en Rondelles",
+      brand: "Greens",
+      weight: "1000g",
+      category: "frozen",
+      price: 3.99
+    },
+    {
+      id: 49,
+      image: "/lovable-uploads/1fa9d97e-d6c5-4e71-94d7-b3f7d3d3364f.png",
+      title: "Épinards en Portions",
+      brand: "Greens",
+      weight: "1000g",
+      category: "frozen",
+      price: 4.99
+    },
+    {
+      id: 50,
+      image: "/lovable-uploads/25e9b217-b040-49b3-ba9e-cb512a15e540.png",
+      title: "Choux-Fleurs en Fleurettes",
+      brand: "Greens",
+      weight: "1000g",
+      category: "frozen",
+      price: 4.49
+    },
+    {
+      id: 51,
+      image: "/lovable-uploads/d2da4325-771a-487a-b3f0-60f0f1f6555e.png",
+      title: "Aubergines Grillées",
+      brand: "Greens",
+      weight: "1000g",
+      category: "frozen",
+      price: 6.99
+    },
+    {
+      id: 52,
+      image: "/lovable-uploads/c1cc5a91-5f97-4e1e-a59e-592f235c95b5.png",
+      title: "Brocolis",
+      brand: "Greens",
+      weight: "1000g",
+      category: "frozen",
+      price: 4.99
+    },
+    {
+      id: 53,
+      image: "/lovable-uploads/b644a9a9-2d5a-4cb6-97cf-1c810a617672.png",
+      title: "Persil Haché",
+      brand: "Greens Herbs",
+      weight: "250g",
+      category: "frozen",
+      price: 3.49
+    },
+    {
+      id: 54,
+      image: "/lovable-uploads/354d2e94-2199-425e-ac88-ccd4fce595bd.png",
+      title: "Choux de Bruxelles",
+      brand: "Greens",
+      weight: "1000g",
+      category: "frozen",
+      price: 4.99
+    },
+    {
+      id: 55,
+      image: "/lovable-uploads/d1b3508e-4004-49e5-89db-09b25eaf96bc.png",
+      title: "Basilic Haché",
+      brand: "Greens Herbs",
+      weight: "250g",
+      category: "frozen",
+      price: 3.49
+    },
+    {
+      id: 56,
+      image: "/lovable-uploads/feeddc07-602e-4f41-a634-68099502a616.png",
+      title: "Courgettes en Rondelles",
+      brand: "Greens",
+      weight: "1000g",
+      category: "frozen",
+      price: 4.49
+    },
+    {
+      id: 57,
+      image: "/lovable-uploads/ecb7cb2d-f92d-4b8b-86d2-f03dbcdb4787.png",
+      title: "Ciboulette Hachée",
+      brand: "Greens Herbs",
+      weight: "250g",
+      category: "frozen",
+      price: 3.49
     }
   ];
 
@@ -456,6 +663,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
               key={index} 
               className="cursor-pointer"
               onClick={() => setActiveCategory(category.id)}
+              data-category={category.id}
             >
               <div 
                 className={`h-full ${activeCategory === category.id ? 'bg-brand-orange text-white' : 'bg-white hover:bg-white/80'} rounded-xl p-6 shadow-sm border border-gray-100 transition-all hover:translate-y-[-5px] group`}
