@@ -30,6 +30,9 @@ const initialCartItems = [
   }
 ];
 
+// WhatsApp settings
+export const WHATSAPP_NUMBER = "+33600000000"; // Replace with your actual WhatsApp number
+
 const Index = () => {
   const deliveryRef = useRef<HTMLDivElement>(null);
   const [cartItems, setCartItems] = useState(initialCartItems);
