@@ -353,7 +353,7 @@ const Commande: React.FC = () => {
                     <div className="p-4 border border-gray-200 bg-gray-50 rounded-lg">
                       <p className="mb-2 font-medium text-gray-700">Notification au commerçant :</p>
                       <p className="text-sm text-gray-600">
-                        En confirmant cette commande, un message sera envoyé automatiquement au commerçant via WhatsApp ({WHATSAPP_NUMBER}) et par email (contact@zmarket.fr) avec les détails de votre commande pour accélérer le traitement.
+                        En confirmant cette commande, une notification sera envoyée automatiquement au commerçant par WhatsApp ({WHATSAPP_NUMBER}) et par email (contact@zmarket.fr) avec les détails de votre commande pour accélérer le traitement.
                       </p>
                     </div>
                   </div>

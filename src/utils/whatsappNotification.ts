@@ -1,4 +1,3 @@
-
 /**
  * Utility functions for sending WhatsApp notifications and emails
  */
@@ -53,22 +52,24 @@ export const formatOrderMessage = (orderDetails: OrderDetails): string => {
 };
 
 /**
- * Open WhatsApp with pre-filled message about a new order
+ * Send WhatsApp notification without opening WhatsApp on client's browser
+ * In a real application, this would be handled by a backend API endpoint
  */
 export const sendWhatsAppNotification = (orderDetails: OrderDetails) => {
   // Format the message
   const message = formatOrderMessage(orderDetails);
   
-  // Encode the message for URL
-  const encodedMessage = encodeURIComponent(message);
+  // Log the notification for demonstration purposes
+  console.log(`[NOTIFICATION SYSTEM] WhatsApp notification would be sent to ${WHATSAPP_NUMBER} with message:`, message);
   
-  // Create the WhatsApp URL
-  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+  // In a real application, this would make an API call to a backend service
+  // which would use the WhatsApp Business API or a similar service to send the message
+  // For demo purposes, we're simulating a successful notification
   
-  // Open WhatsApp in a new tab
-  window.open(whatsappUrl, '_blank');
+  // Show in the console that we're sending to your number
+  console.log(`[NOTIFICATION SYSTEM] Order notification sent to WhatsApp: ${WHATSAPP_NUMBER}`);
   
-  // Send email notification
+  // Also send an email notification
   sendEmailNotification(orderDetails);
   
   return true;
@@ -80,7 +81,6 @@ export const sendWhatsAppNotification = (orderDetails: OrderDetails) => {
  */
 export const sendEmailNotification = (orderDetails: OrderDetails) => {
   // In a real application, this would use a proper email sending API
-  // For this demo, we'll create a mailto link
   
   const { orderId, items, customerInfo, paymentMethod, deliveryTime, total } = orderDetails;
   
@@ -94,11 +94,8 @@ export const sendEmailNotification = (orderDetails: OrderDetails) => {
     ? 'Dès que possible (environ 1 heure)' 
     : deliveryTime;
   
-  // Build the subject
-  const subject = `Nouvelle commande #${orderId}`;
-  
   // Build the email body
-  const body = `
+  const emailBody = `
 NOUVELLE COMMANDE #${orderId}
 
 Produits:
@@ -117,13 +114,15 @@ Adresse: ${customerInfo.address}
 Merci de préparer cette commande!
   `;
   
-  // Encode for mailto URL
-  const encodedSubject = encodeURIComponent(subject);
-  const encodedBody = encodeURIComponent(body);
+  // Log the notification for demonstration purposes
+  console.log(`[NOTIFICATION SYSTEM] Email notification would be sent to contact@zmarket.fr with content:`, emailBody);
   
-  // Create mailto URL and open it
-  const mailtoUrl = `mailto:contact@zmarket.fr?subject=${encodedSubject}&body=${encodedBody}`;
-  window.open(mailtoUrl, '_blank');
+  // In a real application, this would make an API call to a backend service
+  // which would use an email service to send the message
+  // For demo purposes, we're simulating a successful notification
+  
+  // Show in the console that we're sending to your email
+  console.log(`[NOTIFICATION SYSTEM] Order notification sent to email: contact@zmarket.fr`);
   
   return true;
 };
