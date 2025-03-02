@@ -97,11 +97,11 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white overflow-hidden">
+    <div className="min-h-screen bg-white overflow-x-hidden w-full">
       <Navbar />
       
       {/* Mini Page Banner for Frozen Delivery */}
-      <div className="bg-brand-orange/10 py-3">
+      <div className="bg-brand-orange/10 py-3 w-full">
         <div className="container mx-auto px-4 flex items-center justify-center cursor-pointer" onClick={scrollToDelivery}>
           <div className="flex items-center gap-3 group">
             <div className="flex items-center justify-center bg-white p-2 rounded-full shadow-sm">
@@ -123,7 +123,7 @@ const Index = () => {
         </div>
       </div>
       
-      <main>
+      <main className="w-full">
         <Hero />
         
         {/* Simple Delivery CTA Button right after Hero section */}
