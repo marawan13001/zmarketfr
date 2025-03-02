@@ -3,157 +3,8 @@ import { IceCream, Refrigerator, Package, Coffee, ShoppingCart, Beef, Salad, Ute
 import ScrollReveal from '../ui/ScrollReveal';
 import { toast } from 'sonner';
 
-interface CategoryCardProps {
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-  delay: number;
-}
-
-const CategoryCard: React.FC<CategoryCardProps> = ({ title, description, icon, delay }) => {
-  return (
-    <ScrollReveal delay={delay} direction="up" className="w-full">
-      <div className="h-full bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all hover:translate-y-[-5px] group">
-        <div className="w-14 h-14 rounded-lg bg-brand-orange/10 flex items-center justify-center mb-6 text-brand-orange transition-colors group-hover:bg-brand-orange group-hover:text-white">
-          {icon}
-        </div>
-        <h3 className="text-xl font-bold mb-3 text-gray-900">{title}</h3>
-        <p className="text-gray-600">{description}</p>
-      </div>
-    </ScrollReveal>
-  );
-};
-
-interface ProductProps {
-  id: number;
-  image: string;
-  title: string;
-  brand: string;
-  weight: string;
-  category: string;
-  subcategory?: string;
-  price: number;
-  onAddToCart: (product: { id: number; title: string; image: string; price: number }) => void;
-}
-
-const ProductCard: React.FC<ProductProps> = ({ id, image, title, brand, weight, category, price, onAddToCart }) => {
-  const handleAddToCart = () => {
-    onAddToCart({ id, title, image, price });
-  };
-
-  return (
-    <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all hover:translate-y-[-5px] group">
-      <div className="relative aspect-square overflow-hidden">
-        <img 
-          src={image} 
-          alt={title} 
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-        <div className="absolute top-3 right-3 bg-brand-orange text-white text-xs font-medium py-1 px-2 rounded-full">
-          {category}
-        </div>
-      </div>
-      <div className="p-4">
-        <div className="flex justify-between items-center mb-1">
-          <h3 className="font-bold text-gray-900">{title}</h3>
-          <span className="text-brand-orange font-bold">{price.toFixed(2)}€</span>
-        </div>
-        <p className="text-sm text-gray-500 mb-2">{brand}</p>
-        <div className="flex justify-between items-center">
-          <span className="text-sm font-medium">{weight}</span>
-          <div className="flex gap-2 items-center">
-            <span className="text-xs py-1 px-2 bg-gray-100 rounded-full font-medium text-gray-700">Halal</span>
-            <button 
-              onClick={handleAddToCart}
-              className="flex items-center gap-1 bg-brand-orange hover:bg-brand-orange/90 text-white py-1.5 px-3 rounded-lg transition-colors"
-            >
-              <ShoppingCart size={14} />
-              <span className="text-sm">Ajouter</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-interface CategoriesProps {
-  onAddToCart?: (product: { id: number; title: string; image: string; price: number }) => void;
-}
-
-const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
-  const [activeCategory, setActiveCategory] = useState("all");
-  const [activeSubcategory, setActiveSubcategory] = useState("all");
-  
-  useEffect(() => {
-    setActiveSubcategory("all");
-  }, [activeCategory]);
-
-  const categories = [
-    {
-      id: "all",
-      title: "Tous les produits",
-      description: "Notre sélection complète de produits Halal premium pour tous les goûts.",
-      icon: <Package size={28} />,
-      delay: 100
-    },
-    {
-      id: "frozen",
-      title: "Produits Surgelés",
-      description: "Une large gamme de produits surgelés Halal de qualité premium pour tous les goûts.",
-      icon: <IceCream size={28} />,
-      delay: 200
-    },
-    {
-      id: "fresh",
-      title: "Produits Frais",
-      description: "Des produits frais sélectionnés avec soin pour garantir fraîcheur et qualité.",
-      icon: <Refrigerator size={28} />,
-      delay: 300
-    },
-    {
-      id: "drinks",
-      title: "Boissons",
-      description: "Un choix varié de boissons pour accompagner vos repas et moments de détente.",
-      icon: <Coffee size={28} />,
-      delay: 400
-    }
-  ];
-
-  const subcategories = [
-    {
-      id: "viande",
-      title: "Viandes",
-      icon: <Beef size={20} />,
-      color: "bg-red-500",
-      textColor: "text-red-500",
-      bgColor: "bg-red-50",
-      hoverBgColor: "hover:bg-red-100",
-      activeBgColor: "bg-red-100"
-    },
-    {
-      id: "plats",
-      title: "Plats Cuisinés",
-      icon: <UtensilsCrossed size={20} />,
-      color: "bg-amber-500",
-      textColor: "text-amber-500",
-      bgColor: "bg-amber-50",
-      hoverBgColor: "hover:bg-amber-100",
-      activeBgColor: "bg-amber-100"
-    },
-    {
-      id: "legumes",
-      title: "Légumes",
-      icon: <Salad size={20} />,
-      color: "bg-green-500",
-      textColor: "text-green-500",
-      bgColor: "bg-green-50",
-      hoverBgColor: "hover:bg-green-100",
-      activeBgColor: "bg-green-100"
-    }
-  ];
-
-  const products = [
+// Export the products data so it can be used by other components like Admin
+export const products = [
     {
       id: 1,
       image: "/lovable-uploads/1e7548f5-8859-4e95-b8cb-40cab3d8dd35.png",
@@ -713,123 +564,164 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
     }
   ];
 
+// Export category and subcategory data
+export const categories = [
+  {
+    id: "all",
+    title: "Tous les produits",
+    description: "Notre sélection complète de produits Halal premium pour tous les goûts.",
+    icon: <Package size={28} />,
+    delay: 100
+  },
+  {
+    id: "frozen",
+    title: "Produits Surgelés",
+    description: "Une large gamme de produits surgelés Halal de qualité premium pour tous les goûts.",
+    icon: <IceCream size={28} />,
+    delay: 200
+  },
+  {
+    id: "fresh",
+    title: "Produits Frais",
+    description: "Des produits frais sélectionnés avec soin pour garantir fraîcheur et qualité.",
+    icon: <Refrigerator size={28} />,
+    delay: 300
+  },
+  {
+    id: "drinks",
+    title: "Boissons",
+    description: "Un choix varié de boissons pour accompagner vos repas et moments de détente.",
+    icon: <Coffee size={28} />,
+    delay: 400
+  }
+];
+
+export const subcategories = [
+  {
+    id: "viande",
+    title: "Viandes",
+    icon: <Beef size={20} />,
+    color: "bg-red-500",
+    textColor: "text-red-500",
+    bgColor: "bg-red-50",
+    hoverBgColor: "hover:bg-red-100",
+    activeBgColor: "bg-red-100"
+  },
+  {
+    id: "plats",
+    title: "Plats Cuisinés",
+    icon: <UtensilsCrossed size={20} />,
+    color: "bg-amber-500",
+    textColor: "text-amber-500",
+    bgColor: "bg-amber-50",
+    hoverBgColor: "hover:bg-amber-100",
+    activeBgColor: "bg-amber-100"
+  },
+  {
+    id: "legumes",
+    title: "Légumes",
+    icon: <Salad size={20} />,
+    color: "bg-green-500",
+    textColor: "text-green-500",
+    bgColor: "bg-green-50",
+    hoverBgColor: "hover:bg-green-100",
+    activeBgColor: "bg-green-100"
+  }
+];
+
+interface CategoryCardProps {
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  delay: number;
+}
+
+const CategoryCard: React.FC<CategoryCardProps> = ({ title, description, icon, delay }) => {
+  return (
+    <ScrollReveal delay={delay} direction="up" className="w-full">
+      <div className="h-full bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all hover:translate-y-[-5px] group">
+        <div className="w-14 h-14 rounded-lg bg-brand-orange/10 flex items-center justify-center mb-6 text-brand-orange transition-colors group-hover:bg-brand-orange group-hover:text-white">
+          {icon}
+        </div>
+        <h3 className="text-xl font-bold mb-3 text-gray-900">{title}</h3>
+        <p className="text-gray-600">{description}</p>
+      </div>
+    </ScrollReveal>
+  );
+};
+
+interface ProductProps {
+  id: number;
+  image: string;
+  title: string;
+  brand: string;
+  weight: string;
+  category: string;
+  subcategory?: string;
+  price: number;
+  onAddToCart: (product: { id: number; title: string; image: string; price: number }) => void;
+}
+
+const ProductCard: React.FC<ProductProps> = ({ id, image, title, brand, weight, category, price, onAddToCart }) => {
+  const handleAddToCart = () => {
+    onAddToCart({ id, title, image, price });
+  };
+
+  return (
+    <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all hover:translate-y-[-5px] group">
+      <div className="relative aspect-square overflow-hidden">
+        <img 
+          src={image} 
+          alt={title} 
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        <div className="absolute top-3 right-3 bg-brand-orange text-white text-xs font-medium py-1 px-2 rounded-full">
+          {category}
+        </div>
+      </div>
+      <div className="p-4">
+        <div className="flex justify-between items-center mb-1">
+          <h3 className="font-bold text-gray-900">{title}</h3>
+          <span className="text-brand-orange font-bold">{price.toFixed(2)}€</span>
+        </div>
+        <p className="text-sm text-gray-500 mb-2">{brand}</p>
+        <div className="flex justify-between items-center">
+          <span className="text-sm font-medium">{weight}</span>
+          <div className="flex gap-2 items-center">
+            <span className="text-xs py-1 px-2 bg-gray-100 rounded-full font-medium text-gray-700">Halal</span>
+            <button 
+              onClick={handleAddToCart}
+              className="flex items-center gap-1 bg-brand-orange hover:bg-brand-orange/90 text-white py-1.5 px-3 rounded-lg transition-colors"
+            >
+              <ShoppingCart size={14} />
+              <span className="text-sm">Ajouter</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+interface CategoriesProps {
+  onAddToCart?: (product: { id: number; title: string; image: string; price: number }) => void;
+}
+
+const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
+  const [activeCategory, setActiveCategory] = useState("all");
+  const [activeSubcategory, setActiveSubcategory] = useState("all");
+  
+  // Reset subcategory when category changes
+  useEffect(() => {
+    setActiveSubcategory("all");
+  }, [activeCategory]);
+
+  // Filter products by category and subcategory
   const filteredProducts = (() => {
+    // First filter by main category
     let filtered = activeCategory === "all" 
       ? products 
       : products.filter(product => product.category === activeCategory);
     
-    if (activeCategory === "frozen" && activeSubcategory !== "all") {
-      filtered = filtered.filter(product => product.subcategory === activeSubcategory);
-    }
-    
-    return filtered;
-  })();
-
-  const isEmpty = filteredProducts.length === 0;
-
-  return (
-    <section id="categories" className="py-16 bg-gray-50">
-      <div className="container px-4 mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-3">Nos catégories de produits</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Découvrez notre large gamme de produits Halal de qualité premium. De la viande fraîche aux plats préparés, nous avons tout ce dont vous avez besoin.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => setActiveCategory(category.id)}
-              className={`w-full text-left focus:outline-none ${
-                activeCategory === category.id ? "ring-2 ring-brand-orange" : ""
-              }`}
-            >
-              <CategoryCard
-                title={category.title}
-                description={category.description}
-                icon={category.icon}
-                delay={category.delay}
-              />
-            </button>
-          ))}
-        </div>
-
-        {activeCategory === "frozen" && (
-          <div className="mb-8">
-            <div className="flex flex-wrap items-center gap-3 justify-center md:justify-start">
-              <button
-                onClick={() => setActiveSubcategory("all")}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  activeSubcategory === "all"
-                    ? "bg-gray-900 text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                }`}
-              >
-                Tous
-              </button>
-              {subcategories.map((subcategory) => (
-                <button
-                  key={subcategory.id}
-                  onClick={() => setActiveSubcategory(subcategory.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                    activeSubcategory === subcategory.id
-                      ? subcategory.color + " text-white"
-                      : subcategory.bgColor + " " + subcategory.textColor + " " + subcategory.hoverBgColor
-                  }`}
-                >
-                  {subcategory.icon}
-                  {subcategory.title}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {isEmpty ? (
-            <div className="col-span-full text-center py-16">
-              <div className="text-gray-400 mb-4">
-                <Package size={48} className="mx-auto" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Aucun produit trouvé</h3>
-              <p className="text-gray-600">
-                Aucun produit ne correspond à vos critères de recherche.
-              </p>
-              <button 
-                onClick={() => {
-                  setActiveCategory("all");
-                  setActiveSubcategory("all");
-                }}
-                className="mt-4 px-4 py-2 bg-brand-orange text-white rounded-lg hover:bg-brand-orange/90 transition-colors"
-              >
-                Afficher tous les produits
-              </button>
-            </div>
-          ) : (
-            filteredProducts.map((product) => (
-              <ProductCard 
-                key={product.id}
-                id={product.id}
-                image={product.image}
-                title={product.title}
-                brand={product.brand}
-                weight={product.weight}
-                category={
-                  product.category === "frozen" ? "Surgelé" : 
-                  product.category === "fresh" ? "Frais" : 
-                  product.category === "drinks" ? "Boisson" : product.category
-                }
-                price={product.price}
-                onAddToCart={onAddToCart}
-              />
-            ))
-          )}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-export default Categories;
+    // Then filter by subcategory if in frozen category and subcategory is not "all"
+    if (activeCategory === "frozen" && activeSubcategory !== "all
