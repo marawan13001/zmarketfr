@@ -83,7 +83,7 @@ const Admin = () => {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     // Simple password authentication (in real app, use proper authentication)
-    if (password === 'admin123') {
+    if (password === 'fragment13') {
       setIsAuthenticated(true);
       toast.success('Connexion réussie');
     } else {
