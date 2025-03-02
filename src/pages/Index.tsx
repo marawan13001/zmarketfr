@@ -8,10 +8,9 @@ import Contact from '@/components/home/Contact';
 import Footer from '@/components/layout/Footer';
 import FloatingCart from '@/components/cart/FloatingCart';
 import { toast } from 'sonner';
-import { Snowflake, Clock, MapPin, Truck, ChevronRight } from 'lucide-react';
+import { Snowflake, Clock, MapPin, Truck, ChevronRight, Coffee } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// Sample cart items to display
 const initialCartItems = [
   {
     id: 1,
@@ -29,14 +28,13 @@ const initialCartItems = [
   }
 ];
 
-// WhatsApp settings
-export const WHATSAPP_NUMBER = "0675725897"; // Updated WhatsApp number
+export const WHATSAPP_NUMBER = "0675725897";
 
 const Index = () => {
   const deliveryRef = useRef<HTMLDivElement>(null);
+  const categoriesRef = useRef<HTMLDivElement>(null);
   const [cartItems, setCartItems] = useState(initialCartItems);
 
-  // Notification pour informer de la mise à jour du design
   useEffect(() => {
     setTimeout(() => {
       toast.info(
@@ -58,6 +56,10 @@ const Index = () => {
     deliveryRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const scrollToCategories = () => {
+    categoriesRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const updateCartItemQuantity = (id: number, newQuantity: number) => {
     setCartItems(prevItems => 
       prevItems.map(item => 
@@ -66,21 +68,16 @@ const Index = () => {
     );
   };
 
-  // Ajout de la fonction pour supprimer un produit du panier
   const removeCartItem = (id: number) => {
     setCartItems(prevItems => prevItems.filter(item => item.id !== id));
   };
 
-  // Add item to cart function
   const addToCart = (product: { id: number; title: string; image: string; price: number }) => {
-    // Check if the product is already in the cart
     const existingItem = cartItems.find(item => item.id === product.id);
     
     if (existingItem) {
-      // If already in cart, increase quantity
       updateCartItemQuantity(product.id, existingItem.quantity + 1);
     } else {
-      // Add new item to cart
       setCartItems([...cartItems, {
         id: product.id,
         name: product.title,
@@ -102,12 +99,10 @@ const Index = () => {
     <div className="min-h-screen bg-white overflow-x-hidden w-full">
       <Navbar />
       
-      {/* Mini Page Banner for Frozen Delivery */}
       <div className="bg-brand-orange/10 py-3 w-full">
         <div className="container mx-auto px-4 flex items-center justify-center cursor-pointer" onClick={scrollToDelivery}>
           <div className="flex items-center gap-3 group">
             <div className="flex items-center justify-center bg-white p-2 rounded-full shadow-sm">
-              {/* Option 1: Using custom SVG that exactly matches the provided image */}
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2L12 22" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
                 <path d="M17 5L7 19" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
@@ -125,10 +120,23 @@ const Index = () => {
         </div>
       </div>
       
+      <div className="bg-blue-100 py-3 w-full">
+        <div className="container mx-auto px-4 flex items-center justify-center cursor-pointer" onClick={scrollToCategories}>
+          <div className="flex items-center gap-3 group">
+            <div className="flex items-center justify-center bg-white p-2 rounded-full shadow-sm">
+              <Coffee size={24} className="text-blue-500" />
+            </div>
+            <p className="font-medium text-gray-800">
+              Découvrez nos <span className="text-blue-500">nouvelles boissons Mogu Mogu</span>
+            </p>
+            <span className="text-blue-500 group-hover:translate-x-1 transition-transform">→</span>
+          </div>
+        </div>
+      </div>
+      
       <main className="w-full">
         <Hero />
         
-        {/* Simple Delivery CTA Button right after Hero section */}
         <div className="container mx-auto px-4 py-6 flex justify-center">
           <button 
             onClick={scrollToDelivery}
@@ -140,7 +148,9 @@ const Index = () => {
           </button>
         </div>
         
-        <Categories onAddToCart={addToCart} />
+        <div ref={categoriesRef}>
+          <Categories onAddToCart={addToCart} />
+        </div>
         <div ref={deliveryRef}>
           <HomeDelivery onAddToCart={addToCart} />
         </div>
@@ -149,7 +159,6 @@ const Index = () => {
       </main>
       <Footer />
 
-      {/* Floating Cart Component */}
       <FloatingCart 
         items={cartItems}
         onUpdateQuantity={updateCartItemQuantity}

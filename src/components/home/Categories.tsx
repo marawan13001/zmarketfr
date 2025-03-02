@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { IceCream, Refrigerator, Package, Coffee, ShoppingCart } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
@@ -232,6 +231,96 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
       weight: "160g",
       category: "frozen",
       price: 3.99
+    },
+    {
+      id: 14,
+      image: "/lovable-uploads/d6f4f369-b5a9-424e-9666-32854a6a1a0f.png",
+      title: "Mogu Mogu Pastèque",
+      brand: "Mogu Mogu",
+      weight: "320ml",
+      category: "drinks",
+      price: 2.49
+    },
+    {
+      id: 15,
+      image: "/lovable-uploads/2e6b10c0-52c0-4df5-8de4-ba644d2d1d5d.png",
+      title: "Mogu Mogu Myrtille",
+      brand: "Mogu Mogu",
+      weight: "320ml",
+      category: "drinks",
+      price: 2.49
+    },
+    {
+      id: 16,
+      image: "/lovable-uploads/2a80a5bc-ed23-4f7b-878a-65b63d545001.png",
+      title: "Mogu Mogu Litchi",
+      brand: "Mogu Mogu",
+      weight: "320ml",
+      category: "drinks",
+      price: 2.49
+    },
+    {
+      id: 17,
+      image: "/lovable-uploads/4c35a608-024c-404b-8289-b85a7d567f11.png",
+      title: "Mogu Mogu Fruit de la Passion",
+      brand: "Mogu Mogu",
+      weight: "320ml",
+      category: "drinks",
+      price: 2.49
+    },
+    {
+      id: 18,
+      image: "/lovable-uploads/91da941d-c3fa-4c69-84fd-d97ff502ec3b.png",
+      title: "Mogu Mogu Pêche",
+      brand: "Mogu Mogu",
+      weight: "320ml",
+      category: "drinks",
+      price: 2.49
+    },
+    {
+      id: 19,
+      image: "/lovable-uploads/ac338037-eedc-4e04-b524-a732c404939f.png",
+      title: "Mogu Mogu Coco",
+      brand: "Mogu Mogu",
+      weight: "320ml",
+      category: "drinks",
+      price: 2.49
+    },
+    {
+      id: 20,
+      image: "/lovable-uploads/9575ecb2-4a7c-4f27-aa26-ad2daa24ba12.png",
+      title: "Mogu Mogu Fraise",
+      brand: "Mogu Mogu",
+      weight: "320ml",
+      category: "drinks",
+      price: 2.49
+    },
+    {
+      id: 21,
+      image: "/lovable-uploads/b9b0e0b9-e39d-425d-944c-3ca9abbf8fed.png",
+      title: "Mogu Mogu Melon",
+      brand: "Mogu Mogu",
+      weight: "320ml",
+      category: "drinks",
+      price: 2.49
+    },
+    {
+      id: 22,
+      image: "/lovable-uploads/23b8692e-080c-4ff2-b592-6b8177190c4a.png",
+      title: "Mogu Mogu Mangue",
+      brand: "Mogu Mogu",
+      weight: "320ml",
+      category: "drinks",
+      price: 2.49
+    },
+    {
+      id: 23,
+      image: "/lovable-uploads/79cda79d-be87-476b-83ac-bd55e167e2a6.png",
+      title: "Mogu Mogu Citron",
+      brand: "Mogu Mogu",
+      weight: "320ml",
+      category: "drinks",
+      price: 2.49
     }
   ];
 
