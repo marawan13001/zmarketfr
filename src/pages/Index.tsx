@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/home/Hero';
@@ -31,7 +30,7 @@ const initialCartItems = [
 ];
 
 // WhatsApp settings
-export const WHATSAPP_NUMBER = "+33600000000"; // Replace with your actual WhatsApp number
+export const WHATSAPP_NUMBER = "0675725897"; // Updated WhatsApp number
 
 const Index = () => {
   const deliveryRef = useRef<HTMLDivElement>(null);

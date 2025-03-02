@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -59,7 +58,6 @@ const Commande: React.FC = () => {
   const deliveryFee = subtotal >= 50 ? 0 : 15;
   const total = subtotal + deliveryFee;
 
-  // Generate a random order ID
   const generateOrderId = () => {
     return Math.floor(10000 + Math.random() * 90000).toString(); // 5-digit number
   };
@@ -96,7 +94,6 @@ const Commande: React.FC = () => {
     if (step === 3) {
       const orderId = generateOrderId();
       
-      // Prepare data for WhatsApp notification
       const orderDetails = {
         orderId,
         items: cartItems.map(item => ({
@@ -114,7 +111,6 @@ const Commande: React.FC = () => {
         total
       };
       
-      // Send WhatsApp notification
       sendWhatsAppNotification(orderDetails);
       
       toast.success("Commande confirmée ! Votre livraison est en route.", {
@@ -357,7 +353,7 @@ const Commande: React.FC = () => {
                     <div className="p-4 border border-gray-200 bg-gray-50 rounded-lg">
                       <p className="mb-2 font-medium text-gray-700">Notification au commerçant :</p>
                       <p className="text-sm text-gray-600">
-                        En confirmant cette commande, un message sera envoyé automatiquement au commerçant via WhatsApp ({WHATSAPP_NUMBER}) avec les détails de votre commande pour accélérer le traitement.
+                        En confirmant cette commande, un message sera envoyé automatiquement au commerçant via WhatsApp ({WHATSAPP_NUMBER}) et par email (contact@zmarket.fr) avec les détails de votre commande pour accélérer le traitement.
                       </p>
                     </div>
                   </div>
