@@ -12,7 +12,7 @@ const Footer = () => {
           {/* Column 1: Logo and Description */}
           <div>
             <div className="mb-4">
-              <img src="/lovable-uploads/b198d5d0-a298-4da5-8981-3d139ea2060f.png" alt="Logo Surgelés Express" className="h-12" />
+              <img src="/lovable-uploads/c97b959e-d75d-40fb-8e7d-fca9337435d3.png" alt="Logo Z Market" className="h-12" />
             </div>
             <p className="text-gray-400 mb-4">
               Livraison de produits surgelés de qualité directement à votre porte. Nous garantissons la fraîcheur et la qualité de tous nos produits.
