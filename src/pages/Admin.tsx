@@ -1,10 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
 import { toast } from 'sonner';
-import { ArrowLeft, Save, Lock, ShoppingBag, Settings, LogOut } from 'lucide-react';
+import { ArrowLeft, Save, Lock, ShoppingBag, Settings, LogOut, Plus, Trash } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// Sample product data structure
 interface Product {
   id: number;
   title: string;
@@ -12,6 +10,9 @@ interface Product {
   price: number;
   category: string;
   inStock: boolean;
+  brand?: string;
+  weight?: string;
+  subcategory?: string;
 }
 
 const Admin = () => {
@@ -20,19 +21,18 @@ const Admin = () => {
   const [activeTab, setActiveTab] = useState('products');
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
 
-  // Load products from localStorage on mount
   useEffect(() => {
     const loadProducts = () => {
       setIsLoading(true);
       try {
-        // Try to load products from localStorage
         const savedProducts = localStorage.getItem('admin_products');
+        const savedAllProducts = localStorage.getItem('all_products');
         
         if (savedProducts) {
           setProducts(JSON.parse(savedProducts));
         } else {
-          // If no products exist yet, initialize with some sample data
           const initialProducts: Product[] = [
             {
               id: 1,
@@ -62,6 +62,106 @@ const Admin = () => {
           setProducts(initialProducts);
           localStorage.setItem('admin_products', JSON.stringify(initialProducts));
         }
+
+        if (savedAllProducts) {
+          setAllProducts(JSON.parse(savedAllProducts));
+        } else {
+          const catalogProducts = [
+            {
+              id: 4,
+              title: "Hachis Parmentier",
+              image: "/lovable-uploads/1e7548f5-8859-4e95-b8cb-40cab3d8dd35.png",
+              brand: "Isla Délice",
+              weight: "1kg",
+              category: "frozen",
+              subcategory: "plats",
+              price: 6.99,
+              inStock: true
+            },
+            {
+              id: 5,
+              title: "Lasagnes Bolognaise",
+              image: "/lovable-uploads/d2681e21-da6a-4833-a3ab-0401774b86b8.png",
+              brand: "Isla Délice",
+              weight: "1kg",
+              category: "frozen",
+              subcategory: "plats",
+              price: 7.49,
+              inStock: true
+            },
+            {
+              id: 6,
+              title: "M'Semen",
+              image: "/lovable-uploads/433dd9e5-e599-46c3-8392-fc448937ffc8.png",
+              brand: "Isla Délice",
+              weight: "300g",
+              category: "frozen",
+              subcategory: "plats",
+              price: 4.99,
+              inStock: true
+            },
+            {
+              id: 7,
+              title: "Chili Con Carne",
+              image: "/lovable-uploads/598f2802-d958-4c9f-a399-523b3093bc03.png",
+              brand: "Isla Délice",
+              weight: "350g",
+              category: "fresh",
+              price: 5.49,
+              inStock: true
+            },
+            {
+              id: 8,
+              title: "Poulet Mariné Harissa",
+              image: "/lovable-uploads/2f0beba4-380a-432d-a95c-d2adf30b0af5.png",
+              brand: "Isla Délice",
+              weight: "400g",
+              category: "frozen",
+              subcategory: "viande",
+              price: 6.99,
+              inStock: true
+            },
+            {
+              id: 9,
+              title: "Pizza Kebab",
+              image: "/lovable-uploads/f8882b9d-14ea-4d99-80c5-9e95889b9a08.png",
+              brand: "Isla Délice",
+              weight: "420g",
+              category: "frozen",
+              subcategory: "plats",
+              price: 5.99,
+              inStock: true
+            },
+            {
+              id: 10,
+              title: "Mogu Mogu Pastèque",
+              image: "/lovable-uploads/d6f4f369-b5a9-424e-9666-32854a6a1a0f.png",
+              brand: "Mogu Mogu",
+              weight: "320ml",
+              category: "drinks",
+              price: 2.49,
+              inStock: true
+            },
+            {
+              id: 11,
+              title: "Viande Hachée de Boeuf",
+              image: "/lovable-uploads/3108354e-d4b5-49dd-b5f6-d6745fe8fa76.png",
+              brand: "HALBEEF",
+              weight: "800g",
+              category: "frozen",
+              subcategory: "viande",
+              price: 9.99,
+              inStock: true
+            }
+          ];
+
+          const uniqueProducts = catalogProducts.filter((product, index, self) =>
+            index === self.findIndex((p) => p.id === product.id)
+          );
+          
+          setAllProducts(uniqueProducts);
+          localStorage.setItem('all_products', JSON.stringify(uniqueProducts));
+        }
       } catch (error) {
         console.error("Error loading products:", error);
         toast.error("Erreur lors du chargement des produits");
@@ -73,16 +173,20 @@ const Admin = () => {
     loadProducts();
   }, []);
 
-  // Save products to localStorage whenever they change
   useEffect(() => {
     if (!isLoading && products.length > 0) {
       localStorage.setItem('admin_products', JSON.stringify(products));
     }
   }, [products, isLoading]);
 
+  useEffect(() => {
+    if (!isLoading && allProducts.length > 0) {
+      localStorage.setItem('all_products', JSON.stringify(allProducts));
+    }
+  }, [allProducts, isLoading]);
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simple password authentication (in real app, use proper authentication)
     if (password === 'fragment13') {
       setIsAuthenticated(true);
       toast.success('Connexion réussie');
@@ -106,11 +210,35 @@ const Admin = () => {
       )
     );
     
+    setAllProducts(prevProducts => 
+      prevProducts.map(product => 
+        product.id === productId 
+          ? { ...product, inStock: !product.inStock } 
+          : product
+      )
+    );
+    
     toast.success('État du stock mis à jour');
+  };
+
+  const addProductToAdmin = (product: Product) => {
+    if (products.some(p => p.id === product.id)) {
+      toast.info('Ce produit est déjà dans la liste d\'administration');
+      return;
+    }
+    
+    setProducts(prevProducts => [...prevProducts, product]);
+    toast.success(`"${product.title}" ajouté à la liste d'administration`);
+  };
+
+  const removeProductFromAdmin = (productId: number) => {
+    setProducts(prevProducts => prevProducts.filter(product => product.id !== productId));
+    toast.success('Produit retiré de la liste d\'administration');
   };
 
   const saveChanges = () => {
     localStorage.setItem('admin_products', JSON.stringify(products));
+    localStorage.setItem('all_products', JSON.stringify(allProducts));
     toast.success('Modifications enregistrées');
   };
 
@@ -182,7 +310,6 @@ const Admin = () => {
       </header>
       
       <div className="container mx-auto px-4 py-8 flex flex-col md:flex-row gap-8 flex-1">
-        {/* Sidebar */}
         <div className="md:w-64 shrink-0">
           <div className="bg-white rounded-lg shadow-sm overflow-hidden">
             <div className="p-4 border-b">
@@ -201,6 +328,17 @@ const Admin = () => {
                 Gestion des produits
               </button>
               <button
+                onClick={() => setActiveTab('catalog')}
+                className={`w-full text-left px-4 py-2 rounded-md flex items-center ${
+                  activeTab === 'catalog' 
+                    ? 'bg-brand-orange/10 text-brand-orange font-medium' 
+                    : 'text-gray-700 hover:bg-gray-100'
+                }`}
+              >
+                <ShoppingBag className="h-4 w-4 mr-3" />
+                Catalogue complet
+              </button>
+              <button
                 onClick={() => setActiveTab('settings')}
                 className={`w-full text-left px-4 py-2 rounded-md flex items-center ${
                   activeTab === 'settings' 
@@ -215,7 +353,6 @@ const Admin = () => {
           </div>
         </div>
         
-        {/* Main content area */}
         <div className="flex-1 bg-white rounded-lg shadow-sm overflow-hidden">
           {activeTab === 'products' && (
             <div>
@@ -267,14 +404,17 @@ const Admin = () => {
                                 </div>
                                 <div className="ml-4">
                                   <div className="text-sm font-medium text-gray-900">{product.title}</div>
+                                  {product.brand && <div className="text-xs text-gray-500">{product.brand}</div>}
                                 </div>
                               </div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="text-sm text-gray-500">{product.category}</div>
+                              {product.subcategory && <div className="text-xs text-gray-400">{product.subcategory}</div>}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="text-sm text-gray-900">{product.price.toFixed(2)} €</div>
+                              {product.weight && <div className="text-xs text-gray-500">{product.weight}</div>}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
@@ -286,16 +426,127 @@ const Admin = () => {
                               </span>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <button
-                                onClick={() => toggleProductStock(product.id)}
-                                className={`${
-                                  product.inStock 
-                                    ? 'bg-red-50 text-red-600 hover:bg-red-100' 
-                                    : 'bg-green-50 text-green-600 hover:bg-green-100'
-                                } px-3 py-1 rounded-md transition-colors`}
-                              >
-                                {product.inStock ? 'Marquer en rupture' : 'Remettre en stock'}
-                              </button>
+                              <div className="flex justify-end gap-2">
+                                <button
+                                  onClick={() => toggleProductStock(product.id)}
+                                  className={`${
+                                    product.inStock 
+                                      ? 'bg-red-50 text-red-600 hover:bg-red-100' 
+                                      : 'bg-green-50 text-green-600 hover:bg-green-100'
+                                  } px-3 py-1 rounded-md transition-colors text-xs`}
+                                >
+                                  {product.inStock ? 'Marquer en rupture' : 'Remettre en stock'}
+                                </button>
+                                <button
+                                  onClick={() => removeProductFromAdmin(product.id)}
+                                  className="bg-gray-50 text-gray-600 hover:bg-gray-100 px-3 py-1 rounded-md transition-colors text-xs flex items-center"
+                                >
+                                  <Trash size={14} className="mr-1" />
+                                  Retirer
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+          
+          {activeTab === 'catalog' && (
+            <div>
+              <div className="p-4 border-b flex justify-between items-center">
+                <h2 className="font-medium text-gray-800">Catalogue complet des produits</h2>
+                <button
+                  onClick={saveChanges}
+                  className="bg-brand-orange hover:bg-brand-orange/90 text-white px-4 py-2 rounded-md flex items-center text-sm transition-colors"
+                >
+                  <Save className="h-4 w-4 mr-2" />
+                  Enregistrer
+                </button>
+              </div>
+              
+              <div className="p-4">
+                {isLoading ? (
+                  <div className="flex justify-center py-8">
+                    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-brand-orange"></div>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="min-w-full divide-y divide-gray-200">
+                      <thead className="bg-gray-50">
+                        <tr>
+                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Produit
+                          </th>
+                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Catégorie
+                          </th>
+                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Prix
+                          </th>
+                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Stock
+                          </th>
+                          <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Actions
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="bg-white divide-y divide-gray-200">
+                        {allProducts.map((product) => (
+                          <tr key={product.id}>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="flex items-center">
+                                <div className="flex-shrink-0 h-10 w-10">
+                                  <img className="h-10 w-10 rounded-md object-cover" src={product.image} alt={product.title} />
+                                </div>
+                                <div className="ml-4">
+                                  <div className="text-sm font-medium text-gray-900">{product.title}</div>
+                                  {product.brand && <div className="text-xs text-gray-500">{product.brand}</div>}
+                                </div>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm text-gray-500">{product.category}</div>
+                              {product.subcategory && <div className="text-xs text-gray-400">{product.subcategory}</div>}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm text-gray-900">{product.price.toFixed(2)} €</div>
+                              {product.weight && <div className="text-xs text-gray-500">{product.weight}</div>}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                                product.inStock 
+                                  ? 'bg-green-100 text-green-800' 
+                                  : 'bg-red-100 text-red-800'
+                              }`}>
+                                {product.inStock ? 'En stock' : 'Rupture'}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                              <div className="flex justify-end gap-2">
+                                <button
+                                  onClick={() => toggleProductStock(product.id)}
+                                  className={`${
+                                    product.inStock 
+                                      ? 'bg-red-50 text-red-600 hover:bg-red-100' 
+                                      : 'bg-green-50 text-green-600 hover:bg-green-100'
+                                  } px-3 py-1 rounded-md transition-colors text-xs`}
+                                >
+                                  {product.inStock ? 'Marquer en rupture' : 'Remettre en stock'}
+                                </button>
+                                <button
+                                  onClick={() => addProductToAdmin(product)}
+                                  className="bg-brand-orange/10 text-brand-orange hover:bg-brand-orange/20 px-3 py-1 rounded-md transition-colors text-xs flex items-center"
+                                >
+                                  <Plus size={14} className="mr-1" />
+                                  Ajouter à la liste
+                                </button>
+                              </div>
                             </td>
                           </tr>
                         ))}
