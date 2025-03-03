@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/home/Hero';
@@ -146,7 +147,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white overflow-x-hidden w-full">
+    <div className="min-h-screen bg-white w-full">
       <div className="bg-brand-orange/10 py-3 w-full">
         <div className="container mx-auto px-4 flex items-center justify-center cursor-pointer" onClick={scrollToDelivery}>
           <div className="flex items-center gap-3 group">

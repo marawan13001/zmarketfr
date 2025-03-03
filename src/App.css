@@ -9,11 +9,18 @@
   overflow-x: hidden;
 }
 
-/* Ensure no horizontal scrolling */
+/* Ensure no horizontal scrolling and fix the black bar at the top */
 html, body {
   overflow-x: hidden;
   width: 100%;
   position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background-color: white;
 }
 
 /* Keep the rest of the original styles */
