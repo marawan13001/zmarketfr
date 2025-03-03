@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,7 +8,6 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/contexts/AuthContext';
 import { Mail, Lock, User, ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 const Auth: React.FC = () => {
   const location = useLocation();
@@ -80,12 +79,21 @@ const Auth: React.FC = () => {
           Retour à l'accueil
         </Link>
         
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle className="text-2xl text-center">
+        {/* Logo */}
+        <div className="w-full flex justify-center mb-6">
+          <img 
+            src="/placeholder.svg" 
+            alt="Logo" 
+            className="h-16 w-auto"
+          />
+        </div>
+        
+        <Card className="w-full shadow-lg border-brand-orange/10">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-2xl text-center font-bold text-brand-dark">
               {activeTab === 'login' ? 'Connexion' : 'Créer un compte'}
             </CardTitle>
-            <CardDescription className="text-center">
+            <CardDescription className="text-center text-gray-600">
               {activeTab === 'login' 
                 ? 'Connectez-vous pour accéder à votre compte' 
                 : 'Inscrivez-vous pour profiter de nos services'}
@@ -98,23 +106,27 @@ const Auth: React.FC = () => {
           </CardHeader>
           
           <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="login">Connexion</TabsTrigger>
-              <TabsTrigger value="register">Inscription</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 mb-2">
+              <TabsTrigger value="login" className="data-[state=active]:bg-brand-orange data-[state=active]:text-white">
+                Connexion
+              </TabsTrigger>
+              <TabsTrigger value="register" className="data-[state=active]:bg-brand-orange data-[state=active]:text-white">
+                Inscription
+              </TabsTrigger>
             </TabsList>
             
             <TabsContent value="login">
               <form onSubmit={handleLogin}>
-                <CardContent className="space-y-4 pt-6">
+                <CardContent className="space-y-4 pt-4">
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="email" className="text-gray-700">Email</Label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-3 text-gray-400" size={16} />
                       <Input 
                         id="email" 
                         type="email" 
                         placeholder="votre@email.com" 
-                        className="pl-10"
+                        className="pl-10 border-gray-300 focus:border-brand-orange focus:ring-brand-orange"
                         value={loginEmail}
                         onChange={(e) => setLoginEmail(e.target.value)}
                         required
@@ -124,7 +136,7 @@ const Auth: React.FC = () => {
                   
                   <div className="space-y-2">
                     <div className="flex justify-between">
-                      <Label htmlFor="password">Mot de passe</Label>
+                      <Label htmlFor="password" className="text-gray-700">Mot de passe</Label>
                       <a href="#" className="text-xs text-brand-orange hover:underline">
                         Mot de passe oublié?
                       </a>
@@ -135,7 +147,7 @@ const Auth: React.FC = () => {
                         id="password" 
                         type="password" 
                         placeholder="••••••••" 
-                        className="pl-10"
+                        className="pl-10 border-gray-300 focus:border-brand-orange focus:ring-brand-orange"
                         value={loginPassword}
                         onChange={(e) => setLoginPassword(e.target.value)}
                         required
@@ -147,7 +159,7 @@ const Auth: React.FC = () => {
                 <CardFooter>
                   <Button 
                     type="submit" 
-                    className="w-full bg-brand-orange hover:bg-brand-orange/90"
+                    className="w-full bg-brand-orange hover:bg-brand-orange/90 font-medium transition-all"
                     disabled={isLoading}
                   >
                     {isLoading ? 'Connexion en cours...' : 'Se connecter'}
@@ -158,16 +170,16 @@ const Auth: React.FC = () => {
             
             <TabsContent value="register">
               <form onSubmit={handleRegister}>
-                <CardContent className="space-y-4 pt-6">
+                <CardContent className="space-y-4 pt-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="firstName">Prénom</Label>
+                      <Label htmlFor="firstName" className="text-gray-700">Prénom</Label>
                       <div className="relative">
                         <User className="absolute left-3 top-3 text-gray-400" size={16} />
                         <Input 
                           id="firstName" 
                           placeholder="Prénom" 
-                          className="pl-10"
+                          className="pl-10 border-gray-300 focus:border-brand-orange focus:ring-brand-orange"
                           value={registerFirstName}
                           onChange={(e) => setRegisterFirstName(e.target.value)}
                           required
@@ -176,10 +188,11 @@ const Auth: React.FC = () => {
                     </div>
                     
                     <div className="space-y-2">
-                      <Label htmlFor="lastName">Nom</Label>
+                      <Label htmlFor="lastName" className="text-gray-700">Nom</Label>
                       <Input 
                         id="lastName" 
                         placeholder="Nom" 
+                        className="border-gray-300 focus:border-brand-orange focus:ring-brand-orange"
                         value={registerLastName}
                         onChange={(e) => setRegisterLastName(e.target.value)}
                         required
@@ -188,14 +201,14 @@ const Auth: React.FC = () => {
                   </div>
                   
                   <div className="space-y-2">
-                    <Label htmlFor="registerEmail">Email</Label>
+                    <Label htmlFor="registerEmail" className="text-gray-700">Email</Label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-3 text-gray-400" size={16} />
                       <Input 
                         id="registerEmail" 
                         type="email" 
                         placeholder="votre@email.com" 
-                        className="pl-10"
+                        className="pl-10 border-gray-300 focus:border-brand-orange focus:ring-brand-orange"
                         value={registerEmail}
                         onChange={(e) => setRegisterEmail(e.target.value)}
                         required
@@ -204,14 +217,14 @@ const Auth: React.FC = () => {
                   </div>
                   
                   <div className="space-y-2">
-                    <Label htmlFor="registerPassword">Mot de passe</Label>
+                    <Label htmlFor="registerPassword" className="text-gray-700">Mot de passe</Label>
                     <div className="relative">
                       <Lock className="absolute left-3 top-3 text-gray-400" size={16} />
                       <Input 
                         id="registerPassword" 
                         type="password" 
                         placeholder="••••••••" 
-                        className="pl-10"
+                        className="pl-10 border-gray-300 focus:border-brand-orange focus:ring-brand-orange"
                         value={registerPassword}
                         onChange={(e) => setRegisterPassword(e.target.value)}
                         required
@@ -227,7 +240,7 @@ const Auth: React.FC = () => {
                 <CardFooter>
                   <Button 
                     type="submit" 
-                    className="w-full bg-brand-orange hover:bg-brand-orange/90"
+                    className="w-full bg-brand-orange hover:bg-brand-orange/90 font-medium transition-all"
                     disabled={isLoading}
                   >
                     {isLoading ? 'Inscription en cours...' : 'S\'inscrire'}
