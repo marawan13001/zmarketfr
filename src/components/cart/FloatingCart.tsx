@@ -1,9 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
 import { ShoppingCart, X, ChevronUp, ChevronDown, Trash2, AlertTriangle, Info } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import { StockItem } from '@/components/admin/types';
 
 export interface CartItem {
   id: number;
@@ -17,7 +17,7 @@ interface FloatingCartProps {
   items: CartItem[];
   onUpdateQuantity?: (id: number, newQuantity: number) => void;
   onRemoveItem?: (id: number) => void;
-  stockItems?: Array<{id: number, inStock: boolean, quantity: number}>;
+  stockItems?: StockItem[];
 }
 
 const FloatingCart: React.FC<FloatingCartProps> = ({ 
@@ -32,7 +32,6 @@ const FloatingCart: React.FC<FloatingCartProps> = ({
     setIsOpen(!isOpen);
   };
 
-  // Sync cart items with localStorage
   useEffect(() => {
     if (items.length > 0) {
       localStorage.setItem("cartItems", JSON.stringify(items));
@@ -94,7 +93,6 @@ const FloatingCart: React.FC<FloatingCartProps> = ({
       "fixed bottom-6 right-6 z-50 flex flex-col items-end",
       isOpen ? "w-80" : "w-auto"
     )}>
-      {/* Floating Button */}
       <button
         onClick={toggleCart}
         className="flex items-center gap-2 bg-brand-orange text-white p-4 rounded-full shadow-lg hover:bg-brand-orange/90 transition-all"
@@ -108,7 +106,6 @@ const FloatingCart: React.FC<FloatingCartProps> = ({
         )}
       </button>
 
-      {/* Cart Panel */}
       {isOpen && (
         <div className="bg-white rounded-lg shadow-xl w-full mt-4 overflow-hidden border border-gray-200 animate-in slide-in-from-bottom-10 duration-300">
           <div className="flex items-center justify-between p-4 border-b">
