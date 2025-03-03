@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/home/Hero';
@@ -16,8 +17,15 @@ const Index = () => {
   const deliveryRef = useRef<HTMLDivElement>(null);
   const categoriesRef = useRef<HTMLDivElement>(null);
   const [cartItems, setCartItems] = useState([]);
+  const [stockItems, setStockItems] = useState([]);
 
   useEffect(() => {
+    // Load stock status from localStorage if available
+    const savedStock = localStorage.getItem("stockItems");
+    if (savedStock) {
+      setStockItems(JSON.parse(savedStock));
+    }
+
     setTimeout(() => {
       toast.info(
         <div>
@@ -90,6 +98,18 @@ const Index = () => {
   };
 
   const addToCart = (product: { id: number; title: string; image: string; price: number }) => {
+    // Check if product is in stock before adding to cart
+    const stockItem = stockItems.find(item => item.id === product.id);
+    if (stockItem && !stockItem.inStock) {
+      toast.error(
+        <div className="flex items-center gap-2">
+          <span className="font-medium">{product.title}</span> est actuellement épuisé
+        </div>,
+        { duration: 3000 }
+      );
+      return;
+    }
+
     const existingItem = cartItems.find(item => item.id === product.id);
     
     if (existingItem) {
@@ -152,11 +172,11 @@ const Index = () => {
         </div>
         
         <div ref={categoriesRef}>
-          <Categories onAddToCart={addToCart} />
+          <Categories onAddToCart={addToCart} stockItems={stockItems} />
         </div>
         
         <div id="livraison" ref={deliveryRef}>
-          <HomeDelivery onAddToCart={addToCart} />
+          <HomeDelivery onAddToCart={addToCart} stockItems={stockItems} />
         </div>
         
         <About />
