@@ -8,6 +8,7 @@ import { sendWhatsAppNotification } from '@/utils/whatsappNotification';
 import { WHATSAPP_NUMBER } from '@/pages/Index';
 import { useLocation } from 'react-router-dom';
 import StripePaymentForm from '@/components/payment/StripePaymentForm';
+import { StockItem } from '@/components/admin/types';
 
 interface CartItem {
   id: number;
@@ -16,12 +17,6 @@ interface CartItem {
   price: number;
   quantity: number;
   inStock?: boolean;
-}
-
-interface StockItem {
-  id: number;
-  title: string;
-  inStock: boolean;
 }
 
 const Commande: React.FC = () => {

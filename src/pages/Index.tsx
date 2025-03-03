@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/home/Hero';
@@ -10,6 +9,7 @@ import Footer from '@/components/layout/Footer';
 import FloatingCart from '@/components/cart/FloatingCart';
 import { toast } from 'sonner';
 import { Truck, ChevronRight } from 'lucide-react';
+import { StockItem } from '@/components/admin/types';
 
 export const WHATSAPP_NUMBER = "0675725897";
 
@@ -17,7 +17,7 @@ const Index = () => {
   const deliveryRef = useRef<HTMLDivElement>(null);
   const categoriesRef = useRef<HTMLDivElement>(null);
   const [cartItems, setCartItems] = useState([]);
-  const [stockItems, setStockItems] = useState([]);
+  const [stockItems, setStockItems] = useState<StockItem[]>([]);
 
   useEffect(() => {
     // Load stock items from localStorage
@@ -107,6 +107,17 @@ const Index = () => {
     let updatedItems;
     
     if (existingItem) {
+      // Check if adding one more would exceed stock
+      if (stockItem && existingItem.quantity >= stockItem.quantity) {
+        toast.error(
+          <div className="flex items-center gap-2">
+            <span className="font-medium">Maximum disponible: {stockItem.quantity}</span>
+          </div>,
+          { duration: 3000 }
+        );
+        return;
+      }
+      
       updatedItems = cartItems.map(item => 
         item.id === product.id 
           ? { ...item, quantity: item.quantity + 1 } 
