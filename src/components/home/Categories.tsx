@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { IceCream, Refrigerator, Package, Coffee, ShoppingCart, Beef, Salad, UtensilsCrossed, Utensils } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
@@ -708,3 +709,185 @@ export const products = [
       brand: "CENNET",
       weight: "470g",
       category: "epices",
+      subcategory: "epices",
+      price: 4.49
+    }
+];
+
+interface CategoriesProps {
+  onAddToCart: (product: { id: number; title: string; image: string; price: number }) => void;
+  stockItems: any[];
+}
+
+const Categories: React.FC<CategoriesProps> = ({ onAddToCart, stockItems }) => {
+  const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
+  const [filteredProducts, setFilteredProducts] = useState(products);
+  
+  useEffect(() => {
+    filterProducts(activeCategory, activeSubcategory);
+  }, [activeCategory, activeSubcategory, stockItems]);
+  
+  const filterProducts = (category: string, subcategory: string | null) => {
+    let filtered = products;
+    
+    if (category !== 'all') {
+      filtered = filtered.filter(product => product.category === category);
+    }
+    
+    if (subcategory) {
+      filtered = filtered.filter(product => product.subcategory === subcategory);
+    }
+    
+    setFilteredProducts(filtered);
+  };
+  
+  const handleCategoryClick = (category: string) => {
+    setActiveCategory(category);
+    setActiveSubcategory(null);
+  };
+  
+  const handleSubcategoryClick = (subcategory: string) => {
+    setActiveSubcategory(subcategory === activeSubcategory ? null : subcategory);
+  };
+  
+  const categories = [
+    { id: 'all', name: 'Tous les produits', icon: <ShoppingCart className="w-5 h-5" /> },
+    { id: 'frozen', name: 'Surgelés', icon: <IceCream className="w-5 h-5" /> },
+    { id: 'fresh', name: 'Frais', icon: <Refrigerator className="w-5 h-5" /> },
+    { id: 'drinks', name: 'Boissons', icon: <Coffee className="w-5 h-5" /> },
+    { id: 'epices', name: 'Épices', icon: <Utensils className="w-5 h-5" /> }
+  ];
+  
+  const subcategories: Record<string, { id: string; name: string; icon: React.ReactNode }[]> = {
+    frozen: [
+      { id: 'viande', name: 'Viandes', icon: <Beef className="w-5 h-5" /> },
+      { id: 'plats', name: 'Plats préparés', icon: <UtensilsCrossed className="w-5 h-5" /> },
+      { id: 'legumes', name: 'Légumes', icon: <Salad className="w-5 h-5" /> }
+    ],
+    epices: [
+      { id: 'epices', name: 'Épices', icon: <Package className="w-5 h-5" /> }
+    ]
+  };
+
+  // Function to check if a product is in stock
+  const isProductInStock = (productId: number) => {
+    const stockItem = stockItems.find(item => item.id === productId);
+    if (stockItem && !stockItem.inStock) {
+      return false;
+    }
+    return true;
+  };
+  
+  return (
+    <section id="categories" className="py-16 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <ScrollReveal>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+            Nos <span className="text-brand-orange">Produits</span>
+          </h2>
+        </ScrollReveal>
+        
+        {/* Categories tabs */}
+        <ScrollReveal>
+          <div className="flex overflow-x-auto pb-4 mb-8 gap-2 md:justify-center">
+            {categories.map(category => (
+              <button
+                key={category.id}
+                data-category={category.id}
+                onClick={() => handleCategoryClick(category.id)}
+                className={`flex items-center whitespace-nowrap px-4 py-3 rounded-full transition-colors ${
+                  activeCategory === category.id
+                    ? 'bg-brand-orange text-white font-medium'
+                    : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
+                }`}
+              >
+                <div className="mr-2">{category.icon}</div>
+                {category.name}
+              </button>
+            ))}
+          </div>
+        </ScrollReveal>
+        
+        {/* Subcategories */}
+        {activeCategory !== 'all' && subcategories[activeCategory] && (
+          <ScrollReveal>
+            <div className="flex overflow-x-auto pb-4 mb-8 gap-2 md:justify-center">
+              {subcategories[activeCategory].map(subcategory => (
+                <button
+                  key={subcategory.id}
+                  data-subcategory={subcategory.id}
+                  onClick={() => handleSubcategoryClick(subcategory.id)}
+                  className={`flex items-center whitespace-nowrap px-4 py-2 rounded-full transition-colors ${
+                    activeSubcategory === subcategory.id
+                      ? 'bg-gray-800 text-white font-medium'
+                      : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
+                  }`}
+                >
+                  <div className="mr-2">{subcategory.icon}</div>
+                  {subcategory.name}
+                </button>
+              ))}
+            </div>
+          </ScrollReveal>
+        )}
+        
+        {/* Products grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 lg:gap-6">
+          {filteredProducts.map(product => (
+            <ScrollReveal key={product.id}>
+              <div className="relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow p-2 border border-gray-100">
+                {/* Out of stock overlay */}
+                {!isProductInStock(product.id) && (
+                  <div className="absolute inset-0 bg-black/60 flex items-center justify-center z-10 rounded-xl">
+                    <div className="bg-red-600 text-white px-3 py-1 rounded-full text-sm font-medium transform -rotate-3">
+                      Rupture de stock
+                    </div>
+                  </div>
+                )}
+                
+                <div className="relative pt-[100%] mb-3">
+                  <img 
+                    src={product.image} 
+                    alt={product.title} 
+                    className="absolute inset-0 w-full h-full object-contain p-4"
+                  />
+                </div>
+                
+                <div className="px-2">
+                  <h3 className="font-medium text-gray-900 text-sm mb-1 line-clamp-2 min-h-[2.5rem]">
+                    {product.title}
+                  </h3>
+                  
+                  <div className="text-xs text-gray-500 mb-2">
+                    {product.brand} • {product.weight}
+                  </div>
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="text-brand-orange font-bold">
+                      {product.price.toFixed(2)} €
+                    </div>
+                    
+                    <button
+                      onClick={() => onAddToCart(product)}
+                      disabled={!isProductInStock(product.id)}
+                      className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
+                        isProductInStock(product.id)
+                          ? 'bg-brand-orange text-white hover:bg-brand-orange/90'
+                          : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                      }`}
+                    >
+                      Ajouter
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Categories;
