@@ -110,6 +110,11 @@ export default {
 				'pulse-slow': {
 					'0%, 100%': { opacity: '1' },
 					'50%': { opacity: '0.8' }
+				},
+				'scale-bounce': {
+					'0%': { transform: 'scale(1)' },
+					'50%': { transform: 'scale(1.15)' },
+					'100%': { transform: 'scale(1)' }
 				}
 			},
 			animation: {
@@ -119,7 +124,8 @@ export default {
 				'fade-in-up': 'fade-in-up 0.7s ease-out',
 				'fade-in-down': 'fade-in-down 0.7s ease-out',
 				'float': 'float 6s ease-in-out infinite',
-				'pulse-slow': 'pulse-slow 3s ease-in-out infinite'
+				'pulse-slow': 'pulse-slow 3s ease-in-out infinite',
+				'scale-bounce': 'scale-bounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
 			},
 			transitionTimingFunction: {
 				'elastic': 'cubic-bezier(0.76, 0, 0.24, 1)',

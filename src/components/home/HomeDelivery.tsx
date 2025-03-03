@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Truck, Clock, ShoppingCart, ChevronRight, MapPin, Calendar } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
@@ -51,6 +50,16 @@ const HomeDelivery: React.FC<HomeDeliveryProps> = ({ onAddToCart = () => {}, sto
   };
 
   const handleAddToCart = (product: Product) => {
+    const button = document.querySelector(`button[data-product-id="${product.id}"]`);
+    
+    if (button) {
+      button.classList.add('animate-scale-bounce');
+      
+      setTimeout(() => {
+        button.classList.remove('animate-scale-bounce');
+      }, 500);
+    }
+    
     onAddToCart({
       id: product.id,
       title: product.title,
@@ -220,6 +229,7 @@ const HomeDelivery: React.FC<HomeDeliveryProps> = ({ onAddToCart = () => {}, sto
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-500">{product.unit}</span>
                       <button 
+                        data-product-id={product.id}
                         onClick={() => handleAddToCart(product)}
                         className={`flex items-center gap-2 ${isProductInStock(product.id) ? 'bg-brand-orange hover:bg-brand-orange/90 transform transition-transform duration-300 group-hover:scale-105' : 'bg-gray-300 cursor-not-allowed'} text-white py-2 px-4 rounded-lg transition-colors`}
                         disabled={!isProductInStock(product.id)}

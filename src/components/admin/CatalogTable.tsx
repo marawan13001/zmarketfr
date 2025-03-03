@@ -38,6 +38,25 @@ const CatalogTable: React.FC<CatalogTableProps> = ({
   toggleSort, 
   addToAdminProducts 
 }) => {
+  // Function to handle button click with animation
+  const handleAddClick = (product: Product) => {
+    // Find the button element that was clicked
+    const button = document.querySelector(`button[data-product-id="${product.id}"]`);
+    
+    // Add animation class
+    if (button) {
+      button.classList.add('animate-scale-bounce');
+      
+      // Remove animation class after animation completes
+      setTimeout(() => {
+        button.classList.remove('animate-scale-bounce');
+      }, 500);
+    }
+    
+    // Call the original function
+    addToAdminProducts(product);
+  };
+
   // Fonction pour obtenir la couleur de badge selon la catégorie
   const getCategoryBadgeColor = (category: string) => {
     switch (category) {
@@ -137,9 +156,11 @@ const CatalogTable: React.FC<CatalogTableProps> = ({
               </TableCell>
               <TableCell>
                 <Button 
+                  data-product-id={product.id}
                   variant="outline" 
                   size="sm"
-                  onClick={() => addToAdminProducts(product)}
+                  onClick={() => handleAddClick(product)}
+                  className="transition-all duration-200"
                 >
                   <PlusCircle size={16} className="mr-1" />
                   Ajouter
