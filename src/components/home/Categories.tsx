@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
-import { IceCream, Refrigerator, Package, Coffee, ShoppingCart, Beef, Salad, UtensilsCrossed } from 'lucide-react';
+import { IceCream, Refrigerator, Package, Coffee, ShoppingCart, Beef, Salad, UtensilsCrossed, Utensils } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
 import { toast } from 'sonner';
 
@@ -561,269 +560,151 @@ export const products = [
       category: "frozen",
       subcategory: "legumes",
       price: 3.49
-    }
-  ];
-
-export const categories = [
-  {
-    id: "all",
-    title: "Tous les produits",
-    description: "Notre sélection complète de produits Halal premium pour tous les goûts.",
-    icon: <Package size={28} />,
-    delay: 100
-  },
-  {
-    id: "frozen",
-    title: "Produits Surgelés",
-    description: "Une large gamme de produits surgelés Halal de qualité premium pour tous les goûts.",
-    icon: <IceCream size={28} />,
-    delay: 200
-  },
-  {
-    id: "fresh",
-    title: "Produits Frais",
-    description: "Des produits frais sélectionnés avec soin pour garantir fraîcheur et qualité.",
-    icon: <Refrigerator size={28} />,
-    delay: 300
-  },
-  {
-    id: "drinks",
-    title: "Boissons",
-    description: "Un choix varié de boissons pour accompagner vos repas et moments de détente.",
-    icon: <Coffee size={28} />,
-    delay: 400
-  }
-];
-
-export const subcategories = [
-  {
-    id: "viande",
-    title: "Viandes",
-    icon: <Beef size={20} />,
-    color: "bg-red-500",
-    textColor: "text-red-500",
-    bgColor: "bg-red-50",
-    hoverBgColor: "hover:bg-red-100",
-    activeBgColor: "bg-red-100"
-  },
-  {
-    id: "plats",
-    title: "Plats Cuisinés",
-    icon: <UtensilsCrossed size={20} />,
-    color: "bg-amber-500",
-    textColor: "text-amber-500",
-    bgColor: "bg-amber-50",
-    hoverBgColor: "hover:bg-amber-100",
-    activeBgColor: "bg-amber-100"
-  },
-  {
-    id: "legumes",
-    title: "Légumes",
-    icon: <Salad size={20} />,
-    color: "bg-green-500",
-    textColor: "text-green-500",
-    bgColor: "bg-green-50",
-    hoverBgColor: "hover:bg-green-100",
-    activeBgColor: "bg-green-100"
-  }
-];
-
-interface CategoryCardProps {
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-  delay: number;
-}
-
-const CategoryCard: React.FC<CategoryCardProps> = ({ title, description, icon, delay }) => {
-  return (
-    <ScrollReveal delay={delay} direction="up" className="w-full">
-      <div className="h-full bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all hover:translate-y-[-5px] group">
-        <div className="w-14 h-14 rounded-lg bg-brand-orange/10 flex items-center justify-center mb-6 text-brand-orange transition-colors group-hover:bg-brand-orange group-hover:text-white">
-          {icon}
-        </div>
-        <h3 className="text-xl font-bold mb-3 text-gray-900">{title}</h3>
-        <p className="text-gray-600">{description}</p>
-      </div>
-    </ScrollReveal>
-  );
-};
-
-interface ProductProps {
-  id: number;
-  image: string;
-  title: string;
-  brand: string;
-  weight: string;
-  category: string;
-  subcategory?: string;
-  price: number;
-  onAddToCart: (product: { id: number; title: string; image: string; price: number }) => void;
-  inStock?: boolean;
-}
-
-const ProductCard: React.FC<ProductProps> = ({ id, image, title, brand, weight, category, price, onAddToCart, inStock = true }) => {
-  const handleAddToCart = () => {
-    onAddToCart({ id, title, image, price });
-  };
-
-  return (
-    <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all hover:translate-y-[-5px] group">
-      <div className="relative aspect-square overflow-hidden">
-        <img 
-          src={image} 
-          alt={title} 
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-        <div className="absolute top-3 right-3 bg-brand-orange text-white text-xs font-medium py-1 px-2 rounded-full">
-          {category}
-        </div>
-        {!inStock && (
-          <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-            <span className="bg-red-500 text-white text-sm font-medium px-2 py-1 rounded">
-              Rupture de stock
-            </span>
-          </div>
-        )}
-      </div>
-      <div className="p-4">
-        <div className="flex justify-between items-center mb-1">
-          <h3 className="font-bold text-gray-900">{title}</h3>
-          <span className="text-brand-orange font-bold">{price.toFixed(2)}€</span>
-        </div>
-        <p className="text-sm text-gray-500 mb-2">{brand}</p>
-        <div className="flex justify-between items-center">
-          <span className="text-sm font-medium">{weight}</span>
-          <div className="flex gap-2 items-center">
-            <span className="text-xs py-1 px-2 bg-gray-100 rounded-full font-medium text-gray-700">Halal</span>
-            <button 
-              onClick={handleAddToCart}
-              className={`flex items-center gap-1 ${inStock ? 'bg-brand-orange hover:bg-brand-orange/90' : 'bg-gray-300 cursor-not-allowed'} text-white py-1.5 px-3 rounded-lg transition-colors`}
-              disabled={!inStock}
-            >
-              <ShoppingCart size={14} />
-              <span className="text-sm">Ajouter</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-interface CategoriesProps {
-  onAddToCart?: (product: { id: number; title: string; image: string; price: number }) => void;
-  stockItems?: Array<{id: number, inStock: boolean}>;
-}
-
-const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {}, stockItems = [] }) => {
-  const [activeCategory, setActiveCategory] = useState("all");
-  const [activeSubcategory, setActiveSubcategory] = useState("all");
-  
-  useEffect(() => {
-    setActiveSubcategory("all");
-  }, [activeCategory]);
-
-  const filteredProducts = (() => {
-    let filtered = activeCategory === "all" 
-      ? products 
-      : products.filter(product => product.category === activeCategory);
-    
-    if (activeCategory === "frozen" && activeSubcategory !== "all") {
-      filtered = filtered.filter(product => product.subcategory === activeSubcategory);
-    }
-    
-    return filtered;
-  })();
-
-  const isProductInStock = (productId: number) => {
-    const stockItem = stockItems.find(item => item.id === productId);
-    return stockItem ? stockItem.inStock : true;
-  };
-
-  const handleAddToCart = (product: { id: number; title: string; image: string; price: number }) => {
-    onAddToCart(product);
-    toast.success(`${product.title} ajouté au panier`);
-  };
-
-  return (
-    <section id="produits" className="py-16 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Nos <span className="text-brand-orange">Produits</span></h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Découvrez notre large gamme de produits halal soigneusement sélectionnés pour vous offrir le meilleur de la gastronomie.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {categories.map((category) => (
-            <div 
-              key={category.id}
-              onClick={() => setActiveCategory(category.id)}
-              className="cursor-pointer"
-              data-category={category.id}
-            >
-              <CategoryCard 
-                title={category.title}
-                description={category.description}
-                icon={category.icon}
-                delay={category.delay}
-              />
-            </div>
-          ))}
-        </div>
-
-        {activeCategory === "frozen" && (
-          <div className="flex flex-wrap gap-2 mb-8 justify-center">
-            <button
-              onClick={() => setActiveSubcategory("all")}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                activeSubcategory === "all" 
-                  ? "bg-gray-800 text-white" 
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              Tous
-            </button>
-            
-            {subcategories.map((subcategory) => (
-              <button
-                key={subcategory.id}
-                onClick={() => setActiveSubcategory(subcategory.id)}
-                data-subcategory={subcategory.id}
-                className={`px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 transition-colors ${
-                  activeSubcategory === subcategory.id 
-                    ? subcategory.color + " text-white" 
-                    : subcategory.bgColor + " " + subcategory.textColor + " " + subcategory.hoverBgColor
-                }`}
-              >
-                <span>{subcategory.icon}</span>
-                {subcategory.title}
-              </button>
-            ))}
-          </div>
-        )}
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {filteredProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              id={product.id}
-              image={product.image}
-              title={product.title}
-              brand={product.brand}
-              weight={product.weight}
-              category={product.category}
-              price={product.price}
-              onAddToCart={handleAddToCart}
-              inStock={isProductInStock(product.id)}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-export default Categories;
+    },
+    {
+      id: 58,
+      image: "/lovable-uploads/af6825cc-2bdf-4849-9106-6bd2fbe3770b.png",
+      title: "Viande Égrenée Calibre 4mm",
+      brand: "Vedina",
+      weight: "800g",
+      category: "frozen",
+      subcategory: "viande",
+      price: 9.99
+    },
+    {
+      id: 59,
+      image: "/lovable-uploads/43fe0d6a-f1b8-4ab7-b3b3-3f26ac78419c.png",
+      title: "10 Burgers Nature",
+      brand: "Vedina",
+      weight: "1kg",
+      category: "frozen",
+      subcategory: "viande",
+      price: 12.99
+    },
+    {
+      id: 60,
+      image: "/lovable-uploads/fd36b94a-2f3d-4728-8137-d4380a67afe5.png",
+      title: "Steaks Hachés Gaufrés",
+      brand: "Vedina",
+      weight: "900g",
+      category: "frozen",
+      subcategory: "viande",
+      price: 11.99
+    },
+    {
+      id: 61,
+      image: "/lovable-uploads/4fad4d6b-f83f-4022-a548-d3cdbf036732.png",
+      title: "Poulet Entier",
+      brand: "Vedina",
+      weight: "2kg",
+      category: "frozen",
+      subcategory: "viande",
+      price: 14.99
+    },
+    {
+      id: 62,
+      image: "/lovable-uploads/a1db05cf-8733-43c9-a57f-a138f9d2e90f.png",
+      title: "Émincé de Poulet",
+      brand: "Vedina",
+      weight: "800g",
+      category: "frozen",
+      subcategory: "viande",
+      price: 9.99
+    },
+    {
+      id: 63,
+      image: "/lovable-uploads/944489ec-7b59-4e0f-add7-507264e878ba.png",
+      title: "Tortillas Wrap",
+      brand: "Gulnur",
+      weight: "90g",
+      category: "frozen",
+      subcategory: "plats",
+      price: 4.49
+    },
+    {
+      id: 64,
+      image: "/lovable-uploads/82f08ee2-82d2-45b6-979f-6bd3b588436b.png",
+      title: "Wings Tex Mex",
+      brand: "Gulnur",
+      weight: "800g",
+      category: "frozen",
+      subcategory: "viande",
+      price: 10.99
+    },
+    {
+      id: 65,
+      image: "/lovable-uploads/1133e988-c6ff-45a2-8642-65395b16c8f3.png",
+      title: "Nems au Poulet",
+      brand: "UMUT",
+      weight: "500g",
+      category: "frozen",
+      subcategory: "plats",
+      price: 7.99
+    },
+    {
+      id: 66,
+      image: "/lovable-uploads/9be95fad-88c2-4080-b478-810b6e186446.png",
+      title: "Falafels",
+      brand: "UMUT",
+      weight: "1kg",
+      category: "frozen",
+      subcategory: "plats",
+      price: 8.99
+    },
+    {
+      id: 67,
+      image: "/lovable-uploads/30ea942f-0210-476b-be64-a7bcc6a1f355.png",
+      title: "Herbes de Provence",
+      brand: "CENNET",
+      weight: "150g",
+      category: "epices",
+      subcategory: "epices",
+      price: 2.99
+    },
+    {
+      id: 68,
+      image: "/lovable-uploads/30ea942f-0210-476b-be64-a7bcc6a1f355.png",
+      title: "Ail Moulu",
+      brand: "CENNET",
+      weight: "300g",
+      category: "epices",
+      subcategory: "epices",
+      price: 3.49
+    },
+    {
+      id: 69,
+      image: "/lovable-uploads/30ea942f-0210-476b-be64-a7bcc6a1f355.png",
+      title: "Cumin Moulu",
+      brand: "CENNET",
+      weight: "330g",
+      category: "epices",
+      subcategory: "epices",
+      price: 3.29
+    },
+    {
+      id: 70,
+      image: "/lovable-uploads/30ea942f-0210-476b-be64-a7bcc6a1f355.png",
+      title: "Piment Piquant",
+      brand: "CENNET",
+      weight: "365g",
+      category: "epices",
+      subcategory: "epices",
+      price: 3.99
+    },
+    {
+      id: 71,
+      image: "/lovable-uploads/30ea942f-0210-476b-be64-a7bcc6a1f355.png",
+      title: "Ras El Hanout Jaune",
+      brand: "CENNET",
+      weight: "470g",
+      category: "epices",
+      subcategory: "epices",
+      price: 4.49
+    },
+    {
+      id: 72,
+      image: "/lovable-uploads/30ea942f-0210-476b-be64-a7bcc6a1f355.png",
+      title: "Ras El Hanout Rouge",
+      brand: "CENNET",
+      weight: "470g",
+      category: "epices",

@@ -136,7 +136,10 @@ const Admin = () => {
     
     if (searchTerm) {
       filtered = filtered.filter(product => 
-        product.title.toLowerCase().includes(searchTerm.toLowerCase())
+        product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (product.subcategory && product.subcategory.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        product.brand.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
     
@@ -161,7 +164,10 @@ const Admin = () => {
     
     if (searchTerm) {
       filtered = filtered.filter(product => 
-        product.title.toLowerCase().includes(searchTerm.toLowerCase())
+        product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (product.subcategory && product.subcategory.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        product.brand.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
     
