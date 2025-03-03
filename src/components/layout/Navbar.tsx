@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, ShoppingCart, X } from 'lucide-react';
@@ -18,14 +17,12 @@ const Navbar: React.FC = () => {
       }
     };
 
-    // Déclencher handleScroll immédiatement pour définir l'état initial
     handleScroll();
     
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Prevent body scroll when menu is open
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -56,11 +53,10 @@ const Navbar: React.FC = () => {
             className="h-10 mr-2" 
           />
           <span className={`text-2xl font-bold tracking-tight ${isScrolled || isMenuOpen ? 'text-brand-black' : 'text-white'}`}>
-            Z <span className={`${isScrolled || isMenuOpen ? 'text-brand-orange' : 'text-brand-orange'}`}>Market</span>
+            zmarket<span className={`${isScrolled || isMenuOpen ? 'text-brand-orange' : 'text-brand-orange'}`}>.fr</span>
           </span>
         </Link>
 
-        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
           <ul className="flex items-center space-x-8">
             <li>
@@ -107,7 +103,6 @@ const Navbar: React.FC = () => {
           </div>
         </nav>
 
-        {/* Mobile Menu Button */}
         <div className="flex items-center md:hidden">
           <UserMenu />
           <Link
@@ -133,12 +128,10 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Menu - Fixed Overlay */}
       {isMenuOpen && (
         <div 
           className="fixed inset-0 bg-white z-40 md:hidden flex flex-col"
         >
-          {/* Mobile Menu Header */}
           <div className="sticky top-0 left-0 right-0 px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-white">
             <Link to="/" className="flex items-center" onClick={toggleMenu}>
               <img 
@@ -147,7 +140,7 @@ const Navbar: React.FC = () => {
                 className="h-10 mr-2" 
               />
               <span className="text-2xl font-bold tracking-tight text-brand-black">
-                Z <span className="text-brand-orange">Market</span>
+                zmarket<span className="text-brand-orange">.fr</span>
               </span>
             </Link>
             <button
@@ -159,7 +152,6 @@ const Navbar: React.FC = () => {
             </button>
           </div>
           
-          {/* Mobile Menu Navigation */}
           <div className="flex-1 overflow-y-auto p-6 bg-white">
             <nav className="space-y-8">
               <div className="text-xl font-semibold text-center mb-6 text-brand-black">
@@ -206,7 +198,6 @@ const Navbar: React.FC = () => {
             </nav>
           </div>
           
-          {/* Mobile Menu Footer */}
           <div className="p-6 border-t border-gray-200 bg-white">
             <Link
               to="/commande"
