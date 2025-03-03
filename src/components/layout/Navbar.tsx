@@ -121,55 +121,59 @@ const Navbar: React.FC = () => {
       {/* Mobile Menu */}
       <div
         className={cn(
-          'fixed inset-0 bg-black/95 z-40 flex flex-col justify-center items-center transition-transform duration-500 ease-elastic',
+          'fixed inset-0 bg-black/95 z-40 flex flex-col items-center transition-transform duration-500 ease-elastic',
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'
         )}
       >
-        <div className="mb-10">
-          <img 
-            src="/lovable-uploads/81fe1b1a-9718-4a7d-b30e-3b1b32c3cc85.png" 
-            alt="Z Market Full Logo" 
-            className="h-16" 
-          />
-        </div>
-        <nav className="flex flex-col items-center space-y-8">
-          <a
-            href="#produits"
-            className="text-2xl font-semibold text-white hover:text-brand-orange transition-colors"
-            onClick={toggleMenu}
-          >
-            Nos Produits
-          </a>
-          <a
-            href="#livraison"
-            className="text-2xl font-semibold text-white hover:text-brand-orange transition-colors"
-            onClick={toggleMenu}
-          >
-            Livraison
-          </a>
-          <a
-            href="#a-propos"
-            className="text-2xl font-semibold text-white hover:text-brand-orange transition-colors"
-            onClick={toggleMenu}
-          >
-            À Propos
-          </a>
-          <a
-            href="#contact"
-            className="text-2xl font-semibold text-white hover:text-brand-orange transition-colors"
-            onClick={toggleMenu}
-          >
-            Contact
-          </a>
+        <div className="w-full h-full flex flex-col items-center justify-center space-y-10 px-8">
+          <div className="mb-4">
+            <img 
+              src="/lovable-uploads/81fe1b1a-9718-4a7d-b30e-3b1b32c3cc85.png" 
+              alt="Z Market Full Logo" 
+              className="h-16 mb-2" 
+            />
+          </div>
+          
+          <nav className="flex flex-col items-center w-full">
+            <a
+              href="#produits"
+              className="w-full py-5 text-2xl font-semibold text-white hover:text-brand-orange transition-colors text-center border-b border-white/10"
+              onClick={toggleMenu}
+            >
+              Nos Produits
+            </a>
+            <a
+              href="#livraison"
+              className="w-full py-5 text-2xl font-semibold text-white hover:text-brand-orange transition-colors text-center border-b border-white/10"
+              onClick={toggleMenu}
+            >
+              Livraison
+            </a>
+            <a
+              href="#a-propos"
+              className="w-full py-5 text-2xl font-semibold text-white hover:text-brand-orange transition-colors text-center border-b border-white/10"
+              onClick={toggleMenu}
+            >
+              À Propos
+            </a>
+            <a
+              href="#contact"
+              className="w-full py-5 text-2xl font-semibold text-white hover:text-brand-orange transition-colors text-center border-b border-white/10"
+              onClick={toggleMenu}
+            >
+              Contact
+            </a>
+          </nav>
+          
           <Link
             to="/commande"
-            className="flex items-center gap-2 px-6 py-3 bg-brand-orange text-white rounded-lg font-semibold"
+            className="flex items-center gap-2 px-8 py-4 mt-6 bg-brand-orange text-white rounded-lg font-semibold"
             onClick={toggleMenu}
           >
             <ShoppingCart size={20} />
             Commander
           </Link>
-        </nav>
+        </div>
       </div>
     </header>
   );
