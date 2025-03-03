@@ -22,6 +22,18 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
+
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
@@ -118,56 +130,70 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Fixed positioning and completely separate from the page content */}
       <div
         className={cn(
-          'fixed inset-0 bg-black/95 z-40 flex flex-col items-center transition-transform duration-500 ease-elastic',
+          'fixed inset-0 bg-black z-40 transition-transform duration-500 ease-elastic flex flex-col',
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'
         )}
       >
-        <div className="w-full h-full flex flex-col items-center justify-center space-y-10 px-8">
-          <div className="mb-4">
+        <div className="px-4 py-5 flex justify-between items-center border-b border-white/10">
+          <Link to="/" className="flex items-center" onClick={toggleMenu}>
             <img 
               src="/lovable-uploads/81fe1b1a-9718-4a7d-b30e-3b1b32c3cc85.png" 
-              alt="Z Market Full Logo" 
-              className="h-16 mb-2" 
+              alt="Z Market Logo" 
+              className="h-10 mr-2" 
             />
-          </div>
-          
-          <nav className="flex flex-col items-center w-full">
+            <span className="text-2xl font-bold tracking-tight text-white">
+              Z <span className="text-brand-orange">Market</span>
+            </span>
+          </Link>
+          <button
+            onClick={toggleMenu}
+            className="p-2 focus:outline-none"
+            aria-label="Close Menu"
+          >
+            <X size={24} className="text-white" />
+          </button>
+        </div>
+        
+        <div className="flex-1 overflow-y-auto py-6">
+          <nav className="flex flex-col w-full px-4">
             <a
               href="#produits"
-              className="w-full py-5 text-2xl font-semibold text-white hover:text-brand-orange transition-colors text-center border-b border-white/10"
+              className="py-4 text-xl font-semibold text-white hover:text-brand-orange transition-colors border-b border-white/10"
               onClick={toggleMenu}
             >
               Nos Produits
             </a>
             <a
               href="#livraison"
-              className="w-full py-5 text-2xl font-semibold text-white hover:text-brand-orange transition-colors text-center border-b border-white/10"
+              className="py-4 text-xl font-semibold text-white hover:text-brand-orange transition-colors border-b border-white/10"
               onClick={toggleMenu}
             >
               Livraison
             </a>
             <a
               href="#a-propos"
-              className="w-full py-5 text-2xl font-semibold text-white hover:text-brand-orange transition-colors text-center border-b border-white/10"
+              className="py-4 text-xl font-semibold text-white hover:text-brand-orange transition-colors border-b border-white/10"
               onClick={toggleMenu}
             >
               À Propos
             </a>
             <a
               href="#contact"
-              className="w-full py-5 text-2xl font-semibold text-white hover:text-brand-orange transition-colors text-center border-b border-white/10"
+              className="py-4 text-xl font-semibold text-white hover:text-brand-orange transition-colors border-b border-white/10"
               onClick={toggleMenu}
             >
               Contact
             </a>
           </nav>
-          
+        </div>
+        
+        <div className="p-4 border-t border-white/10">
           <Link
             to="/commande"
-            className="flex items-center gap-2 px-8 py-4 mt-6 bg-brand-orange text-white rounded-lg font-semibold"
+            className="flex items-center justify-center gap-2 w-full py-3 bg-brand-orange text-white rounded-lg font-semibold"
             onClick={toggleMenu}
           >
             <ShoppingCart size={20} />
