@@ -131,89 +131,92 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Mobile Menu - Fixed Overlay */}
-      {isMenuOpen && (
-        <div className="fixed inset-0 bg-white z-40 flex flex-col md:hidden">
-          {/* Mobile Menu Header */}
-          <div className="sticky top-0 left-0 right-0 px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-white">
-            <Link to="/" className="flex items-center" onClick={toggleMenu}>
-              <img 
-                src="/lovable-uploads/81fe1b1a-9718-4a7d-b30e-3b1b32c3cc85.png" 
-                alt="Z Market Logo" 
-                className="h-10 mr-2" 
-              />
-              <span className="text-2xl font-bold tracking-tight text-brand-black">
-                Z <span className="text-brand-orange">Market</span>
-              </span>
-            </Link>
-            <button
-              onClick={toggleMenu}
-              className="p-2 focus:outline-none"
-              aria-label="Close Menu"
-            >
-              <X size={24} className="text-brand-black" />
-            </button>
-          </div>
-          
-          {/* Mobile Menu Navigation */}
-          <div className="flex-1 overflow-y-auto p-6">
-            <nav className="space-y-8">
-              <div className="text-xl font-semibold text-center mb-6 text-brand-black">
-                Découvrir
-              </div>
-              <ul className="space-y-6">
-                <li>
-                  <a
-                    href="#produits"
-                    className="block py-3 text-xl font-semibold text-brand-black hover:text-brand-orange transition-colors border-b border-gray-200"
-                    onClick={toggleMenu}
-                  >
-                    Nos Produits
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#livraison"
-                    className="block py-3 text-xl font-semibold text-brand-black hover:text-brand-orange transition-colors border-b border-gray-200"
-                    onClick={toggleMenu}
-                  >
-                    Livraison
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#a-propos"
-                    className="block py-3 text-xl font-semibold text-brand-black hover:text-brand-orange transition-colors border-b border-gray-200"
-                    onClick={toggleMenu}
-                  >
-                    À Propos
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#contact"
-                    className="block py-3 text-xl font-semibold text-brand-black hover:text-brand-orange transition-colors border-b border-gray-200"
-                    onClick={toggleMenu}
-                  >
-                    Contact
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-          
-          {/* Mobile Menu Footer */}
-          <div className="p-6 border-t border-gray-200 bg-white">
-            <Link
-              to="/commande"
-              className="flex items-center justify-center gap-2 w-full py-4 bg-brand-orange text-white rounded-lg font-semibold"
-              onClick={toggleMenu}
-            >
-              <ShoppingCart size={20} />
-              Commander
-            </Link>
-          </div>
+      <div 
+        className={cn(
+          "fixed inset-0 bg-white z-40 md:hidden flex flex-col transition-all duration-300",
+          isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        )}
+      >
+        {/* Mobile Menu Header */}
+        <div className="sticky top-0 left-0 right-0 px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-white">
+          <Link to="/" className="flex items-center" onClick={toggleMenu}>
+            <img 
+              src="/lovable-uploads/81fe1b1a-9718-4a7d-b30e-3b1b32c3cc85.png" 
+              alt="Z Market Logo" 
+              className="h-10 mr-2" 
+            />
+            <span className="text-2xl font-bold tracking-tight text-brand-black">
+              Z <span className="text-brand-orange">Market</span>
+            </span>
+          </Link>
+          <button
+            onClick={toggleMenu}
+            className="p-2 focus:outline-none"
+            aria-label="Close Menu"
+          >
+            <X size={24} className="text-brand-black" />
+          </button>
         </div>
-      )}
+        
+        {/* Mobile Menu Navigation */}
+        <div className="flex-1 overflow-y-auto p-6">
+          <nav className="space-y-8">
+            <div className="text-xl font-semibold text-center mb-6 text-brand-black">
+              Découvrir
+            </div>
+            <ul className="space-y-6">
+              <li>
+                <a
+                  href="#produits"
+                  className="block py-3 text-xl font-semibold text-brand-black hover:text-brand-orange transition-colors border-b border-gray-200"
+                  onClick={toggleMenu}
+                >
+                  Nos Produits
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#livraison"
+                  className="block py-3 text-xl font-semibold text-brand-black hover:text-brand-orange transition-colors border-b border-gray-200"
+                  onClick={toggleMenu}
+                >
+                  Livraison
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#a-propos"
+                  className="block py-3 text-xl font-semibold text-brand-black hover:text-brand-orange transition-colors border-b border-gray-200"
+                  onClick={toggleMenu}
+                >
+                  À Propos
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#contact"
+                  className="block py-3 text-xl font-semibold text-brand-black hover:text-brand-orange transition-colors border-b border-gray-200"
+                  onClick={toggleMenu}
+                >
+                  Contact
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        
+        {/* Mobile Menu Footer */}
+        <div className="p-6 border-t border-gray-200 bg-white">
+          <Link
+            to="/commande"
+            className="flex items-center justify-center gap-2 w-full py-4 bg-brand-orange text-white rounded-lg font-semibold"
+            onClick={toggleMenu}
+          >
+            <ShoppingCart size={20} />
+            Commander
+          </Link>
+        </div>
+      </div>
     </header>
   );
 };
