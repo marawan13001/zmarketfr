@@ -101,7 +101,7 @@ const Hero: React.FC = () => {
           
           <ScrollReveal direction="up" delay={200}>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white mb-4 max-w-4xl mx-auto">
-              Découvrez les Produits Professionnels Dédiés aux <span className="text-brand-orange">Particuliers</span>
+              Découvrez les Produits Professionnels et <span className="text-brand-orange">Surgelés Halal</span> Dédiés aux Particuliers
             </h1>
           </ScrollReveal>
           
