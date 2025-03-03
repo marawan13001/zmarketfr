@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { 
   Table, 
@@ -39,19 +38,17 @@ const CatalogTable: React.FC<CatalogTableProps> = ({
   addToAdminProducts 
 }) => {
   // Function to handle button click with animation
-  const handleAddClick = (product: Product) => {
-    // Find the button element that was clicked
-    const button = document.querySelector(`button[data-product-id="${product.id}"]`);
+  const handleAddClick = (product: Product, event: React.MouseEvent<HTMLButtonElement>) => {
+    // Get the button that was clicked directly from the event
+    const button = event.currentTarget;
     
     // Add animation class
-    if (button) {
-      button.classList.add('animate-scale-bounce');
-      
-      // Remove animation class after animation completes
-      setTimeout(() => {
-        button.classList.remove('animate-scale-bounce');
-      }, 500);
-    }
+    button.classList.add('animate-scale-bounce');
+    
+    // Remove animation class after animation completes
+    setTimeout(() => {
+      button.classList.remove('animate-scale-bounce');
+    }, 500);
     
     // Call the original function
     addToAdminProducts(product);
@@ -156,10 +153,9 @@ const CatalogTable: React.FC<CatalogTableProps> = ({
               </TableCell>
               <TableCell>
                 <Button 
-                  data-product-id={product.id}
                   variant="outline" 
                   size="sm"
-                  onClick={() => handleAddClick(product)}
+                  onClick={(e) => handleAddClick(product, e)}
                   className="transition-all duration-200"
                 >
                   <PlusCircle size={16} className="mr-1" />
