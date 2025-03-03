@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { ShoppingCart, X, ChevronUp, ChevronDown, Trash2, AlertTriangle, Info } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { StockItem } from '@/components/admin/types';
+import { useAuth } from '@/contexts/AuthContext';
 
 export interface CartItem {
   id: number;
@@ -27,6 +28,8 @@ const FloatingCart: React.FC<FloatingCartProps> = ({
   stockItems = []
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const toggleCart = () => {
     setIsOpen(!isOpen);
@@ -82,6 +85,13 @@ const FloatingCart: React.FC<FloatingCartProps> = ({
     onRemoveItem(id);
     
     toast.success(`${item.name} retiré du panier`);
+  };
+
+  const handleCheckout = (e: React.MouseEvent) => {
+    if (!user) {
+      e.preventDefault();
+      navigate('/auth?redirect=commande');
+    }
   };
 
   if (items.length === 0 && !isOpen) {
@@ -198,13 +208,24 @@ const FloatingCart: React.FC<FloatingCartProps> = ({
               </div>
               
               <div className="p-4">
-                <Link 
-                  to="/commande" 
-                  className="w-full bg-brand-orange hover:bg-brand-orange/90 text-white font-medium py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
-                >
-                  <ShoppingCart size={18} />
-                  Passer commande
-                </Link>
+                {user ? (
+                  <Link 
+                    to="/commande" 
+                    className="w-full bg-brand-orange hover:bg-brand-orange/90 text-white font-medium py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
+                  >
+                    <ShoppingCart size={18} />
+                    Passer commande
+                  </Link>
+                ) : (
+                  <Link 
+                    to="/auth?redirect=commande" 
+                    className="w-full bg-brand-orange hover:bg-brand-orange/90 text-white font-medium py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
+                    onClick={handleCheckout}
+                  >
+                    <ShoppingCart size={18} />
+                    Se connecter pour commander
+                  </Link>
+                )}
               </div>
             </>
           )}

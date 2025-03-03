@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 const Auth: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { signIn, signUp, isLoading } = useAuth();
+  const { signIn, signUp, isLoading, user } = useAuth();
   
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
@@ -28,12 +28,27 @@ const Auth: React.FC = () => {
   const defaultTab = queryParams.get('tab') === 'register' ? 'register' : 'login';
   const [activeTab, setActiveTab] = useState(defaultTab);
   
+  // Get redirect destination from query parameter
+  const redirectTo = queryParams.get('redirect') || '/';
+  
+  // Redirect authenticated users 
+  useEffect(() => {
+    if (user) {
+      // Si l'utilisateur est déjà connecté, rediriger vers la page de destination
+      if (redirectTo === 'commande') {
+        navigate('/commande', { state: { from: 'auth' } });
+      } else {
+        navigate(redirectTo);
+      }
+    }
+  }, [user, navigate, redirectTo]);
+  
   const handleTabChange = (value: string) => {
     setActiveTab(value);
     // Update URL without navigating
     const newUrl = value === 'register' 
-      ? `${location.pathname}?tab=register` 
-      : location.pathname;
+      ? `${location.pathname}?tab=register${redirectTo !== '/' ? `&redirect=${redirectTo}` : ''}` 
+      : `${location.pathname}${redirectTo !== '/' ? `?redirect=${redirectTo}` : ''}`;
     window.history.replaceState(null, '', newUrl);
   };
   
@@ -41,7 +56,7 @@ const Auth: React.FC = () => {
     e.preventDefault();
     try {
       await signIn(loginEmail, loginPassword);
-      navigate('/');
+      // Redirection will happen in the useEffect
     } catch (error) {
       console.error('Login error:', error);
     }
@@ -75,6 +90,11 @@ const Auth: React.FC = () => {
                 ? 'Connectez-vous pour accéder à votre compte' 
                 : 'Inscrivez-vous pour profiter de nos services'}
             </CardDescription>
+            {redirectTo === 'commande' && (
+              <div className="mt-2 text-center text-sm text-amber-600 bg-amber-50 p-2 rounded-md">
+                Veuillez vous connecter ou créer un compte pour finaliser votre commande
+              </div>
+            )}
           </CardHeader>
           
           <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">

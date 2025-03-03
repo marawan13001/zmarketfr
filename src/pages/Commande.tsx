@@ -6,9 +6,11 @@ import { ShoppingBag, CreditCard, Banknote, Clock, CalendarClock, AlertCircle, C
 import FloatingCart from '@/components/cart/FloatingCart';
 import { sendWhatsAppNotification } from '@/utils/whatsappNotification';
 import { WHATSAPP_NUMBER } from '@/pages/Index';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import StripePaymentForm from '@/components/payment/StripePaymentForm';
 import { StockItem } from '@/components/admin/types';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/lib/supabase';
 
 interface CartItem {
   id: number;
@@ -20,6 +22,10 @@ interface CartItem {
 }
 
 const Commande: React.FC = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [stockItems, setStockItems] = useState<StockItem[]>([]);
   const [deliveryTime, setDeliveryTime] = useState<string>("asap");
@@ -29,6 +35,50 @@ const Commande: React.FC = () => {
   const [paymentMethod, setPaymentMethod] = useState<string>("card");
   const [step, setStep] = useState<number>(1);
   const [isProcessingPayment, setIsProcessingPayment] = useState<boolean>(false);
+  const [isRedirectedFromAuth, setIsRedirectedFromAuth] = useState<boolean>(false);
+
+  // Vérifier si l'utilisateur est connecté
+  useEffect(() => {
+    if (!user && !isRedirectedFromAuth) {
+      // Rediriger vers la page de connexion avec un paramètre de redirection
+      navigate('/auth?redirect=commande', { state: { from: 'commande' } });
+    }
+  }, [user, navigate, isRedirectedFromAuth]);
+
+  // Vérifier si l'utilisateur revient de la page d'authentification
+  useEffect(() => {
+    const fromAuth = location.state?.from === 'auth';
+    if (fromAuth) {
+      setIsRedirectedFromAuth(true);
+    }
+  }, [location]);
+
+  // Préremplir les informations de l'utilisateur depuis son profil
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (user) {
+        try {
+          const { data, error } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', user.id)
+            .single();
+
+          if (error) throw error;
+          
+          if (data) {
+            setEmail(data.email || '');
+            // Si vous ajoutez plus de champs à la table profiles, vous pourriez les utiliser ici
+            // Par exemple: setDeliveryAddress(data.address || '');
+          }
+        } catch (error) {
+          console.error('Erreur lors du chargement du profil:', error);
+        }
+      }
+    };
+
+    fetchUserProfile();
+  }, [user]);
 
   useEffect(() => {
     // Load stock items from localStorage
@@ -189,6 +239,12 @@ const Commande: React.FC = () => {
   const handleStripePaymentSuccess = () => {
     processOrderConfirmation();
   };
+
+  // Si l'utilisateur n'est pas connecté et qu'il n'a pas été redirigé depuis la page d'authentification,
+  // on ne rend pas le contenu de la page pour éviter un flash
+  if (!user && !isRedirectedFromAuth) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
