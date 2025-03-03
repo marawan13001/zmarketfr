@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ShoppingCart, X, ChevronUp, ChevronDown, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -56,6 +55,10 @@ const FloatingCart: React.FC<FloatingCartProps> = ({
     
     toast.success(`${item.name} retiré du panier`);
   };
+
+  if (items.length === 0 && !isOpen) {
+    return null;
+  }
 
   return (
     <div className={cn(

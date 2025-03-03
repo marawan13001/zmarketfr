@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { toast } from 'sonner';
@@ -7,6 +6,7 @@ import { ShoppingBag, CreditCard, Banknote, Clock, CalendarClock } from 'lucide-
 import FloatingCart from '@/components/cart/FloatingCart';
 import { sendWhatsAppNotification } from '@/utils/whatsappNotification';
 import { WHATSAPP_NUMBER } from '@/pages/Index';
+import { useLocation } from 'react-router-dom';
 
 interface CartItem {
   id: number;
@@ -17,29 +17,18 @@ interface CartItem {
 }
 
 const Commande: React.FC = () => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: 1,
-      name: "Pizza 4 Fromages Surgelée",
-      image: "/lovable-uploads/3230e5df-068b-4a55-89ea-10484b277a5a.png",
-      price: 12.99,
-      quantity: 2
-    },
-    {
-      id: 2,
-      name: "Glace Vanille Premium",
-      image: "/lovable-uploads/f96329d1-539b-41bc-8c63-c12b7a050ae6.png",
-      price: 8.50,
-      quantity: 1
-    }
-  ]);
-
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [deliveryTime, setDeliveryTime] = useState<string>("asap");
   const [deliveryAddress, setDeliveryAddress] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [paymentMethod, setPaymentMethod] = useState<string>("card");
   const [step, setStep] = useState<number>(1);
+
+  useEffect(() => {
+    // Logique pour récupérer les éléments du panier (à implémenter plus tard)
+    // Pour le moment, nous laissons le panier vide
+  }, []);
 
   const updateQuantity = (id: number, newQuantity: number) => {
     setCartItems(prevItems =>

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/home/Hero';
@@ -11,29 +10,12 @@ import FloatingCart from '@/components/cart/FloatingCart';
 import { toast } from 'sonner';
 import { Truck, ChevronRight } from 'lucide-react';
 
-const initialCartItems = [
-  {
-    id: 1,
-    name: "Pizza 4 Fromages Surgelée",
-    image: "/lovable-uploads/3230e5df-068b-4a55-89ea-10484b277a5a.png",
-    price: 12.99,
-    quantity: 1
-  },
-  {
-    id: 2,
-    name: "Glace Vanille Premium",
-    image: "/lovable-uploads/f96329d1-539b-41bc-8c63-c12b7a050ae6.png",
-    price: 8.50,
-    quantity: 2
-  }
-];
-
 export const WHATSAPP_NUMBER = "0675725897";
 
 const Index = () => {
   const deliveryRef = useRef<HTMLDivElement>(null);
   const categoriesRef = useRef<HTMLDivElement>(null);
-  const [cartItems, setCartItems] = useState(initialCartItems);
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -61,11 +43,8 @@ const Index = () => {
 
   const scrollToDelivery = () => {
     if (deliveryRef.current) {
-      // Get the element's position relative to the viewport
       const rect = deliveryRef.current.getBoundingClientRect();
-      // Get current scroll position
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      // Calculate position to scroll to (element position + current scroll - offset)
       const top = rect.top + scrollTop - 100;
       
       window.scrollTo({
