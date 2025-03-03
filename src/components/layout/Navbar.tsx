@@ -115,13 +115,13 @@ const Navbar: React.FC = () => {
           </Link>
           <button
             onClick={toggleMenu}
-            className="p-2 focus:outline-none"
+            className="p-2 focus:outline-none z-50"
             aria-label="Toggle Menu"
           >
             {isMenuOpen ? (
               <X
                 size={24}
-                className="text-gray-800 transition-transform duration-300 ease-elastic transform rotate-90"
+                className="text-gray-800 transition-transform duration-300 ease-elastic"
               />
             ) : (
               <Menu size={24} className={isScrolled ? 'text-gray-800' : 'text-white'} />
@@ -130,23 +130,23 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Menu - Completely restructured for better visibility and layout */}
+      {/* Mobile Menu - Fixed to cover the entire viewport */}
       <div
         className={cn(
-          'fixed inset-0 bg-black/95 z-40 transition-transform duration-300 ease-in-out',
+          'fixed inset-0 bg-white z-40 transform transition-transform duration-300 ease-in-out',
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'
         )}
       >
         <div className="flex flex-col h-full">
           {/* Mobile Menu Header */}
-          <div className="px-6 py-4 border-b border-white/10 flex justify-between items-center">
+          <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-white sticky top-0">
             <Link to="/" className="flex items-center" onClick={toggleMenu}>
               <img 
                 src="/lovable-uploads/81fe1b1a-9718-4a7d-b30e-3b1b32c3cc85.png" 
                 alt="Z Market Logo" 
                 className="h-10 mr-2" 
               />
-              <span className="text-2xl font-bold tracking-tight text-white">
+              <span className="text-2xl font-bold tracking-tight text-brand-black">
                 Z <span className="text-brand-orange">Market</span>
               </span>
             </Link>
@@ -155,46 +155,60 @@ const Navbar: React.FC = () => {
               className="p-2 focus:outline-none"
               aria-label="Close Menu"
             >
-              <X size={24} className="text-white" />
+              <X size={24} className="text-brand-black" />
             </button>
           </div>
           
           {/* Mobile Menu Navigation */}
-          <div className="flex-1 overflow-auto py-6">
-            <div className="px-6 flex flex-col space-y-1">
-              <a
-                href="#produits"
-                className="py-4 text-xl font-semibold text-white hover:text-brand-orange transition-colors border-b border-white/10"
-                onClick={toggleMenu}
-              >
-                Nos Produits
-              </a>
-              <a
-                href="#livraison"
-                className="py-4 text-xl font-semibold text-white hover:text-brand-orange transition-colors border-b border-white/10"
-                onClick={toggleMenu}
-              >
-                Livraison
-              </a>
-              <a
-                href="#a-propos"
-                className="py-4 text-xl font-semibold text-white hover:text-brand-orange transition-colors border-b border-white/10"
-                onClick={toggleMenu}
-              >
-                À Propos
-              </a>
-              <a
-                href="#contact"
-                className="py-4 text-xl font-semibold text-white hover:text-brand-orange transition-colors border-b border-white/10"
-                onClick={toggleMenu}
-              >
-                Contact
-              </a>
-            </div>
+          <div className="flex-1 overflow-y-auto py-6">
+            <nav className="px-6">
+              <ul className="space-y-6">
+                <li>
+                  <a
+                    href="#produits"
+                    className="block py-2 text-xl font-semibold text-brand-black hover:text-brand-orange transition-colors"
+                    onClick={toggleMenu}
+                  >
+                    Nos Produits
+                  </a>
+                  <div className="mt-1 h-px bg-gray-200"></div>
+                </li>
+                <li>
+                  <a
+                    href="#livraison"
+                    className="block py-2 text-xl font-semibold text-brand-black hover:text-brand-orange transition-colors"
+                    onClick={toggleMenu}
+                  >
+                    Livraison
+                  </a>
+                  <div className="mt-1 h-px bg-gray-200"></div>
+                </li>
+                <li>
+                  <a
+                    href="#a-propos"
+                    className="block py-2 text-xl font-semibold text-brand-black hover:text-brand-orange transition-colors"
+                    onClick={toggleMenu}
+                  >
+                    À Propos
+                  </a>
+                  <div className="mt-1 h-px bg-gray-200"></div>
+                </li>
+                <li>
+                  <a
+                    href="#contact"
+                    className="block py-2 text-xl font-semibold text-brand-black hover:text-brand-orange transition-colors"
+                    onClick={toggleMenu}
+                  >
+                    Contact
+                  </a>
+                  <div className="mt-1 h-px bg-gray-200"></div>
+                </li>
+              </ul>
+            </nav>
           </div>
           
           {/* Mobile Menu Footer */}
-          <div className="p-6 border-t border-white/10">
+          <div className="p-6 border-t border-gray-200 bg-white">
             <Link
               to="/commande"
               className="flex items-center justify-center gap-2 w-full py-4 bg-brand-orange text-white rounded-lg font-semibold"
