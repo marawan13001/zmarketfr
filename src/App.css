@@ -9,6 +9,13 @@
   overflow-x: hidden;
 }
 
+/* Ensure no horizontal scrolling */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
 /* Keep the rest of the original styles */
 .logo {
   height: 6em;

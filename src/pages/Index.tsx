@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/home/Hero';
@@ -21,19 +20,16 @@ const Index = () => {
   const [stockItems, setStockItems] = useState<StockItem[]>([]);
 
   useEffect(() => {
-    // Load stock items from localStorage
     const savedStock = localStorage.getItem("stockItems");
     if (savedStock) {
       setStockItems(JSON.parse(savedStock));
     }
 
-    // Load cart items from localStorage
     const savedCart = localStorage.getItem("cartItems");
     if (savedCart) {
       setCartItems(JSON.parse(savedCart));
     }
 
-    // Check if URL has #livraison hash and scroll to delivery section
     if (window.location.hash === '#livraison') {
       setTimeout(() => {
         scrollToDelivery();
@@ -92,7 +88,6 @@ const Index = () => {
   };
 
   const addToCart = (product: { id: number; title: string; image: string; price: number }) => {
-    // Check if product is in stock
     const stockItem = stockItems.find(item => item.id === product.id);
     if (stockItem && !stockItem.inStock) {
       toast.error(
@@ -108,7 +103,6 @@ const Index = () => {
     let updatedItems;
     
     if (existingItem) {
-      // Check if adding one more would exceed stock
       if (stockItem && existingItem.quantity >= stockItem.quantity) {
         toast.error(
           <div className="flex items-center gap-2">
@@ -147,16 +141,12 @@ const Index = () => {
   };
 
   const navigateToCommandeWithParams = (method: 'delivery' | 'pickup') => {
-    // Set the delivery method in localStorage
     localStorage.setItem("deliveryMethod", method);
-    // Navigate to commande page
     window.location.href = "/commande";
   };
 
   return (
     <div className="min-h-screen bg-white overflow-x-hidden w-full">
-      <Navbar />
-      
       <div className="bg-brand-orange/10 py-3 w-full">
         <div className="container mx-auto px-4 flex items-center justify-center cursor-pointer" onClick={scrollToDelivery}>
           <div className="flex items-center gap-3 group">
@@ -177,6 +167,8 @@ const Index = () => {
           </div>
         </div>
       </div>
+      
+      <Navbar />
       
       <main className="w-full">
         <Hero />
