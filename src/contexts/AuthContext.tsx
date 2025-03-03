@@ -25,20 +25,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Vérifier si nous sommes sur une page de confirmation d'email
+    // Handle email confirmation
     const handleEmailConfirmation = async () => {
-      // Récupérer les paramètres de l'URL
+      // Get URL parameters
       const params = new URLSearchParams(window.location.search);
       const accessToken = params.get('access_token');
       const tokenType = params.get('token_type');
       const type = params.get('type');
       const refreshToken = params.get('refresh_token');
 
-      // Si nous avons les paramètres d'une confirmation d'email
-      if (accessToken && type === 'signup') {
+      // If we have email confirmation parameters
+      if (accessToken && (type === 'signup' || type === 'recovery' || type === 'invite')) {
         setIsConfirmingEmail(true);
         try {
-          // Échanger le token pour une session
+          // Exchange token for a session
           const { data, error } = await supabase.auth.setSession({
             access_token: accessToken,
             refresh_token: refreshToken || '',
@@ -46,13 +46,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           
           if (error) throw error;
           
-          // Email confirmé avec succès
+          // Email confirmed successfully
           setSession(data.session);
           setUser(data.session?.user || null);
-          toast.success("Email confirmé avec succès! Vous êtes maintenant connecté.");
+          
+          if (type === 'signup') {
+            toast.success("Email confirmé avec succès! Votre compte est maintenant activé.");
+          } else if (type === 'recovery') {
+            toast.success("Email de récupération confirmé.");
+          } else if (type === 'invite') {
+            toast.success("Invitation acceptée avec succès.");
+          }
+          
+          // Clear URL parameters and redirect to home page
+          window.history.replaceState({}, document.title, window.location.pathname);
           navigate('/');
         } catch (error: any) {
           toast.error(error.message || "Erreur lors de la confirmation de l'email");
+          navigate('/auth');
         } finally {
           setIsConfirmingEmail(false);
           setIsLoading(false);
@@ -65,11 +76,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Get initial session
     const initializeAuth = async () => {
       setIsLoading(true);
-      // D'abord vérifier si c'est une confirmation d'email
+      // First check if this is an email confirmation
       const isEmailConfirmation = await handleEmailConfirmation();
       
       if (!isEmailConfirmation) {
-        // Si ce n'est pas une confirmation d'email, obtenir la session normalement
+        // If not an email confirmation, get session normally
         const { data: { session } } = await supabase.auth.getSession();
         setSession(session);
         setUser(session?.user ?? null);
@@ -82,14 +93,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        console.log('Auth state changed:', event);
+        
         setSession(session);
         setUser(session?.user ?? null);
         setIsLoading(false);
         
         if (event === 'SIGNED_IN') {
-          navigate('/');
+          // Don't navigate if we're already handling email confirmation
+          if (!isConfirmingEmail) {
+            navigate('/');
+          }
         } else if (event === 'SIGNED_OUT') {
           navigate('/auth');
+        } else if (event === 'USER_UPDATED') {
+          // Handle user updates (like email confirmations)
+          toast.info("Votre profil a été mis à jour");
         }
       }
     );
@@ -97,13 +116,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => {
       subscription.unsubscribe();
     };
-  }, [navigate]);
+  }, [navigate, isConfirmingEmail]);
 
   const signUp = async (email: string, password: string, firstName: string, lastName: string) => {
     try {
       setIsLoading(true);
       
-      // Get the current origin
+      // Get the current origin for dynamic redirect URL
       const origin = window.location.origin;
       
       const { error } = await supabase.auth.signUp({
@@ -119,8 +138,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
 
       if (error) throw error;
-      // On ne redirige pas l'utilisateur après l'inscription, on affiche le message de confirmation
-      // et on attend qu'il vérifie son email
+      
       toast.success("Inscription réussie! Veuillez vérifier votre email pour confirmer votre compte.");
     } catch (error: any) {
       toast.error(error.message || "Une erreur s'est produite lors de l'inscription");

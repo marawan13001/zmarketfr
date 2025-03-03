@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -23,35 +22,26 @@ const Auth: React.FC = () => {
   const [registerFirstName, setRegisterFirstName] = useState('');
   const [registerLastName, setRegisterLastName] = useState('');
   
-  // État pour le message de confirmation
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   
-  // Vérifier s'il s'agit d'une redirection de confirmation d'email
   const isEmailConfirmation = location.search.includes('confirmation=true');
   const isProcessingConfirmation = location.search.includes('access_token');
   
-  // Get tab from URL query parameter or default to 'login'
-  const queryParams = new URLSearchParams(location.search);
-  const defaultTab = queryParams.get('tab') === 'register' ? 'register' : 'login';
+  const defaultTab = location.search.includes('tab=register') ? 'register' : 'login';
   const [activeTab, setActiveTab] = useState(defaultTab);
   
-  // Get redirect destination from query parameter
-  const redirectTo = queryParams.get('redirect') || '/';
+  const redirectTo = location.search.includes('redirect') ? location.search.split('redirect=')[1] : '/';
   
-  // Redirect authenticated users 
   useEffect(() => {
-    // Si l'utilisateur est en train de confirmer son email, ne pas rediriger
     if (isProcessingConfirmation || isConfirmingEmail) {
       return;
     }
     
-    // Si l'utilisateur vient de suivre le lien de confirmation mais n'est pas encore authentifié
     if (isEmailConfirmation) {
       return;
     }
     
     if (user) {
-      // Si l'utilisateur est déjà connecté, rediriger vers la page de destination
       if (redirectTo === 'commande') {
         navigate('/commande', { state: { from: 'auth' } });
       } else {
@@ -62,9 +52,7 @@ const Auth: React.FC = () => {
   
   const handleTabChange = (value: string) => {
     setActiveTab(value);
-    // Réinitialiser le message de succès lors du changement d'onglet
     setRegistrationSuccess(false);
-    // Update URL without navigating
     const newUrl = value === 'register' 
       ? `${location.pathname}?tab=register${redirectTo !== '/' ? `&redirect=${redirectTo}` : ''}` 
       : `${location.pathname}${redirectTo !== '/' ? `?redirect=${redirectTo}` : ''}`;
@@ -75,7 +63,6 @@ const Auth: React.FC = () => {
     e.preventDefault();
     try {
       await signIn(loginEmail, loginPassword);
-      // Redirection will happen in the useEffect
     } catch (error) {
       console.error('Login error:', error);
     }
@@ -85,9 +72,7 @@ const Auth: React.FC = () => {
     e.preventDefault();
     try {
       await signUp(registerEmail, registerPassword, registerFirstName, registerLastName);
-      // Afficher le message de confirmation après l'inscription réussie
       setRegistrationSuccess(true);
-      // Réinitialiser les champs du formulaire
       setRegisterEmail('');
       setRegisterPassword('');
       setRegisterFirstName('');
@@ -97,7 +82,6 @@ const Auth: React.FC = () => {
     }
   };
 
-  // Afficher un message de chargement pendant la confirmation d'email
   if (isConfirmingEmail || isProcessingConfirmation) {
     return (
       <div className="min-h-screen bg-brand-gray flex flex-col items-center justify-center p-4">
@@ -111,12 +95,12 @@ const Auth: React.FC = () => {
           </div>
           <Card>
             <CardHeader>
-              <CardTitle>Confirmation de votre email</CardTitle>
-              <CardDescription>Veuillez patienter pendant que nous validons votre compte</CardDescription>
+              <CardTitle>Activation de votre compte</CardTitle>
+              <CardDescription>Veuillez patienter pendant que nous activons votre compte</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col items-center justify-center p-6">
               <Loader2 className="h-16 w-16 text-brand-orange animate-spin mb-4" />
-              <p className="text-gray-600">Traitement en cours...</p>
+              <p className="text-gray-600">Votre compte est en cours d'activation...</p>
             </CardContent>
           </Card>
         </div>
@@ -124,7 +108,6 @@ const Auth: React.FC = () => {
     );
   }
 
-  // Afficher un message si l'utilisateur a été redirigé après avoir cliqué sur le lien de confirmation
   if (isEmailConfirmation) {
     return (
       <div className="min-h-screen bg-brand-gray flex flex-col items-center justify-center p-4">
@@ -169,7 +152,6 @@ const Auth: React.FC = () => {
           Retour à l'accueil
         </Link>
         
-        {/* Logo */}
         <div className="w-full flex justify-center mb-6">
           <img 
             src="/lovable-uploads/3853021d-3d04-4065-b4c7-831fbaed557e.png" 
