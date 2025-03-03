@@ -778,6 +778,28 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart, stockItems }) => {
     }
     return true;
   };
+
+  // New function to handle add to cart with animation
+  const handleAddToCartWithAnimation = (product: any, event: React.MouseEvent<HTMLButtonElement>) => {
+    // Get the button that was clicked directly from the event
+    const button = event.currentTarget;
+    
+    // Add animation class
+    button.classList.add('animate-scale-bounce');
+    
+    // Remove animation class after animation completes
+    setTimeout(() => {
+      button.classList.remove('animate-scale-bounce');
+    }, 500);
+    
+    // Call the original function
+    onAddToCart({
+      id: product.id,
+      title: product.title,
+      image: product.image,
+      price: product.price
+    });
+  };
   
   return (
     <section id="categories" className="py-16 bg-gray-50">
@@ -869,7 +891,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart, stockItems }) => {
                     </div>
                     
                     <button
-                      onClick={() => onAddToCart(product)}
+                      onClick={(e) => handleAddToCartWithAnimation(product, e)}
                       disabled={!isProductInStock(product.id)}
                       className={`px-3 py-1 rounded text-xs font-medium transition-all duration-300 ${
                         isProductInStock(product.id)
