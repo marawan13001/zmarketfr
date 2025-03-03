@@ -40,6 +40,12 @@ const Commande: React.FC = () => {
     if (savedStock) {
       setStockItems(JSON.parse(savedStock));
     }
+    
+    // Load cart items from localStorage
+    const savedCart = localStorage.getItem("cartItems");
+    if (savedCart) {
+      setCartItems(JSON.parse(savedCart));
+    }
   }, []);
 
   // Update cart items with current stock status
@@ -58,17 +64,17 @@ const Commande: React.FC = () => {
   }, [stockItems]);
 
   const updateQuantity = (id: number, newQuantity: number) => {
-    setCartItems(prevItems =>
-      prevItems.map(item =>
-        item.id === id
-          ? { ...item, quantity: newQuantity }
-          : item
-      )
+    const updatedItems = cartItems.map(item =>
+      item.id === id ? { ...item, quantity: newQuantity } : item
     );
+    setCartItems(updatedItems);
+    localStorage.setItem("cartItems", JSON.stringify(updatedItems));
   };
 
   const removeCartItem = (id: number) => {
-    setCartItems(prevItems => prevItems.filter(item => item.id !== id));
+    const updatedItems = cartItems.filter(item => item.id !== id);
+    setCartItems(updatedItems);
+    localStorage.setItem("cartItems", JSON.stringify(updatedItems));
   };
 
   const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
@@ -150,6 +156,9 @@ const Commande: React.FC = () => {
       toast.success("Commande confirmée ! Votre livraison est en route.", {
         duration: 5000,
       });
+      
+      // Clear cart after successful order
+      localStorage.setItem("cartItems", JSON.stringify([]));
       
       setTimeout(() => {
         window.location.href = "/";

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/home/Hero';
@@ -23,6 +24,12 @@ const Index = () => {
     const savedStock = localStorage.getItem("stockItems");
     if (savedStock) {
       setStockItems(JSON.parse(savedStock));
+    }
+
+    // Load cart items from localStorage
+    const savedCart = localStorage.getItem("cartItems");
+    if (savedCart) {
+      setCartItems(JSON.parse(savedCart));
     }
 
     // Check if URL has #livraison hash and scroll to delivery section
@@ -70,15 +77,17 @@ const Index = () => {
   };
 
   const updateCartItemQuantity = (id: number, newQuantity: number) => {
-    setCartItems(prevItems => 
-      prevItems.map(item => 
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
+    const updatedItems = cartItems.map(item => 
+      item.id === id ? { ...item, quantity: newQuantity } : item
     );
+    setCartItems(updatedItems);
+    localStorage.setItem("cartItems", JSON.stringify(updatedItems));
   };
 
   const removeCartItem = (id: number) => {
-    setCartItems(prevItems => prevItems.filter(item => item.id !== id));
+    const updatedItems = cartItems.filter(item => item.id !== id);
+    setCartItems(updatedItems);
+    localStorage.setItem("cartItems", JSON.stringify(updatedItems));
   };
 
   const addToCart = (product: { id: number; title: string; image: string; price: number }) => {
@@ -95,19 +104,27 @@ const Index = () => {
     }
 
     const existingItem = cartItems.find(item => item.id === product.id);
+    let updatedItems;
     
     if (existingItem) {
-      updateCartItemQuantity(product.id, existingItem.quantity + 1);
+      updatedItems = cartItems.map(item => 
+        item.id === product.id 
+          ? { ...item, quantity: item.quantity + 1 } 
+          : item
+      );
     } else {
-      setCartItems([...cartItems, {
+      updatedItems = [...cartItems, {
         id: product.id,
         name: product.title,
         image: product.image,
         price: product.price,
         quantity: 1,
         inStock: stockItem ? stockItem.inStock : true
-      }]);
+      }];
     }
+    
+    setCartItems(updatedItems);
+    localStorage.setItem("cartItems", JSON.stringify(updatedItems));
     
     toast.success(
       <div className="flex items-center gap-2">

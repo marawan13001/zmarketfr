@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { ShoppingCart, X, ChevronUp, ChevronDown, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -28,6 +29,13 @@ const FloatingCart: React.FC<FloatingCartProps> = ({
   const toggleCart = () => {
     setIsOpen(!isOpen);
   };
+
+  // Sync cart items with localStorage
+  useEffect(() => {
+    if (items.length > 0) {
+      localStorage.setItem("cartItems", JSON.stringify(items));
+    }
+  }, [items]);
 
   const subtotal = items.reduce((total, item) => total + (item.price * item.quantity), 0);
   const deliveryFee = subtotal >= 50 ? 0 : 15;
