@@ -5,24 +5,7 @@ import { Package, BookOpen, Server } from "lucide-react";
 import ProductsTable from './ProductsTable';
 import CatalogTable from './CatalogTable';
 import StockTable from './StockTable';
-
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  image: string;
-  category: string;
-  subcategory?: string;
-  brand: string;
-  weight: string;
-  inStock?: boolean;
-}
-
-interface StockItem {
-  id: number;
-  title: string;
-  inStock: boolean;
-}
+import { Product, StockItem } from './types';
 
 interface AdminTabsProps {
   getFilteredProducts: () => Product[];
@@ -34,6 +17,7 @@ interface AdminTabsProps {
   handleRemoveProduct: (id: number) => void;
   addToAdminProducts: (product: Product) => void;
   toggleStock: (id: number) => void;
+  updateQuantity?: (id: number, quantity: number) => void;
 }
 
 const AdminTabs: React.FC<AdminTabsProps> = ({
@@ -45,7 +29,8 @@ const AdminTabs: React.FC<AdminTabsProps> = ({
   toggleSort,
   handleRemoveProduct,
   addToAdminProducts,
-  toggleStock
+  toggleStock,
+  updateQuantity
 }) => {
   return (
     <Tabs defaultValue="products">
@@ -91,6 +76,7 @@ const AdminTabs: React.FC<AdminTabsProps> = ({
           sortDirection={sortDirection}
           toggleSort={toggleSort}
           toggleStock={toggleStock}
+          updateQuantity={updateQuantity}
         />
       </TabsContent>
     </Tabs>

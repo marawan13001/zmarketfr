@@ -35,7 +35,8 @@ const Admin = () => {
       const initialStock = allCatalogProducts.map(product => ({
         id: product.id,
         title: product.title,
-        inStock: true
+        inStock: true,
+        quantity: 10 // Default quantity
       }));
       setStockItems(initialStock);
       localStorage.setItem("stockItems", JSON.stringify(initialStock));
@@ -100,7 +101,8 @@ const Admin = () => {
     setStockItems([...stockItems, {
       id: newId,
       title: "Nouveau Produit",
-      inStock: true
+      inStock: true,
+      quantity: 10 // Default quantity for new products
     }]);
     
     toast.success("Nouveau produit ajouté");
@@ -118,6 +120,14 @@ const Admin = () => {
       item.id === id ? { ...item, inStock: !item.inStock } : item
     ));
     toast.success("Statut de stock mis à jour");
+  };
+
+  // Update stock quantity
+  const updateQuantity = (id: number, quantity: number) => {
+    setStockItems(stockItems.map(item => 
+      item.id === id ? { ...item, quantity } : item
+    ));
+    toast.success("Quantité mise à jour");
   };
   
   // Toggle sort direction
@@ -262,6 +272,7 @@ const Admin = () => {
           handleRemoveProduct={handleRemoveProduct}
           addToAdminProducts={addToAdminProducts}
           toggleStock={toggleStock}
+          updateQuantity={updateQuantity}
         />
       </div>
     </div>

@@ -95,7 +95,7 @@ const StockTable: React.FC<StockTableProps> = ({
                   <Package size={16} className="mr-2 text-gray-400" />
                   <Input
                     type="number"
-                    value={item.quantity || 0}
+                    value={item.quantity}
                     min={0}
                     onChange={(e) => handleQuantityChange(item.id, e.target.value)}
                     className="h-8 w-full"
