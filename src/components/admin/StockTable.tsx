@@ -11,12 +11,7 @@ import {
 } from "@/components/ui/table";
 import { Switch } from "@/components/ui/switch";
 import { CircleCheck, CircleX, ChevronUp, ChevronDown } from "lucide-react";
-
-interface StockItem {
-  id: number;
-  title: string;
-  inStock: boolean;
-}
+import { StockItem } from '../admin/types';
 
 interface StockTableProps {
   stockItems: StockItem[];
@@ -33,6 +28,8 @@ const StockTable: React.FC<StockTableProps> = ({
   toggleSort, 
   toggleStock 
 }) => {
+  console.log("StockItems in StockTable:", stockItems); // Debug log
+
   return (
     <Table>
       <TableCaption>Gestion des stocks</TableCaption>
