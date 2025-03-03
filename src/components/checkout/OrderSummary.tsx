@@ -1,5 +1,7 @@
 
 import React from 'react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Clock } from 'lucide-react';
 
 interface OrderSummaryProps {
   subtotal: number;
@@ -24,6 +26,11 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
   paymentMethod,
   deliveryMethod
 }) => {
+  // Vérifier si l'heure actuelle est dans les heures d'ouverture (9h - 20h)
+  const currentHour = new Date().getHours();
+  const isWithinBusinessHours = currentHour >= 9 && currentHour < 20;
+  const openingTime = currentHour < 9 ? "09h00" : "demain à 09h00";
+
   return (
     <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm mb-8">
       <h2 className="text-xl font-bold mb-4">Récapitulatif</h2>
@@ -56,6 +63,17 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
           </div>
         )}
       </div>
+      
+      {!isWithinBusinessHours && (
+        <Alert className="mb-4 bg-amber-50 border-amber-200">
+          <Clock className="h-4 w-4 text-amber-600" />
+          <AlertDescription className="text-amber-800">
+            {deliveryMethod === 'delivery' 
+              ? `Nous sommes actuellement fermés. Votre livraison sera traitée ${openingTime}.`
+              : `Nous sommes actuellement fermés. Votre commande sera prête à être récupérée ${openingTime}.`}
+          </AlertDescription>
+        </Alert>
+      )}
       
       <button 
         className={`w-full bg-brand-orange hover:bg-brand-orange/90 text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 hover:shadow-md transform hover:translate-y-[-2px] ${
