@@ -10,6 +10,7 @@ interface OrderSummaryProps {
   isProcessingPayment: boolean;
   hasOutOfStockItems: boolean;
   paymentMethod: string;
+  deliveryMethod: string;
 }
 
 const OrderSummary: React.FC<OrderSummaryProps> = ({
@@ -20,7 +21,8 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
   step,
   isProcessingPayment,
   hasOutOfStockItems,
-  paymentMethod
+  paymentMethod,
+  deliveryMethod
 }) => {
   return (
     <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm mb-8">
@@ -33,7 +35,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
         </div>
         
         <div className="flex justify-between">
-          <span>Frais de livraison</span>
+          <span>{deliveryMethod === 'delivery' ? 'Frais de livraison' : 'Frais de préparation'}</span>
           <span>
             {deliveryFee === 0 ? (
               <span className="text-green-600">Gratuit</span>
@@ -48,7 +50,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
           <span>{total.toFixed(2)} €</span>
         </div>
 
-        {deliveryFee > 0 && (
+        {deliveryMethod === 'delivery' && deliveryFee > 0 && (
           <div className="text-sm text-gray-500">
             Ajoutez {(50 - subtotal).toFixed(2)} € supplémentaires pour bénéficier de la livraison gratuite
           </div>

@@ -42,6 +42,7 @@ const Commande: React.FC = () => {
   const [step, setStep] = useState<number>(1);
   const [isProcessingPayment, setIsProcessingPayment] = useState<boolean>(false);
   const [isRedirectedFromAuth, setIsRedirectedFromAuth] = useState<boolean>(false);
+  const [deliveryMethod, setDeliveryMethod] = useState<string>("delivery");
 
   // Vérifier si l'utilisateur est connecté
   useEffect(() => {
@@ -137,7 +138,8 @@ const Commande: React.FC = () => {
   };
 
   const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-  const deliveryFee = subtotal >= 50 ? 0 : 15;
+  // Ajuster les frais de livraison en fonction du mode de livraison choisi
+  const deliveryFee = deliveryMethod === 'pickup' ? 0 : (subtotal >= 50 ? 0 : 15);
   const total = subtotal + deliveryFee;
 
   const generateOrderId = () => {
@@ -170,7 +172,7 @@ const Commande: React.FC = () => {
     }
 
     if (step === 2) {
-      if (!deliveryAddress) {
+      if (deliveryMethod === 'delivery' && !deliveryAddress) {
         toast.error("Veuillez entrer une adresse de livraison");
         return;
       }
@@ -216,9 +218,10 @@ const Commande: React.FC = () => {
         customerInfo: {
           email,
           phone: phoneNumber,
-          address: deliveryAddress
+          address: deliveryMethod === 'delivery' ? deliveryAddress : 'Click & Collect en magasin'
         },
         paymentMethod,
+        deliveryMethod,
         deliveryTime: deliveryTime === 'asap' ? 'asap' : 'scheduled',
         total
       };
@@ -227,9 +230,15 @@ const Commande: React.FC = () => {
       const notificationSent = sendWhatsAppNotification(orderDetails);
       console.log('🔔 Notification sent result:', notificationSent);
       
-      toast.success("Commande confirmée ! Votre livraison est en route.", {
-        duration: 5000,
-      });
+      if (deliveryMethod === 'pickup') {
+        toast.success("Commande confirmée ! Votre commande sera prête dans 1 heure environ pour être récupérée en magasin.", {
+          duration: 5000,
+        });
+      } else {
+        toast.success("Commande confirmée ! Votre livraison est en route.", {
+          duration: 5000,
+        });
+      }
       
       // Clear cart after successful order
       localStorage.setItem("cartItems", JSON.stringify([]));
@@ -286,6 +295,8 @@ const Commande: React.FC = () => {
                   setPhoneNumber={setPhoneNumber}
                   email={email}
                   setEmail={setEmail}
+                  deliveryMethod={deliveryMethod}
+                  setDeliveryMethod={setDeliveryMethod}
                 />
               )}
               
@@ -309,6 +320,7 @@ const Commande: React.FC = () => {
               isProcessingPayment={isProcessingPayment}
               hasOutOfStockItems={hasOutOfStockItems}
               paymentMethod={paymentMethod}
+              deliveryMethod={deliveryMethod}
             />
           </div>
         </div>
