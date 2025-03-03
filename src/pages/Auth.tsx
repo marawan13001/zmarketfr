@@ -7,13 +7,13 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/contexts/AuthContext';
-import { Mail, Lock, User, ArrowLeft, Check, AlertCircle } from 'lucide-react';
+import { Mail, Lock, User, ArrowLeft, Check, AlertCircle, Loader2 } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
 const Auth: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { signIn, signUp, isLoading, user } = useAuth();
+  const { signIn, signUp, isLoading, user, isConfirmingEmail } = useAuth();
   
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
@@ -26,6 +26,10 @@ const Auth: React.FC = () => {
   // État pour le message de confirmation
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   
+  // Vérifier s'il s'agit d'une redirection de confirmation d'email
+  const isEmailConfirmation = location.search.includes('confirmation=true');
+  const isProcessingConfirmation = location.search.includes('access_token');
+  
   // Get tab from URL query parameter or default to 'login'
   const queryParams = new URLSearchParams(location.search);
   const defaultTab = queryParams.get('tab') === 'register' ? 'register' : 'login';
@@ -36,6 +40,16 @@ const Auth: React.FC = () => {
   
   // Redirect authenticated users 
   useEffect(() => {
+    // Si l'utilisateur est en train de confirmer son email, ne pas rediriger
+    if (isProcessingConfirmation || isConfirmingEmail) {
+      return;
+    }
+    
+    // Si l'utilisateur vient de suivre le lien de confirmation mais n'est pas encore authentifié
+    if (isEmailConfirmation) {
+      return;
+    }
+    
     if (user) {
       // Si l'utilisateur est déjà connecté, rediriger vers la page de destination
       if (redirectTo === 'commande') {
@@ -44,7 +58,7 @@ const Auth: React.FC = () => {
         navigate(redirectTo);
       }
     }
-  }, [user, navigate, redirectTo]);
+  }, [user, navigate, redirectTo, isEmailConfirmation, isConfirmingEmail, isProcessingConfirmation]);
   
   const handleTabChange = (value: string) => {
     setActiveTab(value);
@@ -82,6 +96,70 @@ const Auth: React.FC = () => {
       console.error('Registration error:', error);
     }
   };
+
+  // Afficher un message de chargement pendant la confirmation d'email
+  if (isConfirmingEmail || isProcessingConfirmation) {
+    return (
+      <div className="min-h-screen bg-brand-gray flex flex-col items-center justify-center p-4">
+        <div className="w-full max-w-md mx-auto text-center">
+          <div className="flex justify-center mb-6">
+            <img 
+              src="/lovable-uploads/3853021d-3d04-4065-b4c7-831fbaed557e.png" 
+              alt="Logo" 
+              className="h-24 w-auto"
+            />
+          </div>
+          <Card>
+            <CardHeader>
+              <CardTitle>Confirmation de votre email</CardTitle>
+              <CardDescription>Veuillez patienter pendant que nous validons votre compte</CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col items-center justify-center p-6">
+              <Loader2 className="h-16 w-16 text-brand-orange animate-spin mb-4" />
+              <p className="text-gray-600">Traitement en cours...</p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
+  // Afficher un message si l'utilisateur a été redirigé après avoir cliqué sur le lien de confirmation
+  if (isEmailConfirmation) {
+    return (
+      <div className="min-h-screen bg-brand-gray flex flex-col items-center justify-center p-4">
+        <div className="w-full max-w-md mx-auto text-center">
+          <div className="flex justify-center mb-6">
+            <img 
+              src="/lovable-uploads/3853021d-3d04-4065-b4c7-831fbaed557e.png" 
+              alt="Logo" 
+              className="h-24 w-auto"
+            />
+          </div>
+          <Card>
+            <CardHeader>
+              <CardTitle>Email confirmé</CardTitle>
+              <CardDescription>Votre adresse email a été confirmée avec succès</CardDescription>
+            </CardHeader>
+            <CardContent className="p-6">
+              <Alert className="bg-green-50 border-green-200 mb-4">
+                <Check className="h-5 w-5 text-green-600" />
+                <AlertDescription className="text-green-700">
+                  Votre compte a été activé. Vous pouvez maintenant vous connecter.
+                </AlertDescription>
+              </Alert>
+              <Button 
+                onClick={() => navigate('/auth')} 
+                className="w-full bg-brand-orange hover:bg-brand-orange/90 font-medium transition-all"
+              >
+                Aller à la page de connexion
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
   
   return (
     <div className="min-h-screen bg-brand-gray flex flex-col">
@@ -94,7 +172,7 @@ const Auth: React.FC = () => {
         {/* Logo */}
         <div className="w-full flex justify-center mb-6">
           <img 
-            src="/lovable-uploads/ddd7dece-9b68-481e-9531-c5d6c2df941b.png" 
+            src="/lovable-uploads/3853021d-3d04-4065-b4c7-831fbaed557e.png" 
             alt="Logo" 
             className="h-20 w-auto"
           />
