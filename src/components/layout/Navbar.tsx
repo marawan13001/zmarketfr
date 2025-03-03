@@ -1,7 +1,9 @@
 
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Menu, ShoppingCart, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import UserMenu from './UserMenu';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -32,7 +34,7 @@ const Navbar: React.FC = () => {
       )}
     >
       <div className="container px-4 mx-auto flex justify-between items-center">
-        <a href="/" className="z-50 flex items-center">
+        <Link to="/" className="z-50 flex items-center">
           <img 
             src="/lovable-uploads/81fe1b1a-9718-4a7d-b30e-3b1b32c3cc85.png" 
             alt="Z Market Logo" 
@@ -41,7 +43,7 @@ const Navbar: React.FC = () => {
           <span className={`text-2xl font-bold tracking-tight ${isScrolled || isMenuOpen ? 'text-brand-black' : 'text-white'}`}>
             Z <span className="text-brand-orange">Market</span>
           </span>
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
@@ -79,22 +81,26 @@ const Navbar: React.FC = () => {
               </a>
             </li>
           </ul>
-          <a
-            href="/commande"
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-brand-orange text-white hover:bg-brand-orange/90 transition-colors"
-          >
-            <ShoppingCart size={20} />
-          </a>
+          <div className="flex items-center gap-2">
+            <UserMenu />
+            <Link
+              to="/commande"
+              className="flex items-center justify-center w-10 h-10 rounded-full bg-brand-orange text-white hover:bg-brand-orange/90 transition-colors"
+            >
+              <ShoppingCart size={20} />
+            </Link>
+          </div>
         </nav>
 
         {/* Mobile Menu Button */}
         <div className="flex items-center md:hidden">
-          <a
-            href="/commande"
+          <UserMenu />
+          <Link
+            to="/commande"
             className="flex items-center justify-center w-10 h-10 rounded-full bg-brand-orange text-white hover:bg-brand-orange/90 transition-colors mr-2"
           >
             <ShoppingCart size={20} />
-          </a>
+          </Link>
           <button
             onClick={toggleMenu}
             className="p-2 focus:outline-none"
@@ -155,14 +161,14 @@ const Navbar: React.FC = () => {
           >
             Contact
           </a>
-          <a
-            href="/commande"
+          <Link
+            to="/commande"
             className="flex items-center gap-2 px-6 py-3 bg-brand-orange text-white rounded-lg font-semibold"
             onClick={toggleMenu}
           >
             <ShoppingCart size={20} />
             Commander
-          </a>
+          </Link>
         </nav>
       </div>
     </header>
@@ -170,4 +176,3 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
-
