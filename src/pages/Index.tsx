@@ -149,28 +149,7 @@ const Index = () => {
     <div className="min-h-screen bg-white w-full">
       <Navbar />
       
-      <div className="fixed top-0 left-0 w-full bg-brand-orange/10 py-3 z-30">
-        <div className="container mx-auto px-4 flex items-center justify-center cursor-pointer" onClick={scrollToDelivery}>
-          <div className="flex items-center gap-3 group">
-            <div className="flex items-center justify-center bg-white p-2 rounded-full shadow-sm">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L12 22" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
-                <path d="M17 5L7 19" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
-                <path d="M7 5L17 19" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
-                <path d="M2 12L22 12" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
-                <path d="M4.93 4.93L19.07 19.07" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
-                <path d="M19.07 4.93L4.93 19.07" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
-            </div>
-            <p className="font-medium text-gray-800">
-              Livraison rapide de produits surgelés <span className="text-brand-orange">en 1 heure</span>
-            </p>
-            <span className="text-brand-orange group-hover:translate-x-1 transition-transform">→</span>
-          </div>
-        </div>
-      </div>
-      
-      <main className="w-full pt-28">
+      <main className="w-full pt-16">
         <Hero />
         
         <div className="container mx-auto px-4 py-6 flex flex-col md:flex-row gap-4 justify-center">
