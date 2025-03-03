@@ -1,8 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { toast } from 'sonner';
-import { ShoppingBag, CreditCard, Banknote, Clock, CalendarClock } from 'lucide-react';
+import { ShoppingBag, CreditCard, Banknote, Clock, CalendarClock, AlertCircle } from 'lucide-react';
 import FloatingCart from '@/components/cart/FloatingCart';
 import { sendWhatsAppNotification } from '@/utils/whatsappNotification';
 import { WHATSAPP_NUMBER } from '@/pages/Index';
@@ -14,10 +15,18 @@ interface CartItem {
   image: string;
   price: number;
   quantity: number;
+  inStock?: boolean;
+}
+
+interface StockItem {
+  id: number;
+  title: string;
+  inStock: boolean;
 }
 
 const Commande: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [stockItems, setStockItems] = useState<StockItem[]>([]);
   const [deliveryTime, setDeliveryTime] = useState<string>("asap");
   const [deliveryAddress, setDeliveryAddress] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
@@ -26,9 +35,27 @@ const Commande: React.FC = () => {
   const [step, setStep] = useState<number>(1);
 
   useEffect(() => {
-    // Logique pour récupérer les éléments du panier (à implémenter plus tard)
-    // Pour le moment, nous laissons le panier vide
+    // Load stock items from localStorage
+    const savedStock = localStorage.getItem("stockItems");
+    if (savedStock) {
+      setStockItems(JSON.parse(savedStock));
+    }
   }, []);
+
+  // Update cart items with current stock status
+  useEffect(() => {
+    if (stockItems.length > 0 && cartItems.length > 0) {
+      setCartItems(prevItems => 
+        prevItems.map(item => {
+          const stockItem = stockItems.find(stock => stock.id === item.id);
+          return {
+            ...item,
+            inStock: stockItem ? stockItem.inStock : true
+          };
+        })
+      );
+    }
+  }, [stockItems]);
 
   const updateQuantity = (id: number, newQuantity: number) => {
     setCartItems(prevItems =>
@@ -58,6 +85,20 @@ const Commande: React.FC = () => {
         toast.error("Votre panier est vide");
         return;
       }
+
+      // Check if any items are out of stock
+      const outOfStockItems = cartItems.filter(item => item.inStock === false);
+      if (outOfStockItems.length > 0) {
+        toast.error(
+          <div>
+            Certains produits dans votre panier sont en rupture de stock. 
+            Veuillez les retirer avant de continuer.
+          </div>,
+          { duration: 5000 }
+        );
+        return;
+      }
+
       setStep(2);
       window.scrollTo(0, 0);
       return;
@@ -161,28 +202,47 @@ const Commande: React.FC = () => {
                     <div className="space-y-6">
                       {cartItems.map((item) => (
                         <div key={item.id} className="flex items-center gap-4 border-b border-gray-100 pb-4">
-                          <img 
-                            src={item.image} 
-                            alt={item.name} 
-                            className="w-20 h-20 object-cover rounded-lg"
-                          />
+                          <div className="relative">
+                            <img 
+                              src={item.image} 
+                              alt={item.name} 
+                              className={`w-20 h-20 object-cover rounded-lg ${item.inStock === false ? 'opacity-60' : ''}`}
+                            />
+                            {item.inStock === false && (
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="bg-red-500 text-white text-xs px-1 py-0.5 rounded">
+                                  Rupture
+                                </div>
+                              </div>
+                            )}
+                          </div>
                           
                           <div className="flex-1">
-                            <h3 className="font-medium">{item.name}</h3>
+                            <div className="flex items-center">
+                              <h3 className="font-medium">{item.name}</h3>
+                              {item.inStock === false && (
+                                <span className="ml-2 bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full flex items-center">
+                                  <AlertCircle size={12} className="mr-1" />
+                                  Rupture de stock
+                                </span>
+                              )}
+                            </div>
                             <p className="text-brand-orange font-bold">{item.price.toFixed(2)} €</p>
                           </div>
                           
                           <div className="flex items-center border rounded-lg overflow-hidden">
                             <button 
-                              className="px-3 py-1 bg-gray-100 hover:bg-gray-200"
+                              className={`px-3 py-1 bg-gray-100 hover:bg-gray-200 ${item.inStock === false ? 'opacity-50 cursor-not-allowed' : ''}`}
                               onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
+                              disabled={item.inStock === false}
                             >
                               -
                             </button>
                             <span className="px-3 py-1">{item.quantity}</span>
                             <button 
-                              className="px-3 py-1 bg-gray-100 hover:bg-gray-200"
+                              className={`px-3 py-1 bg-gray-100 hover:bg-gray-200 ${item.inStock === false ? 'opacity-50 cursor-not-allowed' : ''}`}
                               onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                              disabled={item.inStock === false}
                             >
                               +
                             </button>
@@ -196,6 +256,16 @@ const Commande: React.FC = () => {
                           </button>
                         </div>
                       ))}
+
+                      {cartItems.some(item => item.inStock === false) && (
+                        <div className="bg-red-50 border border-red-100 p-3 rounded-lg text-red-700 text-sm flex items-start gap-2">
+                          <AlertCircle size={18} className="flex-shrink-0 mt-0.5" />
+                          <div>
+                            <p className="font-semibold">Attention:</p>
+                            <p>Certains produits de votre panier sont en rupture de stock. Veuillez les retirer avant de finaliser votre commande.</p>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -387,13 +457,20 @@ const Commande: React.FC = () => {
               </div>
               
               <button 
-                className="w-full bg-brand-orange hover:bg-brand-orange/90 text-white font-medium py-3 px-4 rounded-lg transition-colors"
+                className={`w-full bg-brand-orange hover:bg-brand-orange/90 text-white font-medium py-3 px-4 rounded-lg transition-colors ${cartItems.some(item => item.inStock === false) ? 'opacity-70 cursor-not-allowed' : ''}`}
                 onClick={handleNextStep}
+                disabled={cartItems.some(item => item.inStock === false)}
               >
                 {step === 1 && "Continuer vers la livraison"}
                 {step === 2 && "Continuer vers le paiement"}
                 {step === 3 && "Confirmer la commande"}
               </button>
+              
+              {cartItems.some(item => item.inStock === false) && step === 1 && (
+                <p className="text-center text-red-500 text-sm mt-2">
+                  Veuillez retirer les produits en rupture de stock avant de continuer
+                </p>
+              )}
             </div>
           </div>
         </div>

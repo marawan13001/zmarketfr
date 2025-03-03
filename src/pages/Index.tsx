@@ -16,22 +16,14 @@ const Index = () => {
   const deliveryRef = useRef<HTMLDivElement>(null);
   const categoriesRef = useRef<HTMLDivElement>(null);
   const [cartItems, setCartItems] = useState([]);
+  const [stockItems, setStockItems] = useState([]);
 
   useEffect(() => {
-    setTimeout(() => {
-      toast.info(
-        <div>
-          Nous avons mis à jour notre site avec un nouveau design surgelé! 
-          <a href="/test-images" className="text-blue-500 underline ml-1">
-            Voir tous nos visuels
-          </a>
-        </div>,
-        {
-          duration: 8000,
-          position: "bottom-center"
-        }
-      );
-    }, 1000);
+    // Load stock items from localStorage
+    const savedStock = localStorage.getItem("stockItems");
+    if (savedStock) {
+      setStockItems(JSON.parse(savedStock));
+    }
 
     // Check if URL has #livraison hash and scroll to delivery section
     if (window.location.hash === '#livraison') {
@@ -90,6 +82,18 @@ const Index = () => {
   };
 
   const addToCart = (product: { id: number; title: string; image: string; price: number }) => {
+    // Check if product is in stock
+    const stockItem = stockItems.find(item => item.id === product.id);
+    if (stockItem && !stockItem.inStock) {
+      toast.error(
+        <div className="flex items-center gap-2">
+          <span className="font-medium">{product.title}</span> est en rupture de stock
+        </div>,
+        { duration: 3000 }
+      );
+      return;
+    }
+
     const existingItem = cartItems.find(item => item.id === product.id);
     
     if (existingItem) {
@@ -100,7 +104,8 @@ const Index = () => {
         name: product.title,
         image: product.image,
         price: product.price,
-        quantity: 1
+        quantity: 1,
+        inStock: stockItem ? stockItem.inStock : true
       }]);
     }
     
@@ -152,11 +157,11 @@ const Index = () => {
         </div>
         
         <div ref={categoriesRef}>
-          <Categories onAddToCart={addToCart} />
+          <Categories onAddToCart={addToCart} stockItems={stockItems} />
         </div>
         
         <div id="livraison" ref={deliveryRef}>
-          <HomeDelivery onAddToCart={addToCart} />
+          <HomeDelivery onAddToCart={addToCart} stockItems={stockItems} />
         </div>
         
         <About />
