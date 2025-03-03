@@ -7,7 +7,8 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/contexts/AuthContext';
-import { Mail, Lock, User, ArrowLeft } from 'lucide-react';
+import { Mail, Lock, User, ArrowLeft, Check, AlertCircle } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 const Auth: React.FC = () => {
   const location = useLocation();
@@ -21,6 +22,9 @@ const Auth: React.FC = () => {
   const [registerPassword, setRegisterPassword] = useState('');
   const [registerFirstName, setRegisterFirstName] = useState('');
   const [registerLastName, setRegisterLastName] = useState('');
+  
+  // État pour le message de confirmation
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
   
   // Get tab from URL query parameter or default to 'login'
   const queryParams = new URLSearchParams(location.search);
@@ -44,6 +48,8 @@ const Auth: React.FC = () => {
   
   const handleTabChange = (value: string) => {
     setActiveTab(value);
+    // Réinitialiser le message de succès lors du changement d'onglet
+    setRegistrationSuccess(false);
     // Update URL without navigating
     const newUrl = value === 'register' 
       ? `${location.pathname}?tab=register${redirectTo !== '/' ? `&redirect=${redirectTo}` : ''}` 
@@ -65,7 +71,13 @@ const Auth: React.FC = () => {
     e.preventDefault();
     try {
       await signUp(registerEmail, registerPassword, registerFirstName, registerLastName);
-      // Stay on register tab to show success message
+      // Afficher le message de confirmation après l'inscription réussie
+      setRegistrationSuccess(true);
+      // Réinitialiser les champs du formulaire
+      setRegisterEmail('');
+      setRegisterPassword('');
+      setRegisterFirstName('');
+      setRegisterLastName('');
     } catch (error) {
       console.error('Registration error:', error);
     }
@@ -169,84 +181,102 @@ const Auth: React.FC = () => {
             </TabsContent>
             
             <TabsContent value="register">
-              <form onSubmit={handleRegister}>
-                <CardContent className="space-y-4 pt-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="firstName" className="text-gray-700">Prénom</Label>
-                      <div className="relative">
-                        <User className="absolute left-3 top-3 text-gray-400" size={16} />
+              {registrationSuccess ? (
+                <div className="p-6">
+                  <Alert className="bg-green-50 border-green-200 mb-4">
+                    <Check className="h-5 w-5 text-green-600" />
+                    <AlertDescription className="text-green-700">
+                      Inscription réussie ! Un email de confirmation a été envoyé à votre adresse email. 
+                      Veuillez vérifier votre boîte de réception et cliquer sur le lien pour activer votre compte.
+                    </AlertDescription>
+                  </Alert>
+                  <Button 
+                    onClick={() => handleTabChange('login')} 
+                    className="w-full bg-brand-orange hover:bg-brand-orange/90 font-medium transition-all"
+                  >
+                    Aller à la page de connexion
+                  </Button>
+                </div>
+              ) : (
+                <form onSubmit={handleRegister}>
+                  <CardContent className="space-y-4 pt-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="firstName" className="text-gray-700">Prénom</Label>
+                        <div className="relative">
+                          <User className="absolute left-3 top-3 text-gray-400" size={16} />
+                          <Input 
+                            id="firstName" 
+                            placeholder="Prénom" 
+                            className="pl-10 border-gray-300 focus:border-brand-orange focus:ring-brand-orange"
+                            value={registerFirstName}
+                            onChange={(e) => setRegisterFirstName(e.target.value)}
+                            required
+                          />
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor="lastName" className="text-gray-700">Nom</Label>
                         <Input 
-                          id="firstName" 
-                          placeholder="Prénom" 
-                          className="pl-10 border-gray-300 focus:border-brand-orange focus:ring-brand-orange"
-                          value={registerFirstName}
-                          onChange={(e) => setRegisterFirstName(e.target.value)}
+                          id="lastName" 
+                          placeholder="Nom" 
+                          className="border-gray-300 focus:border-brand-orange focus:ring-brand-orange"
+                          value={registerLastName}
+                          onChange={(e) => setRegisterLastName(e.target.value)}
                           required
                         />
                       </div>
                     </div>
                     
                     <div className="space-y-2">
-                      <Label htmlFor="lastName" className="text-gray-700">Nom</Label>
-                      <Input 
-                        id="lastName" 
-                        placeholder="Nom" 
-                        className="border-gray-300 focus:border-brand-orange focus:ring-brand-orange"
-                        value={registerLastName}
-                        onChange={(e) => setRegisterLastName(e.target.value)}
-                        required
-                      />
+                      <Label htmlFor="registerEmail" className="text-gray-700">Email</Label>
+                      <div className="relative">
+                        <Mail className="absolute left-3 top-3 text-gray-400" size={16} />
+                        <Input 
+                          id="registerEmail" 
+                          type="email" 
+                          placeholder="votre@email.com" 
+                          className="pl-10 border-gray-300 focus:border-brand-orange focus:ring-brand-orange"
+                          value={registerEmail}
+                          onChange={(e) => setRegisterEmail(e.target.value)}
+                          required
+                        />
+                      </div>
                     </div>
-                  </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="registerPassword" className="text-gray-700">Mot de passe</Label>
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-3 text-gray-400" size={16} />
+                        <Input 
+                          id="registerPassword" 
+                          type="password" 
+                          placeholder="••••••••" 
+                          className="pl-10 border-gray-300 focus:border-brand-orange focus:ring-brand-orange"
+                          value={registerPassword}
+                          onChange={(e) => setRegisterPassword(e.target.value)}
+                          required
+                          minLength={6}
+                        />
+                      </div>
+                      <p className="text-xs text-gray-500">
+                        Le mot de passe doit contenir au moins 6 caractères
+                      </p>
+                    </div>
+                  </CardContent>
                   
-                  <div className="space-y-2">
-                    <Label htmlFor="registerEmail" className="text-gray-700">Email</Label>
-                    <div className="relative">
-                      <Mail className="absolute left-3 top-3 text-gray-400" size={16} />
-                      <Input 
-                        id="registerEmail" 
-                        type="email" 
-                        placeholder="votre@email.com" 
-                        className="pl-10 border-gray-300 focus:border-brand-orange focus:ring-brand-orange"
-                        value={registerEmail}
-                        onChange={(e) => setRegisterEmail(e.target.value)}
-                        required
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="registerPassword" className="text-gray-700">Mot de passe</Label>
-                    <div className="relative">
-                      <Lock className="absolute left-3 top-3 text-gray-400" size={16} />
-                      <Input 
-                        id="registerPassword" 
-                        type="password" 
-                        placeholder="••••••••" 
-                        className="pl-10 border-gray-300 focus:border-brand-orange focus:ring-brand-orange"
-                        value={registerPassword}
-                        onChange={(e) => setRegisterPassword(e.target.value)}
-                        required
-                        minLength={6}
-                      />
-                    </div>
-                    <p className="text-xs text-gray-500">
-                      Le mot de passe doit contenir au moins 6 caractères
-                    </p>
-                  </div>
-                </CardContent>
-                
-                <CardFooter>
-                  <Button 
-                    type="submit" 
-                    className="w-full bg-brand-orange hover:bg-brand-orange/90 font-medium transition-all"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? 'Inscription en cours...' : 'S\'inscrire'}
-                  </Button>
-                </CardFooter>
-              </form>
+                  <CardFooter>
+                    <Button 
+                      type="submit" 
+                      className="w-full bg-brand-orange hover:bg-brand-orange/90 font-medium transition-all"
+                      disabled={isLoading}
+                    >
+                      {isLoading ? 'Inscription en cours...' : 'S\'inscrire'}
+                    </Button>
+                  </CardFooter>
+                </form>
+              )}
             </TabsContent>
           </Tabs>
         </Card>

@@ -57,6 +57,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
 
       if (error) throw error;
+      // On ne redirige pas l'utilisateur après l'inscription, on affiche le message de confirmation
+      // et on attend qu'il vérifie son email
       toast.success("Inscription réussie! Veuillez vérifier votre email pour confirmer votre compte.");
     } catch (error: any) {
       toast.error(error.message || "Une erreur s'est produite lors de l'inscription");
