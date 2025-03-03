@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Truck, Clock, ShoppingCart, ChevronRight, MapPin, Calendar } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
@@ -14,9 +15,10 @@ interface Product {
 
 interface HomeDeliveryProps {
   onAddToCart?: (product: { id: number; title: string; image: string; price: number }) => void;
+  stockItems?: Array<{id: number, inStock: boolean}>;
 }
 
-const HomeDelivery: React.FC<HomeDeliveryProps> = ({ onAddToCart = () => {} }) => {
+const HomeDelivery: React.FC<HomeDeliveryProps> = ({ onAddToCart = () => {}, stockItems = [] }) => {
   const navigate = useNavigate();
   
   const featuredProducts: Product[] = [
@@ -42,6 +44,11 @@ const HomeDelivery: React.FC<HomeDeliveryProps> = ({ onAddToCart = () => {} }) =
       unit: "420g"
     }
   ];
+
+  const isProductInStock = (productId: number) => {
+    const stockItem = stockItems.find(item => item.id === productId);
+    return stockItem ? stockItem.inStock : true;
+  };
 
   const handleAddToCart = (product: Product) => {
     onAddToCart({
@@ -197,6 +204,13 @@ const HomeDelivery: React.FC<HomeDeliveryProps> = ({ onAddToCart = () => {} }) =
                         e.currentTarget.src = '/placeholder.svg';
                       }}
                     />
+                    {!isProductInStock(product.id) && (
+                      <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                        <span className="bg-red-500 text-white text-sm font-medium px-2 py-1 rounded">
+                          Rupture de stock
+                        </span>
+                      </div>
+                    )}
                   </div>
                   <div className="p-6">
                     <div className="flex justify-between items-center mb-4">
@@ -207,7 +221,8 @@ const HomeDelivery: React.FC<HomeDeliveryProps> = ({ onAddToCart = () => {} }) =
                       <span className="text-sm text-gray-500">{product.unit}</span>
                       <button 
                         onClick={() => handleAddToCart(product)}
-                        className="flex items-center gap-2 bg-brand-orange hover:bg-brand-orange/90 text-white py-2 px-4 rounded-lg transition-colors"
+                        className={`flex items-center gap-2 ${isProductInStock(product.id) ? 'bg-brand-orange hover:bg-brand-orange/90' : 'bg-gray-300 cursor-not-allowed'} text-white py-2 px-4 rounded-lg transition-colors`}
+                        disabled={!isProductInStock(product.id)}
                       >
                         <ShoppingCart size={16} />
                         Ajouter

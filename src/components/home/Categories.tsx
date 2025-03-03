@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { IceCream, Refrigerator, Package, Coffee, ShoppingCart, Beef, Salad, UtensilsCrossed } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
@@ -658,9 +659,10 @@ interface ProductProps {
   subcategory?: string;
   price: number;
   onAddToCart: (product: { id: number; title: string; image: string; price: number }) => void;
+  inStock?: boolean;
 }
 
-const ProductCard: React.FC<ProductProps> = ({ id, image, title, brand, weight, category, price, onAddToCart }) => {
+const ProductCard: React.FC<ProductProps> = ({ id, image, title, brand, weight, category, price, onAddToCart, inStock = true }) => {
   const handleAddToCart = () => {
     onAddToCart({ id, title, image, price });
   };
@@ -676,6 +678,13 @@ const ProductCard: React.FC<ProductProps> = ({ id, image, title, brand, weight, 
         <div className="absolute top-3 right-3 bg-brand-orange text-white text-xs font-medium py-1 px-2 rounded-full">
           {category}
         </div>
+        {!inStock && (
+          <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+            <span className="bg-red-500 text-white text-sm font-medium px-2 py-1 rounded">
+              Rupture de stock
+            </span>
+          </div>
+        )}
       </div>
       <div className="p-4">
         <div className="flex justify-between items-center mb-1">
@@ -689,7 +698,8 @@ const ProductCard: React.FC<ProductProps> = ({ id, image, title, brand, weight, 
             <span className="text-xs py-1 px-2 bg-gray-100 rounded-full font-medium text-gray-700">Halal</span>
             <button 
               onClick={handleAddToCart}
-              className="flex items-center gap-1 bg-brand-orange hover:bg-brand-orange/90 text-white py-1.5 px-3 rounded-lg transition-colors"
+              className={`flex items-center gap-1 ${inStock ? 'bg-brand-orange hover:bg-brand-orange/90' : 'bg-gray-300 cursor-not-allowed'} text-white py-1.5 px-3 rounded-lg transition-colors`}
+              disabled={!inStock}
             >
               <ShoppingCart size={14} />
               <span className="text-sm">Ajouter</span>
@@ -703,9 +713,10 @@ const ProductCard: React.FC<ProductProps> = ({ id, image, title, brand, weight, 
 
 interface CategoriesProps {
   onAddToCart?: (product: { id: number; title: string; image: string; price: number }) => void;
+  stockItems?: Array<{id: number, inStock: boolean}>;
 }
 
-const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
+const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {}, stockItems = [] }) => {
   const [activeCategory, setActiveCategory] = useState("all");
   const [activeSubcategory, setActiveSubcategory] = useState("all");
   
@@ -724,6 +735,11 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
     
     return filtered;
   })();
+
+  const isProductInStock = (productId: number) => {
+    const stockItem = stockItems.find(item => item.id === productId);
+    return stockItem ? stockItem.inStock : true;
+  };
 
   const handleAddToCart = (product: { id: number; title: string; image: string; price: number }) => {
     onAddToCart(product);
@@ -746,6 +762,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
               key={category.id}
               onClick={() => setActiveCategory(category.id)}
               className="cursor-pointer"
+              data-category={category.id}
             >
               <CategoryCard 
                 title={category.title}
@@ -774,6 +791,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
               <button
                 key={subcategory.id}
                 onClick={() => setActiveSubcategory(subcategory.id)}
+                data-subcategory={subcategory.id}
                 className={`px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 transition-colors ${
                   activeSubcategory === subcategory.id 
                     ? subcategory.color + " text-white" 
@@ -799,6 +817,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
               category={product.category}
               price={product.price}
               onAddToCart={handleAddToCart}
+              inStock={isProductInStock(product.id)}
             />
           ))}
         </div>
