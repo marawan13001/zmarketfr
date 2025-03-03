@@ -134,8 +134,14 @@ const Navbar: React.FC = () => {
       <div 
         className={cn(
           "fixed inset-0 bg-white z-40 md:hidden flex flex-col transition-all duration-300",
-          isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+          isMenuOpen ? "translate-y-0" : "translate-y-full"
         )}
+        style={{ 
+          opacity: 1, 
+          visibility: 'visible',
+          pointerEvents: isMenuOpen ? 'auto' : 'none',
+          transform: isMenuOpen ? 'translateY(0)' : 'translateY(100%)'
+        }}
       >
         {/* Mobile Menu Header */}
         <div className="sticky top-0 left-0 right-0 px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-white">
@@ -159,7 +165,7 @@ const Navbar: React.FC = () => {
         </div>
         
         {/* Mobile Menu Navigation */}
-        <div className="flex-1 overflow-y-auto p-6">
+        <div className="flex-1 overflow-y-auto p-6 bg-white">
           <nav className="space-y-8">
             <div className="text-xl font-semibold text-center mb-6 text-brand-black">
               Découvrir
