@@ -18,6 +18,9 @@ const Navbar: React.FC = () => {
       }
     };
 
+    // Déclencher handleScroll immédiatement pour définir l'état initial
+    handleScroll();
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -53,7 +56,7 @@ const Navbar: React.FC = () => {
             className="h-10 mr-2" 
           />
           <span className={`text-2xl font-bold tracking-tight ${isScrolled || isMenuOpen ? 'text-brand-black' : 'text-white'}`}>
-            Z <span className="text-brand-orange">Market</span>
+            Z <span className={`${isScrolled || isMenuOpen ? 'text-brand-orange' : 'text-brand-orange'}`}>Market</span>
           </span>
         </Link>
 
