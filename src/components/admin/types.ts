@@ -15,4 +15,5 @@ export interface StockItem {
   id: number;
   title: string;
   inStock: boolean;
+  quantity: number;
 }

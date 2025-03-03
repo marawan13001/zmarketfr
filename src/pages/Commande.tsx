@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -66,6 +65,13 @@ const Commande: React.FC = () => {
   }, [stockItems]);
 
   const updateQuantity = (id: number, newQuantity: number) => {
+    // Check if new quantity is within stock limits
+    const stockItem = stockItems.find(item => item.id === id);
+    if (stockItem && stockItem.quantity < newQuantity) {
+      toast.error(`Désolé, seulement ${stockItem.quantity} ${stockItem.title} disponible(s) en stock`);
+      return;
+    }
+    
     const updatedItems = cartItems.map(item =>
       item.id === id ? { ...item, quantity: newQuantity } : item
     );
@@ -555,10 +561,10 @@ const Commande: React.FC = () => {
         items={cartItems}
         onUpdateQuantity={updateQuantity}
         onRemoveItem={removeCartItem}
+        stockItems={stockItems}
       />
     </div>
   );
 };
 
 export default Commande;
-

@@ -10,8 +10,9 @@ import {
   TableRow 
 } from "@/components/ui/table";
 import { Switch } from "@/components/ui/switch";
-import { CircleCheck, CircleX, ChevronUp, ChevronDown } from "lucide-react";
+import { CircleCheck, CircleX, ChevronUp, ChevronDown, Package } from "lucide-react";
 import { StockItem } from '../admin/types';
+import { Input } from "../ui/input";
 
 interface StockTableProps {
   stockItems: StockItem[];
@@ -19,6 +20,7 @@ interface StockTableProps {
   sortDirection: "asc" | "desc";
   toggleSort: (field: "id" | "title" | "price") => void;
   toggleStock: (id: number) => void;
+  updateQuantity?: (id: number, quantity: number) => void;
 }
 
 const StockTable: React.FC<StockTableProps> = ({ 
@@ -26,9 +28,19 @@ const StockTable: React.FC<StockTableProps> = ({
   sortField, 
   sortDirection, 
   toggleSort, 
-  toggleStock 
+  toggleStock,
+  updateQuantity
 }) => {
   console.log("StockItems in StockTable:", stockItems); // Debug log
+
+  const handleQuantityChange = (id: number, value: string) => {
+    if (!updateQuantity) return;
+    
+    const quantity = parseInt(value, 10);
+    if (!isNaN(quantity) && quantity >= 0) {
+      updateQuantity(id, quantity);
+    }
+  };
 
   return (
     <Table>
@@ -52,13 +64,14 @@ const StockTable: React.FC<StockTableProps> = ({
             </div>
           </TableHead>
           <TableHead>Disponibilité</TableHead>
+          <TableHead>Quantité</TableHead>
           <TableHead>Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {stockItems.length === 0 ? (
           <TableRow>
-            <TableCell colSpan={4} className="text-center py-8 text-gray-500">
+            <TableCell colSpan={5} className="text-center py-8 text-gray-500">
               Aucun produit trouvé. Modifiez votre recherche.
             </TableCell>
           </TableRow>
@@ -75,6 +88,18 @@ const StockTable: React.FC<StockTableProps> = ({
                     <CircleX className="text-red-500 mr-2" size={18} />
                   )}
                   {item.inStock ? "En stock" : "Épuisé"}
+                </div>
+              </TableCell>
+              <TableCell>
+                <div className="flex items-center w-24">
+                  <Package size={16} className="mr-2 text-gray-400" />
+                  <Input
+                    type="number"
+                    value={item.quantity || 0}
+                    min={0}
+                    onChange={(e) => handleQuantityChange(item.id, e.target.value)}
+                    className="h-8 w-full"
+                  />
                 </div>
               </TableCell>
               <TableCell>

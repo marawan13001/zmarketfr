@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { ShoppingCart, X, ChevronUp, ChevronDown, Trash2 } from 'lucide-react';
+import { ShoppingCart, X, ChevronUp, ChevronDown, Trash2, AlertTriangle, Info } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
@@ -17,12 +17,14 @@ interface FloatingCartProps {
   items: CartItem[];
   onUpdateQuantity?: (id: number, newQuantity: number) => void;
   onRemoveItem?: (id: number) => void;
+  stockItems?: Array<{id: number, inStock: boolean, quantity: number}>;
 }
 
 const FloatingCart: React.FC<FloatingCartProps> = ({ 
   items = [],
   onUpdateQuantity,
-  onRemoveItem
+  onRemoveItem,
+  stockItems = []
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -41,15 +43,34 @@ const FloatingCart: React.FC<FloatingCartProps> = ({
   const deliveryFee = subtotal >= 50 ? 0 : 15;
   const total = subtotal + deliveryFee;
 
+  const getAvailableStock = (itemId: number) => {
+    const stockItem = stockItems.find(s => s.id === itemId);
+    return stockItem ? stockItem.quantity : Infinity;
+  };
+
   const handleQuantityChange = (id: number, change: number) => {
     if (!onUpdateQuantity) return;
     
     const item = items.find(item => item.id === id);
     if (!item) return;
     
-    const newQuantity = Math.max(1, item.quantity + change);
-    onUpdateQuantity(id, newQuantity);
+    const availableStock = getAvailableStock(id);
+    const newQuantity = item.quantity + change;
     
+    if (newQuantity <= 0) {
+      if (onRemoveItem) {
+        onRemoveItem(id);
+        toast.success(`${item.name} retiré du panier`);
+      }
+      return;
+    }
+    
+    if (newQuantity > availableStock) {
+      toast.error(`Désolé, seulement ${availableStock} ${item.name} disponible(s) en stock`);
+      return;
+    }
+    
+    onUpdateQuantity(id, newQuantity);
     toast.success(`Quantité mise à jour: ${item.name}`);
   };
 
@@ -105,41 +126,54 @@ const FloatingCart: React.FC<FloatingCartProps> = ({
             {items.length === 0 ? (
               <p className="text-gray-500 text-center py-6">Votre panier est vide</p>
             ) : (
-              items.map((item) => (
-                <div key={item.id} className="flex items-center gap-3 border-b border-gray-100 pb-3">
-                  <img 
-                    src={item.image} 
-                    alt={item.name} 
-                    className="w-14 h-14 object-cover rounded-md"
-                  />
-                  <div className="flex-1">
-                    <h4 className="font-medium text-sm">{item.name}</h4>
-                    <p className="text-brand-orange font-bold">{item.price.toFixed(2)} €</p>
-                  </div>
-                  <div className="flex flex-col items-center">
+              items.map((item) => {
+                const availableStock = getAvailableStock(item.id);
+                const isAtMaxStock = item.quantity >= availableStock;
+                
+                return (
+                  <div key={item.id} className="flex items-center gap-3 border-b border-gray-100 pb-3">
+                    <img 
+                      src={item.image} 
+                      alt={item.name} 
+                      className="w-14 h-14 object-cover rounded-md"
+                    />
+                    <div className="flex-1">
+                      <h4 className="font-medium text-sm">{item.name}</h4>
+                      <p className="text-brand-orange font-bold">{item.price.toFixed(2)} €</p>
+                      
+                      {isAtMaxStock && (
+                        <div className="flex items-center mt-1 text-xs text-amber-600">
+                          <Info size={12} className="mr-1" />
+                          <span>Stock max: {availableStock}</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <button 
+                        onClick={() => handleQuantityChange(item.id, 1)}
+                        className={`text-gray-500 ${isAtMaxStock ? 'opacity-50 cursor-not-allowed' : 'hover:text-brand-orange'}`}
+                        disabled={isAtMaxStock}
+                      >
+                        <ChevronUp size={18} />
+                      </button>
+                      <span className="text-sm font-medium">{item.quantity}</span>
+                      <button 
+                        onClick={() => handleQuantityChange(item.id, -1)}
+                        className="text-gray-500 hover:text-brand-orange"
+                      >
+                        <ChevronDown size={18} />
+                      </button>
+                    </div>
                     <button 
-                      onClick={() => handleQuantityChange(item.id, 1)}
-                      className="text-gray-500 hover:text-brand-orange"
+                      onClick={() => handleRemoveItem(item.id)}
+                      className="text-gray-500 hover:text-red-500 ml-1"
+                      aria-label="Supprimer du panier"
                     >
-                      <ChevronUp size={18} />
-                    </button>
-                    <span className="text-sm font-medium">{item.quantity}</span>
-                    <button 
-                      onClick={() => handleQuantityChange(item.id, -1)}
-                      className="text-gray-500 hover:text-brand-orange"
-                    >
-                      <ChevronDown size={18} />
+                      <Trash2 size={18} />
                     </button>
                   </div>
-                  <button 
-                    onClick={() => handleRemoveItem(item.id)}
-                    className="text-gray-500 hover:text-red-500 ml-1"
-                    aria-label="Supprimer du panier"
-                  >
-                    <Trash2 size={18} />
-                  </button>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
 
