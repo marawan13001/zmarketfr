@@ -82,9 +82,9 @@ const Auth: React.FC = () => {
         {/* Logo */}
         <div className="w-full flex justify-center mb-6">
           <img 
-            src="/placeholder.svg" 
+            src="/lovable-uploads/ddd7dece-9b68-481e-9531-c5d6c2df941b.png" 
             alt="Logo" 
-            className="h-16 w-auto"
+            className="h-20 w-auto"
           />
         </div>
         
