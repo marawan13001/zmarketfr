@@ -727,4 +727,84 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart = () => {} }) => {
 
   const handleAddToCart = (product: { id: number; title: string; image: string; price: number }) => {
     onAddToCart(product);
-    toast
+    toast.success(`${product.title} ajouté au panier`);
+  };
+
+  return (
+    <section id="produits" className="py-16 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Nos <span className="text-brand-orange">Produits</span></h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Découvrez notre large gamme de produits halal soigneusement sélectionnés pour vous offrir le meilleur de la gastronomie.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {categories.map((category) => (
+            <div 
+              key={category.id}
+              onClick={() => setActiveCategory(category.id)}
+              className="cursor-pointer"
+            >
+              <CategoryCard 
+                title={category.title}
+                description={category.description}
+                icon={category.icon}
+                delay={category.delay}
+              />
+            </div>
+          ))}
+        </div>
+
+        {activeCategory === "frozen" && (
+          <div className="flex flex-wrap gap-2 mb-8 justify-center">
+            <button
+              onClick={() => setActiveSubcategory("all")}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                activeSubcategory === "all" 
+                  ? "bg-gray-800 text-white" 
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
+            >
+              Tous
+            </button>
+            
+            {subcategories.map((subcategory) => (
+              <button
+                key={subcategory.id}
+                onClick={() => setActiveSubcategory(subcategory.id)}
+                className={`px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 transition-colors ${
+                  activeSubcategory === subcategory.id 
+                    ? subcategory.color + " text-white" 
+                    : subcategory.bgColor + " " + subcategory.textColor + " " + subcategory.hoverBgColor
+                }`}
+              >
+                <span>{subcategory.icon}</span>
+                {subcategory.title}
+              </button>
+            ))}
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {filteredProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              id={product.id}
+              image={product.image}
+              title={product.title}
+              brand={product.brand}
+              weight={product.weight}
+              category={product.category}
+              price={product.price}
+              onAddToCart={handleAddToCart}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Categories;
