@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/home/Hero';
@@ -148,7 +147,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-white w-full">
-      <div className="bg-brand-orange/10 py-3 w-full">
+      <div className="fixed top-0 left-0 w-full bg-brand-orange/10 py-3 z-40">
         <div className="container mx-auto px-4 flex items-center justify-center cursor-pointer" onClick={scrollToDelivery}>
           <div className="flex items-center gap-3 group">
             <div className="flex items-center justify-center bg-white p-2 rounded-full shadow-sm">
@@ -169,49 +168,51 @@ const Index = () => {
         </div>
       </div>
       
-      <Navbar />
-      
-      <main className="w-full">
-        <Hero />
+      <div className="pt-[49px]">
+        <Navbar />
         
-        <div className="container mx-auto px-4 py-6 flex flex-col md:flex-row gap-4 justify-center">
-          <button 
-            onClick={() => navigateToCommandeWithParams('delivery')}
-            className="bg-brand-orange hover:bg-brand-orange/90 text-white px-6 py-4 rounded-lg flex items-center gap-3 transition-colors shadow-md text-lg font-medium"
-          >
-            <Truck className="h-6 w-6" />
-            Livraison à domicile en 1 heure
-            <ChevronRight size={20} />
-          </button>
+        <main className="w-full">
+          <Hero />
           
-          <button 
-            onClick={() => navigateToCommandeWithParams('pickup')}
-            className="bg-gray-800 hover:bg-gray-700 text-white px-6 py-4 rounded-lg flex items-center gap-3 transition-colors shadow-md text-lg font-medium"
-          >
-            <Store className="h-6 w-6" />
-            Click & Collect en 1 heure
-            <ChevronRight size={20} />
-          </button>
-        </div>
-        
-        <div ref={categoriesRef}>
-          <Categories onAddToCart={addToCart} stockItems={stockItems} />
-        </div>
-        
-        <div id="livraison" ref={deliveryRef}>
-          <HomeDelivery onAddToCart={addToCart} stockItems={stockItems} />
-        </div>
-        
-        <About />
-        <Contact />
-      </main>
-      <Footer />
+          <div className="container mx-auto px-4 py-6 flex flex-col md:flex-row gap-4 justify-center">
+            <button 
+              onClick={() => navigateToCommandeWithParams('delivery')}
+              className="bg-brand-orange hover:bg-brand-orange/90 text-white px-6 py-4 rounded-lg flex items-center gap-3 transition-colors shadow-md text-lg font-medium"
+            >
+              <Truck className="h-6 w-6" />
+              Livraison à domicile en 1 heure
+              <ChevronRight size={20} />
+            </button>
+            
+            <button 
+              onClick={() => navigateToCommandeWithParams('pickup')}
+              className="bg-gray-800 hover:bg-gray-700 text-white px-6 py-4 rounded-lg flex items-center gap-3 transition-colors shadow-md text-lg font-medium"
+            >
+              <Store className="h-6 w-6" />
+              Click & Collect en 1 heure
+              <ChevronRight size={20} />
+            </button>
+          </div>
+          
+          <div ref={categoriesRef}>
+            <Categories onAddToCart={addToCart} stockItems={stockItems} />
+          </div>
+          
+          <div id="livraison" ref={deliveryRef}>
+            <HomeDelivery onAddToCart={addToCart} stockItems={stockItems} />
+          </div>
+          
+          <About />
+          <Contact />
+        </main>
+        <Footer />
 
-      <FloatingCart 
-        items={cartItems}
-        onUpdateQuantity={updateCartItemQuantity}
-        onRemoveItem={removeCartItem}
-      />
+        <FloatingCart 
+          items={cartItems}
+          onUpdateQuantity={updateCartItemQuantity}
+          onRemoveItem={removeCartItem}
+        />
+      </div>
     </div>
   );
 };
