@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/home/Hero';
@@ -8,7 +9,7 @@ import Contact from '@/components/home/Contact';
 import Footer from '@/components/layout/Footer';
 import FloatingCart from '@/components/cart/FloatingCart';
 import { toast } from 'sonner';
-import { Truck, ChevronRight } from 'lucide-react';
+import { Truck, ChevronRight, Store } from 'lucide-react';
 import { StockItem } from '@/components/admin/types';
 
 export const WHATSAPP_NUMBER = "0675725897";
@@ -145,6 +146,13 @@ const Index = () => {
     );
   };
 
+  const navigateToCommandeWithParams = (method: 'delivery' | 'pickup') => {
+    // Set the delivery method in localStorage
+    localStorage.setItem("deliveryMethod", method);
+    // Navigate to commande page
+    window.location.href = "/commande";
+  };
+
   return (
     <div className="min-h-screen bg-white overflow-x-hidden w-full">
       <Navbar />
@@ -173,13 +181,22 @@ const Index = () => {
       <main className="w-full">
         <Hero />
         
-        <div className="container mx-auto px-4 py-6 flex justify-center">
+        <div className="container mx-auto px-4 py-6 flex flex-col md:flex-row gap-4 justify-center">
           <button 
-            onClick={scrollToDelivery}
-            className="bg-brand-orange hover:bg-brand-orange/90 text-white px-8 py-4 rounded-lg flex items-center gap-3 transition-colors shadow-md text-lg font-medium"
+            onClick={() => navigateToCommandeWithParams('delivery')}
+            className="bg-brand-orange hover:bg-brand-orange/90 text-white px-6 py-4 rounded-lg flex items-center gap-3 transition-colors shadow-md text-lg font-medium"
           >
             <Truck className="h-6 w-6" />
             Livraison à domicile en 1 heure
+            <ChevronRight size={20} />
+          </button>
+          
+          <button 
+            onClick={() => navigateToCommandeWithParams('pickup')}
+            className="bg-gray-800 hover:bg-gray-700 text-white px-6 py-4 rounded-lg flex items-center gap-3 transition-colors shadow-md text-lg font-medium"
+          >
+            <Store className="h-6 w-6" />
+            Click & Collect en 1 heure
             <ChevronRight size={20} />
           </button>
         </div>
