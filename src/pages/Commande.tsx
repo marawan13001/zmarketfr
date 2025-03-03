@@ -210,12 +210,12 @@ const Commande: React.FC = () => {
                   ) : (
                     <div className="space-y-6">
                       {cartItems.map((item) => (
-                        <div key={item.id} className="flex items-center gap-4 border-b border-gray-100 pb-4">
+                        <div key={item.id} className="flex items-center gap-4 border-b border-gray-100 pb-4 group hover:bg-gray-50 p-2 rounded-lg transition-colors duration-300">
                           <div className="relative">
                             <img 
                               src={item.image} 
                               alt={item.name} 
-                              className={`w-20 h-20 object-cover rounded-lg ${item.inStock === false ? 'opacity-60' : ''}`}
+                              className={`w-20 h-20 object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 ${item.inStock === false ? 'opacity-60' : ''}`}
                             />
                             {item.inStock === false && (
                               <div className="absolute inset-0 flex items-center justify-center">
@@ -228,7 +228,7 @@ const Commande: React.FC = () => {
                           
                           <div className="flex-1">
                             <div className="flex items-center">
-                              <h3 className="font-medium">{item.name}</h3>
+                              <h3 className="font-medium group-hover:text-brand-orange transition-colors duration-300">{item.name}</h3>
                               {item.inStock === false && (
                                 <span className="ml-2 bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full flex items-center">
                                   <AlertCircle size={12} className="mr-1" />
@@ -241,7 +241,7 @@ const Commande: React.FC = () => {
                           
                           <div className="flex items-center border rounded-lg overflow-hidden">
                             <button 
-                              className={`px-3 py-1 bg-gray-100 hover:bg-gray-200 ${item.inStock === false ? 'opacity-50 cursor-not-allowed' : ''}`}
+                              className={`px-3 py-1 bg-gray-100 hover:bg-gray-200 transition-colors duration-300 ${item.inStock === false ? 'opacity-50 cursor-not-allowed' : ''}`}
                               onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
                               disabled={item.inStock === false}
                             >
@@ -249,7 +249,7 @@ const Commande: React.FC = () => {
                             </button>
                             <span className="px-3 py-1">{item.quantity}</span>
                             <button 
-                              className={`px-3 py-1 bg-gray-100 hover:bg-gray-200 ${item.inStock === false ? 'opacity-50 cursor-not-allowed' : ''}`}
+                              className={`px-3 py-1 bg-gray-100 hover:bg-gray-200 transition-colors duration-300 ${item.inStock === false ? 'opacity-50 cursor-not-allowed' : ''}`}
                               onClick={() => updateQuantity(item.id, item.quantity + 1)}
                               disabled={item.inStock === false}
                             >
@@ -258,7 +258,7 @@ const Commande: React.FC = () => {
                           </div>
                           
                           <button 
-                            className="text-gray-400 hover:text-red-500 transition-colors"
+                            className="text-gray-400 hover:text-red-500 transition-colors duration-300 transform hover:scale-110"
                             onClick={() => removeCartItem(item.id)}
                           >
                             &times;
@@ -291,7 +291,7 @@ const Commande: React.FC = () => {
                     <div>
                       <p className="font-medium mb-4">Quand souhaitez-vous être livré?</p>
                       <div className="flex flex-col sm:flex-row gap-4">
-                        <label className={`flex-1 border rounded-lg p-4 cursor-pointer transition-colors ${deliveryTime === 'asap' ? 'border-brand-orange bg-brand-orange/5' : 'border-gray-200 hover:border-gray-300'}`}>
+                        <label className={`flex-1 border rounded-lg p-4 cursor-pointer transition-all duration-300 hover:shadow-md ${deliveryTime === 'asap' ? 'border-brand-orange bg-brand-orange/5' : 'border-gray-200 hover:border-gray-300'}`}>
                           <input 
                             type="radio" 
                             name="deliveryTime" 
@@ -309,7 +309,7 @@ const Commande: React.FC = () => {
                           </div>
                         </label>
                         
-                        <label className={`flex-1 border rounded-lg p-4 cursor-pointer transition-colors ${deliveryTime === 'scheduled' ? 'border-brand-orange bg-brand-orange/5' : 'border-gray-200 hover:border-gray-300'}`}>
+                        <label className={`flex-1 border rounded-lg p-4 cursor-pointer transition-all duration-300 hover:shadow-md ${deliveryTime === 'scheduled' ? 'border-brand-orange bg-brand-orange/5' : 'border-gray-200 hover:border-gray-300'}`}>
                           <input 
                             type="radio" 
                             name="deliveryTime" 
@@ -335,7 +335,7 @@ const Commande: React.FC = () => {
                         type="text" 
                         id="address" 
                         placeholder="Entrez votre adresse complète" 
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-brand-orange outline-none"
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-brand-orange outline-none transition-all duration-300"
                         value={deliveryAddress}
                         onChange={(e) => setDeliveryAddress(e.target.value)}
                         required
@@ -348,7 +348,7 @@ const Commande: React.FC = () => {
                         type="tel" 
                         id="phone" 
                         placeholder="Entrez votre numéro de téléphone" 
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-brand-orange outline-none"
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-brand-orange outline-none transition-all duration-300"
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
                         required
@@ -361,7 +361,7 @@ const Commande: React.FC = () => {
                         type="email" 
                         id="email" 
                         placeholder="Entrez votre adresse email" 
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-brand-orange outline-none"
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-brand-orange outline-none transition-all duration-300"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
@@ -382,7 +382,7 @@ const Commande: React.FC = () => {
                     <div>
                       <p className="font-medium mb-4">Méthode de paiement</p>
                       <div className="flex flex-col sm:flex-row gap-4">
-                        <label className={`flex-1 border rounded-lg p-4 cursor-pointer transition-colors ${paymentMethod === 'card' ? 'border-brand-orange bg-brand-orange/5' : 'border-gray-200 hover:border-gray-300'}`}>
+                        <label className={`flex-1 border rounded-lg p-4 cursor-pointer transition-all duration-300 hover:shadow-md ${paymentMethod === 'card' ? 'border-brand-orange bg-brand-orange/5' : 'border-gray-200 hover:border-gray-300'}`}>
                           <input 
                             type="radio" 
                             name="paymentMethod" 
@@ -397,7 +397,7 @@ const Commande: React.FC = () => {
                           </div>
                         </label>
                         
-                        <label className={`flex-1 border rounded-lg p-4 cursor-pointer transition-colors ${paymentMethod === 'cash' ? 'border-brand-orange bg-brand-orange/5' : 'border-gray-200 hover:border-gray-300'}`}>
+                        <label className={`flex-1 border rounded-lg p-4 cursor-pointer transition-all duration-300 hover:shadow-md ${paymentMethod === 'cash' ? 'border-brand-orange bg-brand-orange/5' : 'border-gray-200 hover:border-gray-300'}`}>
                           <input 
                             type="radio" 
                             name="paymentMethod" 
@@ -415,14 +415,14 @@ const Commande: React.FC = () => {
                     </div>
                     
                     {paymentMethod === 'card' && (
-                      <div className="p-4 border border-gray-200 rounded-lg">
+                      <div className="p-4 border border-gray-200 rounded-lg transition-all duration-300 hover:border-gray-300 hover:shadow-sm">
                         <p className="text-center text-gray-500">
                           Dans une vraie application, un formulaire de carte de paiement serait intégré ici
                         </p>
                       </div>
                     )}
                     
-                    <div className="p-4 border border-gray-200 bg-gray-50 rounded-lg">
+                    <div className="p-4 border border-gray-200 bg-gray-50 rounded-lg transition-all duration-300 hover:bg-gray-100">
                       <p className="mb-2 font-medium text-gray-700">Notification au commerçant :</p>
                       <p className="text-sm text-gray-600">
                         En confirmant cette commande, une notification sera envoyée automatiquement au commerçant par WhatsApp ({WHATSAPP_NUMBER}) et par email (contact@zmarket.fr) avec les détails de votre commande pour accélérer le traitement.
@@ -466,7 +466,7 @@ const Commande: React.FC = () => {
               </div>
               
               <button 
-                className={`w-full bg-brand-orange hover:bg-brand-orange/90 text-white font-medium py-3 px-4 rounded-lg transition-colors ${cartItems.some(item => item.inStock === false) ? 'opacity-70 cursor-not-allowed' : ''}`}
+                className={`w-full bg-brand-orange hover:bg-brand-orange/90 text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 hover:shadow-md transform hover:translate-y-[-2px] ${cartItems.some(item => item.inStock === false) ? 'opacity-70 cursor-not-allowed' : ''}`}
                 onClick={handleNextStep}
                 disabled={cartItems.some(item => item.inStock === false)}
               >

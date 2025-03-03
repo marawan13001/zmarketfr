@@ -836,7 +836,7 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart, stockItems }) => {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 lg:gap-6">
           {filteredProducts.map(product => (
             <ScrollReveal key={product.id}>
-              <div className="relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow p-2 border border-gray-100">
+              <div className="relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 p-2 border border-gray-100 group hover:translate-y-[-5px]">
                 {/* Out of stock overlay */}
                 {!isProductInStock(product.id) && (
                   <div className="absolute inset-0 bg-black/60 flex items-center justify-center z-10 rounded-xl">
@@ -846,16 +846,16 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart, stockItems }) => {
                   </div>
                 )}
                 
-                <div className="relative pt-[100%] mb-3">
+                <div className="relative pt-[100%] mb-3 overflow-hidden">
                   <img 
                     src={product.image} 
                     alt={product.title} 
-                    className="absolute inset-0 w-full h-full object-contain p-4"
+                    className="absolute inset-0 w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>
                 
-                <div className="px-2">
-                  <h3 className="font-medium text-gray-900 text-sm mb-1 line-clamp-2 min-h-[2.5rem]">
+                <div className="px-2 group-hover:bg-gray-50 transition-colors duration-300 rounded-b-lg">
+                  <h3 className="font-medium text-gray-900 text-sm mb-1 line-clamp-2 min-h-[2.5rem] group-hover:text-brand-orange transition-colors duration-300">
                     {product.title}
                   </h3>
                   
@@ -871,9 +871,9 @@ const Categories: React.FC<CategoriesProps> = ({ onAddToCart, stockItems }) => {
                     <button
                       onClick={() => onAddToCart(product)}
                       disabled={!isProductInStock(product.id)}
-                      className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
+                      className={`px-3 py-1 rounded text-xs font-medium transition-all duration-300 ${
                         isProductInStock(product.id)
-                          ? 'bg-brand-orange text-white hover:bg-brand-orange/90'
+                          ? 'bg-brand-orange text-white hover:bg-brand-orange/90 group-hover:scale-105'
                           : 'bg-gray-200 text-gray-500 cursor-not-allowed'
                       }`}
                     >

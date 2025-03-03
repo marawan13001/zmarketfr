@@ -193,12 +193,12 @@ const HomeDelivery: React.FC<HomeDeliveryProps> = ({ onAddToCart = () => {}, sto
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {featuredProducts.map((product) => (
               <ScrollReveal key={product.id} delay={300 + product.id * 100} direction="up">
-                <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all hover:translate-y-[-5px] border border-gray-100">
+                <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all hover:translate-y-[-5px] border border-gray-100 group">
                   <div className="relative aspect-square overflow-hidden">
                     <img 
                       src={product.image} 
                       alt={product.title} 
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       onError={(e) => {
                         console.error(`Failed to load product image: ${product.title}`);
                         e.currentTarget.src = '/placeholder.svg';
@@ -212,16 +212,16 @@ const HomeDelivery: React.FC<HomeDeliveryProps> = ({ onAddToCart = () => {}, sto
                       </div>
                     )}
                   </div>
-                  <div className="p-6">
+                  <div className="p-6 group-hover:bg-gray-50 transition-colors duration-300">
                     <div className="flex justify-between items-center mb-4">
-                      <h4 className="font-bold text-gray-900">{product.title}</h4>
+                      <h4 className="font-bold text-gray-900 group-hover:text-brand-orange transition-colors duration-300">{product.title}</h4>
                       <span className="text-brand-orange font-bold">{product.price.toFixed(2)}€</span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-500">{product.unit}</span>
                       <button 
                         onClick={() => handleAddToCart(product)}
-                        className={`flex items-center gap-2 ${isProductInStock(product.id) ? 'bg-brand-orange hover:bg-brand-orange/90' : 'bg-gray-300 cursor-not-allowed'} text-white py-2 px-4 rounded-lg transition-colors`}
+                        className={`flex items-center gap-2 ${isProductInStock(product.id) ? 'bg-brand-orange hover:bg-brand-orange/90 transform transition-transform duration-300 group-hover:scale-105' : 'bg-gray-300 cursor-not-allowed'} text-white py-2 px-4 rounded-lg transition-colors`}
                         disabled={!isProductInStock(product.id)}
                       >
                         <ShoppingCart size={16} />
