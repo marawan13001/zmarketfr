@@ -1,4 +1,5 @@
 
+
 /* Remove the default margin and padding that could cause white borders */
 #root {
   margin: 0;
@@ -59,3 +60,4 @@ body {
 .read-the-docs {
   color: #888;
 }
+
