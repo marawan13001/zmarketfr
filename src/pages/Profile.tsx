@@ -1,151 +1,218 @@
 
 import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/lib/supabase';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { ArrowLeft, Save, User } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { supabase } from '@/lib/supabase';
 import { toast } from 'sonner';
 
-interface Profile {
-  id: string;
+interface ProfileData {
   first_name: string;
   last_name: string;
   email: string;
   avatar_url: string | null;
 }
 
-const Profile = () => {
-  const { user, isLoading } = useAuth();
-  const [profile, setProfile] = useState<Profile | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [updating, setUpdating] = useState(false);
+const Profile: React.FC = () => {
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [profileData, setProfileData] = useState<ProfileData>({
+    first_name: '',
+    last_name: '',
+    email: '',
+    avatar_url: null
+  });
 
   useEffect(() => {
+    if (!user) {
+      navigate('/auth');
+      return;
+    }
+
     const fetchProfile = async () => {
-      if (!user) return;
-      
       try {
         const { data, error } = await supabase
           .from('profiles')
           .select('*')
           .eq('id', user.id)
           .single();
-          
+
         if (error) throw error;
         
-        setProfile(data);
-        setFirstName(data.first_name || '');
-        setLastName(data.last_name || '');
+        if (data) {
+          setProfileData({
+            first_name: data.first_name || '',
+            last_name: data.last_name || '',
+            email: data.email || '',
+            avatar_url: data.avatar_url
+          });
+        }
       } catch (error) {
         console.error('Error fetching profile:', error);
-        toast.error("Erreur lors du chargement du profil");
-      } finally {
-        setLoading(false);
+        toast.error('Erreur lors du chargement du profil');
       }
     };
-    
-    fetchProfile();
-  }, [user]);
 
-  const updateProfile = async (e: React.FormEvent) => {
-    e.preventDefault();
+    fetchProfile();
+  }, [user, navigate]);
+
+  const handleUpdateProfile = async () => {
     if (!user) return;
     
-    setUpdating(true);
-    
+    setIsLoading(true);
     try {
       const { error } = await supabase
         .from('profiles')
         .update({
-          first_name: firstName,
-          last_name: lastName,
-          updated_at: new Date().toISOString(),
+          first_name: profileData.first_name,
+          last_name: profileData.last_name,
+          updated_at: new Date().toISOString()
         })
         .eq('id', user.id);
-        
+
       if (error) throw error;
       
-      toast.success("Profil mis à jour avec succès");
-      setProfile(prev => prev ? { ...prev, first_name: firstName, last_name: lastName } : null);
+      toast.success('Profil mis à jour avec succès');
     } catch (error) {
       console.error('Error updating profile:', error);
-      toast.error("Erreur lors de la mise à jour du profil");
+      toast.error('Erreur lors de la mise à jour du profil');
     } finally {
-      setUpdating(false);
+      setIsLoading(false);
     }
   };
 
-  if (isLoading || loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-orange"></div>
-      </div>
-    );
-  }
+  const handleLogout = async () => {
+    await signOut();
+    navigate('/');
+  };
 
-  if (!user) {
-    return <Navigate to="/auth" />;
-  }
+  if (!user) return null;
 
   return (
-    <div className="min-h-screen pt-24 pb-12 px-4">
-      <div className="max-w-3xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Mon Profil</h1>
+    <div className="min-h-screen bg-brand-gray py-12">
+      <div className="container max-w-4xl mx-auto px-4">
+        <Link to="/" className="flex items-center text-gray-700 mb-6 hover:text-brand-orange transition-colors">
+          <ArrowLeft className="mr-2" size={16} />
+          Retour à l'accueil
+        </Link>
         
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <form onSubmit={updateProfile} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label htmlFor="firstName" className="text-sm font-medium">
-                  Prénom
-                </label>
-                <Input
-                  id="firstName"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  placeholder="Prénom"
-                />
+        <div className="flex flex-col md:flex-row gap-8">
+          <Card className="md:w-1/3">
+            <CardHeader>
+              <div className="flex flex-col items-center">
+                <Avatar className="w-24 h-24 mb-4">
+                  {profileData.avatar_url ? (
+                    <AvatarImage src={profileData.avatar_url} alt={profileData.first_name} />
+                  ) : (
+                    <AvatarFallback className="bg-brand-orange/10 text-brand-orange">
+                      <User size={40} />
+                    </AvatarFallback>
+                  )}
+                </Avatar>
+                <CardTitle className="text-xl text-center">{profileData.first_name} {profileData.last_name}</CardTitle>
+                <CardDescription className="text-center">{profileData.email}</CardDescription>
               </div>
-              
-              <div className="space-y-2">
-                <label htmlFor="lastName" className="text-sm font-medium">
-                  Nom
-                </label>
-                <Input
-                  id="lastName"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  placeholder="Nom"
-                />
-              </div>
-            </div>
-            
-            <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium">
-                Email
-              </label>
-              <Input
-                id="email"
-                value={user.email}
-                disabled
-                className="bg-gray-100"
-              />
-              <p className="text-xs text-gray-500">L'email ne peut pas être modifié</p>
-            </div>
-            
-            <div className="flex justify-end">
+            </CardHeader>
+            <CardFooter>
               <Button 
-                type="submit" 
-                className="bg-brand-orange hover:bg-brand-orange/90"
-                disabled={updating}
+                variant="outline" 
+                className="w-full text-red-500 hover:text-red-600 hover:bg-red-50 border-red-200"
+                onClick={handleLogout}
               >
-                {updating ? 'Mise à jour...' : 'Mettre à jour'}
+                Se déconnecter
               </Button>
-            </div>
-          </form>
+            </CardFooter>
+          </Card>
+          
+          <div className="md:w-2/3">
+            <Card>
+              <CardHeader>
+                <CardTitle>Mon Profil</CardTitle>
+                <CardDescription>
+                  Gérez vos informations personnelles
+                </CardDescription>
+              </CardHeader>
+              
+              <Tabs defaultValue="profile">
+                <div className="px-6">
+                  <TabsList className="mb-4">
+                    <TabsTrigger value="profile">Profil</TabsTrigger>
+                    <TabsTrigger value="orders">Commandes</TabsTrigger>
+                  </TabsList>
+                </div>
+                
+                <TabsContent value="profile">
+                  <CardContent className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="firstName">Prénom</Label>
+                        <Input 
+                          id="firstName" 
+                          value={profileData.first_name}
+                          onChange={(e) => setProfileData({...profileData, first_name: e.target.value})}
+                        />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor="lastName">Nom</Label>
+                        <Input 
+                          id="lastName" 
+                          value={profileData.last_name}
+                          onChange={(e) => setProfileData({...profileData, last_name: e.target.value})}
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="email">Email</Label>
+                      <Input 
+                        id="email" 
+                        type="email" 
+                        value={profileData.email}
+                        disabled
+                        className="bg-gray-50"
+                      />
+                      <p className="text-xs text-gray-500">
+                        L'email ne peut pas être modifié
+                      </p>
+                    </div>
+                  </CardContent>
+                  
+                  <CardFooter>
+                    <Button 
+                      onClick={handleUpdateProfile}
+                      disabled={isLoading}
+                      className="bg-brand-orange hover:bg-brand-orange/90"
+                    >
+                      <Save className="mr-2 h-4 w-4" />
+                      {isLoading ? 'Enregistrement...' : 'Enregistrer les modifications'}
+                    </Button>
+                  </CardFooter>
+                </TabsContent>
+                
+                <TabsContent value="orders">
+                  <CardContent>
+                    <div className="text-center py-8">
+                      <p className="text-gray-500">Vous n'avez pas encore passé de commande</p>
+                      <Link to="/#produits">
+                        <Button className="mt-4 bg-brand-orange hover:bg-brand-orange/90">
+                          Découvrir nos produits
+                        </Button>
+                      </Link>
+                    </div>
+                  </CardContent>
+                </TabsContent>
+              </Tabs>
+            </Card>
+          </div>
         </div>
       </div>
     </div>
