@@ -86,4 +86,9 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+  
+  .text-center-important {
+    text-align: center !important;
+  }
 }
+

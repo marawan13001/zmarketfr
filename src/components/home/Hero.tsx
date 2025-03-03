@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Snowflake } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import ScrollReveal from '../ui/ScrollReveal';
 
 const Hero: React.FC = () => {
@@ -77,58 +77,57 @@ const Hero: React.FC = () => {
       
       {/* Content */}
       <div className="container px-4 mx-auto relative z-10 pt-20 pb-16 md:py-32">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div className="md:pr-8">
-            <ScrollReveal direction="up" delay={100}>
-              <div className="mb-8">
-                <img 
-                  src={imageErrors.logo ? fallbackImages.logo : imagePaths.logo} 
-                  alt="Z Market Logo" 
-                  className="h-20 md:h-24"
-                  onLoad={() => handleImageLoad('logo')}
-                  onError={() => handleImageError('logo')}
-                />
-              </div>
-            </ScrollReveal>
-            
-            <ScrollReveal direction="up" delay={200}>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white mb-6">
-                Découvrez l'Excellence de la Cuisine <span className="text-brand-orange">Halal Surgelée</span>
-              </h1>
-            </ScrollReveal>
-            
-            <ScrollReveal direction="up" delay={300}>
-              <p className="text-lg text-gray-200 mb-8 max-w-lg">
-                Des produits haut de gamme, préparés avec soin et certifiés halal. Trouvez des surgelés, des produits frais, secs et des boissons dans notre magasin.
-              </p>
-            </ScrollReveal>
-            
-            <ScrollReveal direction="up" delay={400}>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a 
-                  href="#produits" 
-                  className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-brand-orange text-white font-medium transition-all hover:bg-brand-orange/90 hover:scale-105"
-                >
-                  Découvrir nos produits
-                  <ArrowRight size={18} className="ml-2" />
-                </a>
-                <a 
-                  href="#contact" 
-                  className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-transparent border border-white/20 text-white font-medium transition-all hover:bg-white/10"
-                >
-                  Nous trouver
-                </a>
-              </div>
-            </ScrollReveal>
-          </div>
+        <div className="flex flex-col items-center justify-center text-center">
+          <ScrollReveal direction="up" delay={100}>
+            <div className="mb-8">
+              <img 
+                src={imageErrors.logo ? fallbackImages.logo : imagePaths.logo} 
+                alt="Z Market Logo" 
+                className="h-20 md:h-24 mx-auto"
+                onLoad={() => handleImageLoad('logo')}
+                onError={() => handleImageError('logo')}
+              />
+            </div>
+          </ScrollReveal>
           
-          <div className="hidden md:flex items-center justify-center relative h-[500px]">
-            <ScrollReveal direction="left" delay={500} className="relative">
-              <div className="flex items-center justify-center">
-                <Snowflake size={120} className="text-brand-orange mb-4 animate-float" />
-              </div>
-            </ScrollReveal>
-          </div>
+          <ScrollReveal direction="up" delay={150}>
+            <div className="mb-4 flex flex-wrap gap-2 justify-center">
+              <span className="px-4 py-1 rounded-full text-sm font-medium bg-brand-orange/20 text-brand-orange border border-brand-orange/30">ALIMENTAIRE</span>
+              <span className="px-4 py-1 rounded-full text-sm font-medium bg-brand-orange/20 text-brand-orange border border-brand-orange/30">SURGELÉ HALAL</span>
+              <span className="px-4 py-1 rounded-full text-sm font-medium bg-brand-orange/20 text-brand-orange border border-brand-orange/30">BOISSON</span>
+              <span className="px-4 py-1 rounded-full text-sm font-medium bg-brand-orange/20 text-brand-orange border border-brand-orange/30">MATERIEL CHR</span>
+            </div>
+          </ScrollReveal>
+          
+          <ScrollReveal direction="up" delay={200}>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white mb-4 max-w-4xl mx-auto">
+              Découvrez l'Excellence de la Cuisine <span className="text-brand-orange">Halal Surgelée</span>
+            </h1>
+          </ScrollReveal>
+          
+          <ScrollReveal direction="up" delay={300}>
+            <p className="text-lg text-gray-200 mb-10 max-w-2xl mx-auto text-center">
+              Des produits haut de gamme, préparés avec soin et certifiés halal. Trouvez des surgelés, des produits frais, secs et des boissons dans notre magasin.
+            </p>
+          </ScrollReveal>
+          
+          <ScrollReveal direction="up" delay={400}>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a 
+                href="#produits" 
+                className="inline-flex items-center justify-center px-8 py-4 rounded-lg bg-brand-orange text-white font-medium transition-all hover:bg-brand-orange/90 hover:scale-105"
+              >
+                Découvrir nos produits
+                <ArrowRight size={18} className="ml-2" />
+              </a>
+              <a 
+                href="#contact" 
+                className="inline-flex items-center justify-center px-8 py-4 rounded-lg bg-transparent border border-white/20 text-white font-medium transition-all hover:bg-white/10"
+              >
+                Nous trouver
+              </a>
+            </div>
+          </ScrollReveal>
         </div>
       </div>
       
