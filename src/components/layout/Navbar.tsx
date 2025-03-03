@@ -121,7 +121,7 @@ const Navbar: React.FC = () => {
       {/* Mobile Menu */}
       <div
         className={cn(
-          'fixed inset-0 bg-white z-40 flex flex-col justify-center items-center transition-transform duration-500 ease-elastic',
+          'fixed inset-0 bg-black/95 z-40 flex flex-col justify-center items-center transition-transform duration-500 ease-elastic',
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'
         )}
       >
@@ -135,28 +135,28 @@ const Navbar: React.FC = () => {
         <nav className="flex flex-col items-center space-y-8">
           <a
             href="#produits"
-            className="text-2xl font-semibold text-gray-800 hover:text-brand-orange transition-colors"
+            className="text-2xl font-semibold text-white hover:text-brand-orange transition-colors"
             onClick={toggleMenu}
           >
             Nos Produits
           </a>
           <a
             href="#livraison"
-            className="text-2xl font-semibold text-gray-800 hover:text-brand-orange transition-colors"
+            className="text-2xl font-semibold text-white hover:text-brand-orange transition-colors"
             onClick={toggleMenu}
           >
             Livraison
           </a>
           <a
             href="#a-propos"
-            className="text-2xl font-semibold text-gray-800 hover:text-brand-orange transition-colors"
+            className="text-2xl font-semibold text-white hover:text-brand-orange transition-colors"
             onClick={toggleMenu}
           >
             À Propos
           </a>
           <a
             href="#contact"
-            className="text-2xl font-semibold text-gray-800 hover:text-brand-orange transition-colors"
+            className="text-2xl font-semibold text-white hover:text-brand-orange transition-colors"
             onClick={toggleMenu}
           >
             Contact
